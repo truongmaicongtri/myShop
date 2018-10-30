@@ -41,6 +41,7 @@ export default class CartScreen extends Component {
                                 <Text style={styles.textMater}>Material: Cotton</Text>
                                 <Text>Color: Black</Text>
                                 <View style={styles.lastrowInfo}>
+                                    <View style={styles.add}>
                                     <TouchableOpacity>
                                         <Text style={styles.textColor}>-</Text>
                                     </TouchableOpacity>
@@ -48,14 +49,7 @@ export default class CartScreen extends Component {
                                     <TouchableOpacity>
                                         <Text style={styles.textColor}>+</Text>
                                     </TouchableOpacity>
-                                    <View
-                                        style={{
-                                            backgroundColor: 'cyan',
-                                            width: 15,
-                                            height: 15,
-                                            borderRadius: 15
-                                        }}
-                                    />
+                                    </View>
                                     <TouchableOpacity>
                                         <Text style={styles.textDetail}>SHOW DETAIL</Text>
                                     </TouchableOpacity>
@@ -70,6 +64,7 @@ export default class CartScreen extends Component {
                                 <Text style={styles.textMater}>Material: Cotton</Text>
                                 <Text>Color: Black</Text>
                                 <View style={styles.lastrowInfo}>
+                                    <View style={styles.add}>
                                     <TouchableOpacity>
                                         <Text style={styles.textColor}>-</Text>
                                     </TouchableOpacity>
@@ -77,14 +72,7 @@ export default class CartScreen extends Component {
                                     <TouchableOpacity>
                                         <Text style={styles.textColor}>+</Text>
                                     </TouchableOpacity>
-                                    <View
-                                        style={{
-                                            backgroundColor: 'cyan',
-                                            width: 15,
-                                            height: 15,
-                                            borderRadius: 15
-                                        }}
-                                    />
+                                    </View>
                                     <TouchableOpacity>
                                         <Text style={styles.textDetail}>SHOW DETAIL</Text>
                                     </TouchableOpacity>
@@ -99,6 +87,7 @@ export default class CartScreen extends Component {
                                 <Text style={styles.textMater}>Material: Cotton</Text>
                                 <Text>Color: Black</Text>
                                 <View style={styles.lastrowInfo}>
+                                    <View style={styles.add}>
                                     <TouchableOpacity>
                                         <Text style={styles.textColor}>-</Text>
                                     </TouchableOpacity>
@@ -106,14 +95,7 @@ export default class CartScreen extends Component {
                                     <TouchableOpacity>
                                         <Text style={styles.textColor}>+</Text>
                                     </TouchableOpacity>
-                                    <View
-                                        style={{
-                                            backgroundColor: 'cyan',
-                                            width: 15,
-                                            height: 15,
-                                            borderRadius: 15
-                                        }}
-                                    />
+                                    </View>
                                     <TouchableOpacity>
                                         <Text style={styles.textDetail}>SHOW DETAIL</Text>
                                     </TouchableOpacity>
@@ -128,6 +110,7 @@ export default class CartScreen extends Component {
                                 <Text style={styles.textMater}>Material: Cotton</Text>
                                 <Text>Color: Black</Text>
                                 <View style={styles.lastrowInfo}>
+                                    <View style={styles.add}>
                                     <TouchableOpacity>
                                         <Text style={styles.textColor}>-</Text>
                                     </TouchableOpacity>
@@ -135,14 +118,7 @@ export default class CartScreen extends Component {
                                     <TouchableOpacity>
                                         <Text style={styles.textColor}>+</Text>
                                     </TouchableOpacity>
-                                    <View
-                                        style={{
-                                            backgroundColor: 'cyan',
-                                            width: 15,
-                                            height: 15,
-                                            borderRadius: 15
-                                        }}
-                                    />
+                                    </View>
                                     <TouchableOpacity>
                                         <Text style={styles.textDetail}>SHOW DETAIL</Text>
                                     </TouchableOpacity>
@@ -217,7 +193,7 @@ const styles = StyleSheet.create({
 
     lastrowInfo: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
     },
 
     textName: {
@@ -240,9 +216,11 @@ const styles = StyleSheet.create({
     },
 
     textDetail: {
-        fontSize: 10,
-        color: '#B10D65',
-        marginTop: 20
+        fontSize: 6,
+        color: '#B10D65', 
+        width: width / 5,
+        marginTop: 50,
+        paddingLeft: 20
     },
 
     checkout: {
@@ -258,6 +236,13 @@ const styles = StyleSheet.create({
         color: '#3c95fc',
         fontSize: 25,
         fontWeight: '400'
+    },
+
+    add: {
+        flexDirection: 'row',
+        width: width / 4,
+        justifyContent: 'space-around',
+        paddingTop: 10
     }
 
 });

@@ -26,7 +26,7 @@ class AllProductView extends Component {
                         onPress={() => this.props.navigation.navigate('AllProduct')}
                         delayPressIn={100}
                     >
-                        <Text style={styles.textStyle}>ALL ITEMS</Text>
+                        <Text style={styles.textStyle}>CATEGORY</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 4, elevation: 5, }}>
