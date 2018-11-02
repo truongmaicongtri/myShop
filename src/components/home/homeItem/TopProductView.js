@@ -1,67 +1,89 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
-import Img1 from '../../../drawable/8.jpg';
-import Img2 from '../../../drawable/9.jpg';
-import Img3 from '../../../drawable/10.jpg';
-import Img4 from '../../../drawable/11.jpg';
+import {
+    View,
+    Text,
+    StyleSheet,
+    Image,
+    Dimensions,
+    TouchableOpacity,
+    ListView
+} from 'react-native';
 
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
 
+
 class TopProduct extends Component {
     constructor(props) {
         super(props);
+
+        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+
+        //get listItem
+        const { listItem } = this.props.category;
+
+        //create data
+        const data = [];
+
+        //convert listItem to data (2 items on a line)
+        const lineOfListView = (listItem.length % 2 === 0) ?
+            listItem.length / 2 : (listItem.length - 1) / 2;
+        for (let index = 0; index < lineOfListView; index++) {
+            const dataItem = { item1: listItem[index * 2], item2: listItem[(index * 2) + 1] };
+            data.push(dataItem);
+        }
         this.state = {
+            dataSource: ds.cloneWithRows(data),
         };
     }
 
+    renderRow(dataSource) {
+        return (
+            <View style={styles.body}>
+                <TouchableOpacity
+                    onPress={() => { this.props.navigation.navigate('DetailProduct', { item: dataSource.item1 }); }}
+                    style={styles.productContainer}
+                    delayPressIn={100}
+                >
+                    <Image source={dataSource.item1.img[0]} style={styles.imgStyle} />
+                    <Text style={styles.productname}>{dataSource.item1.name}</Text>
+                    <Text style={styles.productprice}>{dataSource.item1.cost} VND</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => { this.props.navigation.navigate('DetailProduct', { item: dataSource.item2 }); }}
+                    style={styles.productContainer}
+                    delayPressIn={100}
+                >
+                    <Image source={dataSource.item2.img[0]} style={styles.imgStyle} />
+                    <Text style={styles.productname}>{dataSource.item2.name}</Text>
+                    <Text style={styles.productprice}>{dataSource.item2.cost} VND</Text>
+                </TouchableOpacity>
+            </View>
+
+        );
+    }
+
     render() {
+        const { navigation } = this.props;
+        const { category } = this.props;
         return (
             <View style={styles.container}>
                 <View style={styles.titlecontainer}>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('TopProduct')}
+                        onPress={() =>
+                            navigation.navigate('Category', { category })
+                        }
                         activeOpacity={this.state.scrollBegin ? 1.0 : 0}
                         delayPressIn={100}
                     >
-                        <Text style={styles.title}> TOP PRODUCT </Text>
+                        <Text style={styles.title}> {category.name} </Text>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.body}>
-                    <TouchableOpacity
-                        style={styles.productContainer}
-                        delayPressIn={100}
-                    >
-                        <Image source={Img1} style={styles.imgStyle} />
-                        <Text style={styles.productname}>Product name</Text>
-                        <Text style={styles.productprice}>1.000.000 VND</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.productContainer}
-                        delayPressIn={100}
-                    >
-                        <Image source={Img2} style={styles.imgStyle} />
-                        <Text style={styles.productname}>Product name</Text>
-                        <Text style={styles.productprice}>999.000 VND</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.productContainer}
-                        delayPressIn={100}
-                    >
-                        <Image source={Img3} style={styles.imgStyle} />
-                        <Text style={styles.productname}>Product name</Text>
-                        <Text style={styles.productprice}>1.500.000 VND</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.productContainer}
-                        delayPressIn={100}
-                    >
-                        <Image source={Img4} style={styles.imgStyle} />
-                        <Text style={styles.productname}>Product name</Text>
-                        <Text style={styles.productprice}>600.000 VND</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+                <ListView
+                    dataSource={this.state.dataSource}
+                    renderRow={this.renderRow.bind(this)}
+                />
+            </View >
         );
     }
 }

@@ -188,7 +188,6 @@ const styles = StyleSheet.create({
     productImg: {
         width: 150,
         height: (150 / 783) * 1200,
-        elevation: 5
     },
 
     lastrowInfo: {

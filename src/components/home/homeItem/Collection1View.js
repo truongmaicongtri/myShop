@@ -12,27 +12,32 @@ class Collection extends React.Component {
     };
 
     render() {
-        // const { navigate } = this.props.navigation;
+        const { navigation } = this.props;
+        const { category } = this.props;
         return (
             <View style={styles.collect}>
                 <View style={{ flex: 1, justifyContent: 'flex-start' }}>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('Collection1')}
+                        onPress={() =>
+                            navigation.navigate('Category', { category })
+                        }
                         delayPressIn={100}
                     >
-                        <Text style={styles.textStyle}>SPRING COLLECTION</Text>
+                        <Text style={styles.textStyle}>{category.name}</Text>
                     </TouchableOpacity>
 
                 </View>
                 <View style={{ flex: 4 }}>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('Collection1')}
+                        onPress={() =>
+                            navigation.navigate('Category', { category })
+                        }
                         delayPressIn={100}
                     >
                         <Image source={Img1} style={styles.imageStyle} />
                     </TouchableOpacity>
                 </View>
-            </View>
+            </View >
         );
     }
 }

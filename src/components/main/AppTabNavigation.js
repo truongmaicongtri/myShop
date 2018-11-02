@@ -6,9 +6,7 @@ import HomeScreen from '../home/HomeScreen';
 import NotifyScreen from '../notify/NotifyScreen';
 import CartScreen from '../cart/CartScreen';
 import ContactScreen from '../contact/ContactScreen';
-import AllProductScreen from '../categories/AllProduct';
-import Collection1Screen from '../categories/Collection1';
-import TopProductScreen from '../categories/TopProduct';
+import CategoryScreen from '../category/Category';
 import DetailProductScreen from '../detailProducts/DetailProducts';
 import TopBar from './TopBar';
 
@@ -33,12 +31,15 @@ export default class AppTabNavigation extends Component {
 
 
 const ProductStackNavigator = createStackNavigator({
-    Home: HomeScreen,
-    AllProduct: AllProductScreen,
-    Collection1: Collection1Screen,
-    TopProduct: TopProductScreen,
+    Home: {
+        screen: HomeScreen
+    },
+    Category: {
+        screen: CategoryScreen, 
+    },
     DetailProduct: DetailProductScreen,
-}, {
+},
+    {
         initialRouteName: 'Home',
         headerMode: 'screen',
     }

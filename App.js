@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { AppRegistry, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
-import Shop from './src/components/Main/Shop';
+import Shop from './src/components/main/Shop';
 
 export default class MyShop extends Component {
   render() {

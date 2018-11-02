@@ -19,14 +19,16 @@ class AllProductView extends Component {
 
 
     render() {
+        const { navigation } = this.props;
+        const { category } = this.props;
         return (
             <View style={styles.collect}>
                 <View style={{ flex: 1, justifyContent: 'flex-start' }}>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('AllProduct')}
+                        onPress={() => navigation.navigate('Category', { category })}
                         delayPressIn={100}
                     >
-                        <Text style={styles.textStyle}>CATEGORY</Text>
+                        <Text style={styles.textStyle}>{category.name}</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 4, elevation: 5, }}>
