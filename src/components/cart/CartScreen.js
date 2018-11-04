@@ -9,10 +9,10 @@ import {
     Image
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import Img1 from '../../../src/drawable/8.jpg';
-import Img2 from '../../../src/drawable/9.jpg';
-import Img3 from '../../../src/drawable/10.jpg';
-import Img4 from '../../../src/drawable/11.jpg';
+import productImage1 from '../../../src/drawable/detailProductImage/productImage1.jpg';
+import productImage2 from '../../../src/drawable/detailProductImage/productImage2.jpg';
+import productImage3 from '../../../src/drawable/detailProductImage/productImage3.jpg';
+import productImage4 from '../../../src/drawable/detailProductImage/productImage4.jpg';
 
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
@@ -34,7 +34,7 @@ export default class CartScreen extends Component {
                             <View style={{ width: 30 }} />
                         </View>
                         <View style={styles.productContainer}>
-                            <Image source={Img1} style={styles.productImg} />
+                            <Image source={productImage1} style={styles.productImg} />
                             <View style={styles.productInfo}>
                                 <Text style={styles.textName}>PRODUCT NAME</Text>
                                 <Text style={styles.textPrice}>1.000.000 VND</Text>
@@ -57,7 +57,7 @@ export default class CartScreen extends Component {
                             </View>
                         </View>
                         <View style={styles.productContainer}>
-                            <Image source={Img2} style={styles.productImg} />
+                            <Image source={productImage2} style={styles.productImg} />
                             <View style={styles.productInfo}>
                                 <Text style={styles.textName}>PRODUCT NAME</Text>
                                 <Text style={styles.textPrice}>1.000.000 VND</Text>
@@ -80,7 +80,7 @@ export default class CartScreen extends Component {
                             </View>
                         </View>
                         <View style={styles.productContainer}>
-                            <Image source={Img3} style={styles.productImg} />
+                            <Image source={productImage3} style={styles.productImg} />
                             <View style={styles.productInfo}>
                                 <Text style={styles.textName}>PRODUCT NAME</Text>
                                 <Text style={styles.textPrice}>1.000.000 VND</Text>
@@ -103,7 +103,7 @@ export default class CartScreen extends Component {
                             </View>
                         </View>
                         <View style={styles.productContainer}>
-                            <Image source={Img4} style={styles.productImg} />
+                            <Image source={productImage4} style={styles.productImg} />
                             <View style={styles.productInfo}>
                                 <Text style={styles.textName}>PRODUCT NAME</Text>
                                 <Text style={styles.textPrice}>1.000.000 VND</Text>

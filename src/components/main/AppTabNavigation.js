@@ -6,7 +6,7 @@ import HomeScreen from '../home/HomeScreen';
 import NotifyScreen from '../notify/NotifyScreen';
 import CartScreen from '../cart/CartScreen';
 import ContactScreen from '../contact/ContactScreen';
-import CategoryScreen from '../category/Category';
+import CategoryScreen from '../category/CategoryScreen';
 import DetailProductScreen from '../detailProducts/DetailProducts';
 import TopBar from './TopBar';
 

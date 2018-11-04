@@ -13,7 +13,7 @@ const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
 
 
-class TopProduct extends Component {
+class HvCategoryWithListItem extends Component {
     constructor(props) {
         super(props);
 
@@ -41,7 +41,10 @@ class TopProduct extends Component {
         return (
             <View style={styles.body}>
                 <TouchableOpacity
-                    onPress={() => { this.props.navigation.navigate('DetailProduct', { item: dataSource.item1 }); }}
+                    onPress={() => {
+                        this.props.navigation.navigate('DetailProduct',
+                            { item: dataSource.item1 });
+                    }}
                     style={styles.productContainer}
                     delayPressIn={100}
                 >
@@ -50,7 +53,10 @@ class TopProduct extends Component {
                     <Text style={styles.productprice}>{dataSource.item1.cost} VND</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => { this.props.navigation.navigate('DetailProduct', { item: dataSource.item2 }); }}
+                    onPress={() => {
+                        this.props.navigation.navigate('DetailProduct',
+                            { item: dataSource.item2 });
+                    }}
                     style={styles.productContainer}
                     delayPressIn={100}
                 >
@@ -144,4 +150,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default TopProduct;
+export default HvCategoryWithListItem;

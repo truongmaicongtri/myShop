@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
-import Img1 from '../../../drawable/1.jpg';
 
 const { height } = Dimensions.get('window');
 const { width } = Dimensions.get('window');
@@ -34,7 +33,7 @@ class Collection extends React.Component {
                         }
                         delayPressIn={100}
                     >
-                        <Image source={Img1} style={styles.imageStyle} />
+                        <Image source={category.imageView} style={styles.imageStyle} />
                     </TouchableOpacity>
                 </View>
             </View >
