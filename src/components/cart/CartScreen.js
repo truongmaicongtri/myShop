@@ -21,14 +21,13 @@ const { height } = Dimensions.get('window');
 export default class CartScreen extends Component {
 
     render() {
-        const { navigate } = this.props.navigation;
         return (
             <View style={{ flex: 1 }}>
                 <ScrollView style={styles.screen}>
                     <View style={styles.wrapper}>
                         <View style={styles.header}>
                             <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                                <Ionicons name="md-arrow-back" size={35} color="#B10D65" />
+                                <Ionicons name="md-arrow-back" size={25} color="#B10D65" />
                             </TouchableOpacity>
                             <Text style={styles.title}>List Cart</Text>
                             <View style={{ width: 30 }} />
@@ -163,7 +162,7 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        fontSize: 30,
+        fontSize: 25,
         color: '#B10D65'
     },
 
@@ -215,11 +214,11 @@ const styles = StyleSheet.create({
     },
 
     textDetail: {
-        fontSize: 6,
+        fontSize: 8,
         color: '#B10D65', 
-        width: width / 5,
+        // width: width / 5,
         marginTop: 50,
-        paddingLeft: 20
+        // paddingLeft: 20
     },
 
     checkout: {

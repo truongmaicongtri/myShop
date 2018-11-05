@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-export default class Category extends Component {
+export default class CategoryScreen extends Component {
     static navigationOptions = {
         header: null
     }

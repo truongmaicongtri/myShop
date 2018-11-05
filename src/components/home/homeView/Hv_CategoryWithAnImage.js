@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity } from 'rea
 const { height } = Dimensions.get('window');
 const { width } = Dimensions.get('window');
 
-class Collection extends React.Component {
+class HvCategoryWithAnImage extends Component {
 
     static navigationOptions = {
         header: null
@@ -65,4 +65,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Collection;
+export default HvCategoryWithAnImage;

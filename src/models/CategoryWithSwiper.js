@@ -1,4 +1,4 @@
-import Image from './Image';
+import Image from 'react-native';
 import { Category } from './Category';
 
 export class CategoryWithSwiper extends Category {

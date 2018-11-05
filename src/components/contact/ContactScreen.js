@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { Ionicons, FontAwesome, Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome, Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
@@ -20,7 +20,6 @@ export default class ContactScreen extends Component {
     }
 
     render() {
-        const { navigate } = this.props.navigation;
         return (
             <View style={styles.screen}>
                 <MapView
@@ -39,7 +38,7 @@ export default class ContactScreen extends Component {
                         <FontAwesome
                             name="map-marker"
                             size={35} color="#B10D65"
-                            style={{ marginLeft: 5 }} 
+                            style={{ marginLeft: 5 }}
                         />
                         <View style={{ width: 11 }} />
                         <Text style={styles.info}>

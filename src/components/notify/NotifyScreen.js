@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
-import { Ionicons, Foundation } from '@expo/vector-icons';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { Foundation } from '@expo/vector-icons';
 
 const { width } = Dimensions.get('window');
 
@@ -12,13 +12,17 @@ export default class NotifyScreen extends Component {
     }
 
     render() {
-        const { navigate } = this.props.navigation;
         return (
             <View style={styles.screen}>
                 <View style={styles.row}>
                     <Foundation name="burst-sale" size={35} color="#B10D65" />
                     <Text style={styles.txtinfo}>Discounted up to 70% for all items</Text>
                     <Text style={styles.txtdate}>20-10-2018</Text>
+                </View>
+                <View style={styles.row}>
+                    <Foundation name="burst-sale" size={35} color="#B10D65" />
+                    <Text style={styles.txtinfo}>Discounted up to 20% for all items</Text>
+                    <Text style={styles.txtdate}>15-10-2018</Text>
                 </View>
             </View>
         );
@@ -34,7 +38,7 @@ const styles = StyleSheet.create({
 
     row: {
         width: width - 20,
-        marginTop: 5,
+        marginTop: 10,
         padding: 5,
         backgroundColor: '#fff',
         flexDirection: 'row',

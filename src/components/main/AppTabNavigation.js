@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
 import { View, Dimensions, Text } from 'react-native';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
-import IconBadge from 'react-native-icon-badge';
 import HomeScreen from '../home/HomeScreen';
 import NotifyScreen from '../notify/NotifyScreen';
 import CartScreen from '../cart/CartScreen';
 import ContactScreen from '../contact/ContactScreen';
 import CategoryScreen from '../category/CategoryScreen';
-import DetailProductScreen from '../detailProducts/DetailProducts';
+import DetailProductScreen from '../detailProducts/DetailProductsScreen';
 import TopBar from './TopBar';
 
 

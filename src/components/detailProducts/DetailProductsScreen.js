@@ -7,7 +7,7 @@ import { Card, Title, Paragraph } from 'react-native-paper';
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
 
-export default class ContactScreen extends Component {
+export default class DetailProductScreen extends Component {
     static navigationOptions = {
         header: null
     }
@@ -24,20 +24,34 @@ export default class ContactScreen extends Component {
 
         return (
             <View style={styles.container}>
-                <View style={styles.img}>
+                <View style={styles.top}>
                     <View style={styles.title}>
                         <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                            <Ionicons name="md-arrow-back" size={35} color="#B10D65" />
+                            <Ionicons name="md-arrow-back" size={25} color="#B10D65" />
                         </TouchableOpacity>
                         <View style={{ width: 30 }} />
                         <TouchableOpacity>
-                            <Ionicons name="ios-cart" size={35} color="#B10D65" />
+                            <Ionicons name="ios-cart" size={25} color="#B10D65" />
                         </TouchableOpacity>
                     </View>
-                    <Swiper style={styles.imgContainer}>
-                        <Image source={item.img[1]} style={styles.img1} />
-                        <Image source={item.img[2]} style={styles.img1} />
-                    </Swiper>
+                    <View style={styles.swiper}>
+                        <Swiper style={styles.imgContainer}>
+                            <View style={{ alignItems: 'center' }}>
+                                <Image
+                                    style={styles.img1}
+                                    source={item.img[1]}
+                                    resizeMode='contain'
+                                />
+                            </View>
+                            <View style={{ alignItems: 'center' }}>
+                                <Image
+                                    style={styles.img1}
+                                    source={item.img[2]}
+                                    resizeMode='contain'
+                                />
+                            </View>
+                        </Swiper>
+                    </View>
                 </View >
                 <View style={styles.infoContainer}>
                     <View style={styles.titleProduct}>
@@ -64,20 +78,18 @@ export default class ContactScreen extends Component {
 }
 
 //1280 720
-const imgWidth = width - 30;
-const imgHeight = (imgWidth / 1280) * 720;
+const imgHeight = width * 0.8;
+const imgWidth = imgHeight;
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#DBDBD8',
+        backgroundColor: '#fff',
+        padding: 10,
+        elevation: 5
     },
-    title: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: 10
-    },
-    img: {
-        height: height / 2.5,
+    top: {
+        flex: 2,
         backgroundColor: '#fff',
         padding: 15,
         borderTopColor: '#fff',
@@ -85,17 +97,31 @@ const styles = StyleSheet.create({
         borderBottomColor: '#D6D6D6',
         borderLeftColor: '#fff',
         borderRightColor: '#fff',
+        elevation: 5
+    },
+    title: {
+        flex: 1 / 2,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingLeft: 10,
+        paddingRight: 10,
+    },
+    swiper: {
+        flex: 5,
     },
     img1: {
         width: imgWidth,
-        height: imgHeight
+        height: imgHeight,
     },
     imgContainer: {
-        margin: 10
+        margin: 10,
+        paddingLeft: width / 3.5,
+        alignItems: 'center',
     },
     infoContainer: {
-        height: height / 2,
+        flex: 1,
         backgroundColor: '#fff',
+        elevation: 5
     },
     titleProduct: {
         flexDirection: 'row',

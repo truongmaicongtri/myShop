@@ -3,14 +3,11 @@ import {
   StyleSheet,
   ScrollView,
   ListView,
-  View,
-  TouchableOpacity,
   Text,
-  Image
 } from 'react-native';
 import HvCategoryWithSwiper from './homeView/Hv_CategoryWithSwiper';
 import HvCategoryWithListItem from './homeView/Hv_CategoryWithListItem';
-import HvCategoryWith1ImageView from './homeView/Hv_CategoryWith1ImageView';
+import HvCategoryWith1ImageView from './homeView/Hv_CategoryWithAnImage';
 
 import categoryView1 from '../../../src/drawable/categoryView/categoryView1.jpg';
 import categoryView2 from '../../../src/drawable/categoryView/categoryView2.jpg';
@@ -54,45 +51,45 @@ import { CategoryWithSwiper } from '../../models/CategoryWithSwiper';
 import { CategoryWithListItem } from '../../models/CategoryWithListView';
 
 const item1 = new Item('001', 'Product 001', '1.500.000',
-  [productImage1, productImage11, productImage12], 'Hello! This is 001');
+  [productImage1, productImage14, productImage1], 'Hello! This is 001');
 const item2 = new Item('002', 'Product 002', '2.500.000',
-  [productImage2, productImage12, productImage13], 'Hello! This is 002');
+  [productImage2, productImage2, productImage2], 'Hello! This is 002');
 const item3 = new Item('003', 'Product 003', '3.500.000',
-  [productImage3, productImage13, productImage14], 'Hello! This is 003');
+  [productImage3, productImage3, productImage3], 'Hello! This is 003');
 const item4 = new Item('004', 'Product 004', '4.500.000',
-  [productImage4, productImage14, productImage15], 'Hello! This is 004');
+  [productImage4, productImage4, productImage4], 'Hello! This is 004');
 const item5 = new Item('005', 'Product 005', '5.500.000',
-  [productImage5, productImage16, productImage15], 'Hello! This is 005');
+  [productImage5, productImage5, productImage5], 'Hello! This is 005');
 const item6 = new Item('006', 'Product 006', '6.500.000',
-  [productImage6, productImage16, productImage17], 'Hello! This is 006');
+  [productImage6, productImage6, productImage6], 'Hello! This is 006');
 const item7 = new Item('007', 'Product 007', '7.500.000',
-  [productImage7, productImage17, productImage18], 'Hello! This is 007');
+  [productImage7, productImage7, productImage7], 'Hello! This is 007');
 const item8 = new Item('008', 'Product 008', '8.500.000',
-  [productImage8, productImage18, productImage15], 'Hello! This is 008');
+  [productImage8, productImage8, productImage8], 'Hello! This is 008');
 const item9 = new Item('009', 'Product 009', '9.500.000',
-  [productImage9, productImage14, productImage13], 'Hello! This is 009');
+  [productImage9, productImage9, productImage9], 'Hello! This is 009');
 const item10 = new Item('010', 'Product 010', '10.500.000',
-  [productImage10, productImage11, productImage16], 'Hello! This is 010');
+  [productImage10, productImage10, productImage10], 'Hello! This is 010');
 const item11 = new Item('011', 'Product 011', '10.500.000',
-  [productImage7, productImage12, productImage14], 'Hello! This is 010');
+  [productImage11, productImage11, productImage11], 'Hello! This is 011');
 const item12 = new Item('012', 'Product 012', '10.500.000',
-  [productImage8, productImage11, productImage13], 'Hello! This is 010');
+  [productImage12, productImage12, productImage12], 'Hello! This is 012');
 const item13 = new Item('013', 'Product 013', '10.500.000',
-  [productImage9, productImage13, productImage15], 'Hello! This is 010');
+  [productImage13, productImage13, productImage13], 'Hello! This is 013');
 const item14 = new Item('014', 'Product 014', '10.500.000',
-  [productImage10, productImage15, productImage17], 'Hello! This is 010');
+  [productImage14, productImage14, productImage14], 'Hello! This is 014');
 const item15 = new Item('015', 'Product 015', '10.500.000',
-  [productImage19, productImage17, productImage11], 'Hello! This is 010');
+  [productImage15, productImage15, productImage15], 'Hello! This is 015');
 const item16 = new Item('016', 'Product 016', '10.500.000',
-  [productImage20, productImage14, productImage11], 'Hello! This is 010');
+  [productImage16, productImage16, productImage16], 'Hello! This is 016');
 const item17 = new Item('017', 'Product 017', '10.500.000',
-  [productImage21, productImage14, productImage16], 'Hello! This is 010');
+  [productImage17, productImage17, productImage17], 'Hello! This is 017');
 const item18 = new Item('018', 'Product 018', '10.500.000',
-  [productImage22, productImage16, productImage18], 'Hello! This is 010');
+  [productImage18, productImage18, productImage18], 'Hello! This is 018');
 const item19 = new Item('019', 'Product 019', '10.500.000',
-  [productImage23, productImage14, productImage16], 'Hello! This is 010');
+  [productImage19, productImage19, productImage19], 'Hello! This is 019');
 const item20 = new Item('020', 'Product 020', '10.500.000',
-  [productImage24, productImage16, productImage18], 'Hello! This is 010');
+  [productImage20, productImage20, productImage20], 'Hello! This is 020');
 
 const categories = [];
 
@@ -116,7 +113,7 @@ const category5 = new CategoryWithSwiper('ACCESSORIES', 'swiper', [
 ], [categoryView11, categoryView12, categoryView13, categoryView14]);
 
 
-export default class HomeScreen extends React.Component {
+export default class HomeScreen extends Component {
   static navigationOptions = {
     title: 'Home',
     header: null
@@ -138,7 +135,6 @@ export default class HomeScreen extends React.Component {
     };
   }
   renderRow(dataSource) {
-    const { navigation } = this.props;
     switch (dataSource.viewDisplay) {
       case 'oneView':
         return (

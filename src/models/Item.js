@@ -1,4 +1,4 @@
-import Image from './Image';
+import Image from 'react-native';
 
 export default class Item {
   id: string;

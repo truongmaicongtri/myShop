@@ -4,46 +4,45 @@ import {
     TouchableOpacity, Image,
     Dimensions, TextInput,
 } from 'react-native';
-import LoginScreen from '../menu/LoginScreen';
 
 const { height } = Dimensions.get('window');
 const { width } = Dimensions.get('window');
-export default class Menu extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            showLoginScreen: true,
-        };
-    }
 
-    renderLoginScreen() {
-        if (this.state.showLoginScreen === true) {
-            return (
-                <LoginScreen />
-            );
-        }
-        return (null);
-    }
+export default class LoginScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
+  }
 
-    render() {
-        return (
-            <View style={styles.screen}>
-                <View style={styles.avatarView}>
-                    <Image
-                        style={{ width: 150, height: 150 }}
-                        source={require('../../drawable/userDefaultAvater.png')}
-                    />
-                    <TouchableOpacity onPress={() => this.setState({ showLoginScreen: !this.state.showLoginScreen })}>
-                        <Text style={{ marginTop: 20 }}>Have a nice day!</Text>
-                    </TouchableOpacity>
+  render() {
+    return (
+        <View style={styles.controller}>
+        <View>
+            <TextInput
+                style={styles.textInput}
+                placeholder="USER"
+                underlineColorAndroid='transparent'
+            />
+        </View>
+        <View style={{ marginTop: 10 }}>
+            <TextInput
+                style={styles.textInput}
+                placeholder="PASSWORD"
+                underlineColorAndroid='transparent'
+            />
+        </View>
+        <View style={{ marginTop: 10 }}>
+            <TouchableOpacity>
+                <View style={styles.loginButton}>
+                    <Text style={{ color: 'white' }}>LOG IN</Text>
                 </View>
-                {this.renderLoginScreen()}
-            </View>
-        );
-    }
+            </TouchableOpacity>
+        </View>
+    </View>
+    );
+  }
 }
-
-
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
