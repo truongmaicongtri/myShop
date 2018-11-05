@@ -35,7 +35,6 @@ export default class ContactScreen extends Component {
                         </TouchableOpacity>
                     </View>
                     <Swiper style={styles.imgContainer}>
-                        <Image source={item.img[0]} style={styles.img1} />
                         <Image source={item.img[1]} style={styles.img1} />
                         <Image source={item.img[2]} style={styles.img1} />
                     </Swiper>

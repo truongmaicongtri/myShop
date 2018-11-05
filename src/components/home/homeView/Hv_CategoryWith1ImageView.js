@@ -42,7 +42,7 @@ class Collection extends React.Component {
 }
 //2400*1648
 const imgWidth = width - 40;
-const imgHeight = (imgWidth / 2400) * 1200;
+const imgHeight = (imgWidth / 2400) * 1230;
 const styles = StyleSheet.create({
     collect: {
         height: height * 0.35,

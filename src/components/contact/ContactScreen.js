@@ -36,29 +36,30 @@ export default class ContactScreen extends Component {
                 </MapView>
                 <View style={styles.wrapper}>
                     <View style={styles.inforow}>
-                        <FontAwesome name="map-marker" size={33} color="#B10D65" />
-                        <View style={{ width: 10 }} />
+                        <FontAwesome
+                            name="map-marker"
+                            size={35} color="#B10D65"
+                            style={{ marginLeft: 5 }} 
+                        />
+                        <View style={{ width: 11 }} />
                         <Text style={styles.info}>
                             255, Nam Ky Khoi Nghia st, Binh Duong Newcity
                         </Text>
                     </View>
                     <View style={styles.inforow}>
                         <Entypo name="phone" size={33} color="#B10D65" />
-                        <View style={{ width: 10 }} />
                         <Text style={styles.info}>
                             (+84)0397408460
                         </Text>
                     </View>
                     <View style={styles.inforow}>
                         <MaterialCommunityIcons name="gmail" size={33} color="#B10D65" />
-                        <View style={{ width: 10 }} />
                         <Text style={styles.info}>
                             tienbui237.550@gmail.com
                         </Text>
                     </View>
                     <View style={styles.inforow}>
                         <Entypo name="mobile" size={33} color="#B10D65" />
-                        <View style={{ width: 10 }} />
                         <Text style={styles.info}>
                             (+84)0397408460
                         </Text>
@@ -92,7 +93,6 @@ const styles = StyleSheet.create({
         margin: 8.9,
         padding: 6,
         flexDirection: 'row',
-        justifyContent: 'space-around',
         borderBottomWidth: 1,
         borderBottomColor: '#B10D65'
     },
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     info: {
         color: '#B10D65',
         fontSize: 10,
-        textAlignVertical: 'center'
+        textAlignVertical: 'center',
+        marginLeft: 20,
     }
 });

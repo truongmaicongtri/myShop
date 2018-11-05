@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
-import { View, Dimensions } from 'react-native';
+import { View, Dimensions, Text } from 'react-native';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
+import IconBadge from 'react-native-icon-badge';
 import HomeScreen from '../home/HomeScreen';
 import NotifyScreen from '../notify/NotifyScreen';
 import CartScreen from '../cart/CartScreen';
@@ -9,6 +10,7 @@ import ContactScreen from '../contact/ContactScreen';
 import CategoryScreen from '../category/CategoryScreen';
 import DetailProductScreen from '../detailProducts/DetailProducts';
 import TopBar from './TopBar';
+
 
 const { height } = Dimensions.get('window');
 
@@ -35,7 +37,7 @@ const ProductStackNavigator = createStackNavigator({
         screen: HomeScreen
     },
     Category: {
-        screen: CategoryScreen, 
+        screen: CategoryScreen,
     },
     DetailProduct: DetailProductScreen,
 },
@@ -61,7 +63,35 @@ const BottomtabNavigator = createMaterialTopTabNavigator(
             navigationOptions: {
                 tabBarLabel: ' Cart',
                 tabBarIcon: ({ tintColor }) => (
-                    <Ionicons name="ios-cart" size={20} color={tintColor} />
+                    <View>
+                        <Ionicons name="ios-cart" size={20} color={tintColor} />
+                        <View
+                            style={{
+                                position: 'absolute',
+                                width: 12,
+                                height: 12,
+                                borderRadius: 10,
+                                backgroundColor: 'red',
+                                justifyContent: 'center',
+                                borderColor: '#fff',
+                                borderWidth: 0.5,
+                                left: 9,
+                                top: -1
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    color: '#fff',
+                                    fontSize: 8,
+                                    textAlign: 'center',
+                                    justifyContent: 'center'
+                                }}
+                            >
+                                1
+                            </Text>
+                        </View>
+
+                    </View>
                 ),
             }
         },
@@ -79,7 +109,35 @@ const BottomtabNavigator = createMaterialTopTabNavigator(
             navigationOptions: {
                 tabBarLabel: 'Notification',
                 tabBarIcon: ({ tintColor }) => (
-                    <Ionicons name="ios-notifications-outline" size={20} color={tintColor} />
+                    <View>
+                        <Ionicons name="ios-notifications-outline" size={20} color={tintColor} />
+                        <View
+                            style={{
+                                position: 'absolute',
+                                width: 12,
+                                height: 12,
+                                borderRadius: 10,
+                                backgroundColor: 'red',
+                                justifyContent: 'center',
+                                borderColor: '#fff',
+                                borderWidth: 0.5,
+                                right: -4,
+                                top: 0
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    color: '#fff',
+                                    fontSize: 8,
+                                    textAlign: 'center',
+                                    justifyContent: 'center'
+                                }}
+                            >
+                                2
+                            </Text>
+                        </View>
+
+                    </View>
                 )
             }
         }
