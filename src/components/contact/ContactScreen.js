@@ -42,7 +42,7 @@ export default class ContactScreen extends Component {
                         />
                         <View style={{ width: 11 }} />
                         <Text style={styles.info}>
-                            255, Nam Ky Khoi Nghia st, Binh Duong Newcity
+                            255, Nam Ky Khoi Nghia st, Binh Duong Newcity ds
                         </Text>
                     </View>
                     <View style={styles.inforow}>
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
 
     mapview: {
         width: width - 20,
-        height: height / 3
+        height: height / 3,
     },
 
     wrapper: {

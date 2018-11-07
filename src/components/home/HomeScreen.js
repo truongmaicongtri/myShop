@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import HvCategoryWithSwiper from './homeView/Hv_CategoryWithSwiper';
 import HvCategoryWithListItem from './homeView/Hv_CategoryWithListItem';
-import HvCategoryWith1ImageView from './homeView/Hv_CategoryWithAnImage';
+import HvCategoryWithAnImage from './homeView/Hv_CategoryWithAnImage';
 
 import categoryView1 from '../../../src/drawable/categoryView/categoryView1.jpg';
 import categoryView2 from '../../../src/drawable/categoryView/categoryView2.jpg';
@@ -46,9 +46,9 @@ import productImage23 from '../../../src/drawable/detailProductImage/productImag
 import productImage24 from '../../../src/drawable/detailProductImage/productImage24.jpg';
 
 import Item from '../../models/Item';
-import { CategoryWith1ImageView } from '../../models/CategoryWith1ImageView';
-import { CategoryWithSwiper } from '../../models/CategoryWithSwiper';
+import { CategoryWithAnImage } from '../../models/CategoryWithAnImage';
 import { CategoryWithListItem } from '../../models/CategoryWithListView';
+import { CategoryWithSwiper } from '../../models/CategoryWithSwiper';
 
 const item1 = new Item('001', 'Product 001', '1.500.000',
   [productImage1, productImage14, productImage1], 'Hello! This is 001');
@@ -94,7 +94,7 @@ const item20 = new Item('020', 'Product 020', '10.500.000',
 const categories = [];
 
 //list category:
-const category1 = new CategoryWith1ImageView('SPRING COLLECTION', 'oneView', [
+const category1 = new CategoryWithAnImage('SPRING COLLECTION', 'oneView', [
   item1, item2, item3, item4, item5, item6
 ], categoryView1);
 
@@ -105,7 +105,7 @@ const category2 = new CategoryWithSwiper('ALL PRODUCTS', 'swiper', [
 const category3 = new CategoryWithListItem('HOT ITEMS', 'listItem', [
   item6, item7, item8, item9, item10
 ]);
-const category4 = new CategoryWith1ImageView('NEW PRODUCTS', 'oneView', [
+const category4 = new CategoryWithAnImage('NEW PRODUCTS', 'oneView', [
   item11, item12, item13, item14
 ], categoryView10);
 const category5 = new CategoryWithSwiper('ACCESSORIES', 'swiper', [
@@ -138,7 +138,7 @@ export default class HomeScreen extends Component {
     switch (dataSource.viewDisplay) {
       case 'oneView':
         return (
-          <HvCategoryWith1ImageView {...this.props} category={dataSource} />
+          <HvCategoryWithAnImage {...this.props} category={dataSource} />
         );
       case 'swiper':
         return (

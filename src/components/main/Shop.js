@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Drawer from 'react-native-drawer';
 import AppTabNavigation from './AppTabNavigation';
-import Menu from './Menu';
+import MenuStackNavigation from '../menu/MenuStackNavigation';
 
 
-export default class Shop extends Component {
+class Shop extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,8 +21,8 @@ export default class Shop extends Component {
         return (
             <Drawer
                 ref={(ref) => { this.drawer = ref; }}
-                content={<Menu />}
-                openDrawerOffset={0.3}
+                content={<MenuStackNavigation />}
+                openDrawerOffset={0.25}
                 tapToClose
                 side={'left'}
             >
@@ -31,3 +31,5 @@ export default class Shop extends Component {
         );
     }
 }
+
+export default Shop;
