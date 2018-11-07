@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     logoutButton: {
-        marginTop: 60,
+        marginTop: 30,
         backgroundColor: '#6caffc',
         height: height / 13,
         padding: 10,
