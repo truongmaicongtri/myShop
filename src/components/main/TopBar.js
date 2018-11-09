@@ -17,7 +17,7 @@ class TopBar extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.shopname}>
-                    <TouchableOpacity onPress={this.openMenu.bind(this)}>
+                    <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
                         <Ionicons name="ios-menu" size={40} color="#fff" />
                     </TouchableOpacity>
                     <Text style={{ fontSize: 30, textAlign: 'center', color: '#fff' }}>

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import Drawer from 'react-native-drawer';
+import { Dimensions } from 'react-native';
+import { createDrawerNavigator } from 'react-navigation';
 import AppTabNavigation from './AppTabNavigation';
 import MenuStackNavigation from '../menu/MenuStackNavigation';
+import Login from '../menu/LoginScreen';
 
 
 class Shop extends Component {
@@ -10,26 +12,22 @@ class Shop extends Component {
         this.state = {
         };
     }
-    closeControlPanel = () => {
-        this.drawer.close();
-    };
-    openControlPanel = () => {
-        this.drawer.open();
-    };
 
     render() {
         return (
-            <Drawer
-                ref={(ref) => { this.drawer = ref; }}
-                content={<MenuStackNavigation />}
-                openDrawerOffset={0.25}
-                tapToClose
-                side={'left'}
-            >
-                <AppTabNavigation open={this.openControlPanel.bind(this)} />
-            </Drawer>
+            <DrawerNavigation />
         );
     }
 }
+
+const { width } = Dimensions.get('window');
+const DrawerNavigation = createDrawerNavigator({
+    TabNavigation: AppTabNavigation,
+    Menu: MenuStackNavigation
+}, {
+        drawerWidth: width * 0.85,
+        contentComponent: props => <MenuStackNavigation {...props} />
+    }
+);
 
 export default Shop;

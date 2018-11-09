@@ -84,7 +84,7 @@ const imgWidth = imgHeight;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#dbf0ff',
         padding: 10,
         elevation: 5
     },

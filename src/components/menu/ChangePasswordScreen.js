@@ -44,7 +44,6 @@ class ChangePasswordScreen extends Component {
                     <TouchableOpacity style={styles.btnedit}>
                         <Text style={styles.txtButton}>Save</Text>
                     </TouchableOpacity>
-                    <View style={{ width: 5 }} />
                     <TouchableOpacity style={styles.btnchange}>
                         <Text style={styles.txtButton}>Cancel</Text>
                     </TouchableOpacity>
@@ -53,6 +52,7 @@ class ChangePasswordScreen extends Component {
         );
     }
 }
+const drawerWidth = width * 0.85;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -84,9 +84,9 @@ const styles = StyleSheet.create({
 
     btnedit: {
         backgroundColor: '#268bff',
-        width: ((width / 35) * 11) - 3,
+        width: (drawerWidth - 47.5) / 2,
         height: height / 13,
-        padding: 10,
+        padding: 20,
         borderTopLeftRadius: height / 13,
         borderBottomLeftRadius: height / 13,
         justifyContent: 'center',
@@ -95,13 +95,14 @@ const styles = StyleSheet.create({
 
     btnchange: {
         backgroundColor: '#268bff',
-        width: ((width / 35) * 11) - 3,
+        width: (drawerWidth - 47.5) / 2,
         height: height / 13,
-        padding: 10,
+        padding: 20,
         borderTopRightRadius: height / 13,
         borderBottomRightRadius: height / 13,
         justifyContent: 'center',
         elevation: 5,
+        marginLeft: 5,
     },
 
     txtButton: {

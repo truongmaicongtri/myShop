@@ -23,7 +23,7 @@ export default class AppTabNavigation extends Component {
     render() {
         return (
             <View style={{ flex: 1 }}>
-                <TopBar open={this.props.open} />
+                <TopBar {...this.props} navigate={this.props.navigation.navigate} />
                 <BottomtabNavigator />
             </View>
         );

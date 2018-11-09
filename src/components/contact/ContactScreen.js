@@ -13,8 +13,8 @@ export default class ContactScreen extends Component {
             region: {
                 latitude: 11.053683,
                 longitude: 106.666986,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
+                latitudeDelta: 0.002,
+                longitudeDelta: 0.002,
             },
         };
     }
@@ -42,7 +42,7 @@ export default class ContactScreen extends Component {
                         />
                         <View style={{ width: 11 }} />
                         <Text style={styles.info}>
-                            255, Nam Ky Khoi Nghia st, Binh Duong Newcity ds
+                            255, Nam Ky Khoi Nghia st, Binh Duong Newcity
                         </Text>
                     </View>
                     <View style={styles.inforow}>
