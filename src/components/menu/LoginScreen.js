@@ -21,8 +21,8 @@ class LoginScreen extends Component {
             uploadImageDialogVisible: false
         };
     }
-    onLogoutPress() {
-        this.setState({ yesNoDialogVisible: true });
+    setYesNoDialogVisible(state) {
+        this.setState({ yesNoDialogVisible: state });
     }
 
     setScreenTaget(state) {
@@ -32,8 +32,8 @@ class LoginScreen extends Component {
     pickImageFromLibrary = async () => {
         await Permissions.askAsync(Permissions.CAMERA_ROLL);
         let result = await ImagePicker.launchImageLibraryAsync({
-            // allowsEditing: true,
-            // aspect: [4, 3],
+            allowsEditing: true,
+            aspect: [3, 3],
         });
 
         if (!result.cancelled) {
@@ -44,8 +44,6 @@ class LoginScreen extends Component {
         await Permissions.askAsync(Permissions.CAMERA);
         await Permissions.askAsync(Permissions.CAMERA_ROLL);
         let result = await ImagePicker.launchCameraAsync({
-            // allowsEditing: true,
-            // aspect: [4, 3],
         });
 
         if (!result.cancelled) {
@@ -58,14 +56,12 @@ class LoginScreen extends Component {
             case 'Login':
                 return (
                     <View style={styles.screen}>
-                        <View style={styles.avatarView}>
+                        <View style={styles.topContainer}>
                             <Image
-                                style={styles.avatarImage}
-                                source={require('../../drawable/userDefaultAvater.png')}
+                                style={styles.avatarView}
+                                source={require('../../drawable/icon/userDefaultAvater.png')}
                             />
-                            <TouchableOpacity>
-                                <Text style={{ marginTop: 20 }}>Have a nice day!</Text>
-                            </TouchableOpacity>
+                            <Text style={{ marginTop: 20 }}>Have a nice day!</Text>
                         </View>
                         <View>
                             <TextInput
@@ -96,14 +92,36 @@ class LoginScreen extends Component {
             case 'UserControlMenu':
                 return (
                     <View style={styles.screen}>
-                        <View style={styles.avatarView}>
-                            <Image
-                                style={styles.avatarImage}
-                                source={this.state.avatarSource != null ? { uri: this.state.avatarSource } : require('../../drawable/userDefaultAvater.png')}
-                            />
-                            <TouchableOpacity onPress={() => this.setState({ uploadImageDialogVisible: true })}>
-                                <Text style={{ marginTop: 20 }}>Have a nice day!</Text>
-                            </TouchableOpacity>
+                        <View style={styles.topContainer}>
+                            <View style={styles.avatarView}>
+                                <TouchableOpacity
+                                    onPress={() =>
+                                        this.setState({ uploadImageDialogVisible: true })
+                                    }
+                                >
+                                    <Image
+                                        style={styles.avatarImage}
+                                        source={this.state.avatarSource != null
+                                            ?
+                                            { uri: this.state.avatarSource } :
+                                            require('../../drawable/icon/userDefaultAvater.png')}
+                                    />
+                                    <View
+                                        style={{
+                                            position: 'absolute',
+                                            justifyContent: 'center',
+                                            left: 110,
+                                            top: 110
+                                        }}
+                                    >
+                                        <Image
+                                            style={styles.avatarIcon}
+                                            source={require('../../drawable/icon/avatarPlus.png')}
+                                        />
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                            <Text style={{ marginTop: 20 }}>Have a nice day!</Text>
                         </View>
                         <View>
                             <TouchableOpacity
@@ -129,7 +147,7 @@ class LoginScreen extends Component {
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={styles.logoutButton}
-                                onPress={() => this.onLogoutPress()}
+                                onPress={() => this.setYesNoDialogVisible(true)}
                             >
                                 <Text style={{ textAlign: 'center', color: 'black' }}>Log out</Text>
                             </TouchableOpacity>
@@ -139,8 +157,9 @@ class LoginScreen extends Component {
                         <Modal
                             style={styles.modal}
                             isVisible={this.state.yesNoDialogVisible}
+                            onBackdropPress={() => this.setYesNoDialogVisible(false)}
                             backdropOpacity={0.2}
-                            onSwipe={() => this.setState({ yesNoModalVisible: false })}
+                            onSwipe={() => this.setYesNoDialogVisible(false)}
                             swipeDirection="left"
                         >
                             <View>
@@ -150,7 +169,7 @@ class LoginScreen extends Component {
                                 <View style={styles.modalOption}>
                                     <TouchableWithoutFeedback
                                         onPress={() => {
-                                            this.setState({ yesNoModalVisible: false });
+                                            this.setYesNoDialogVisible(false);
                                             this.setScreenTaget('Login');
                                         }}
                                     >
@@ -158,7 +177,9 @@ class LoginScreen extends Component {
                                             <Text>Yes</Text>
                                         </View>
                                     </TouchableWithoutFeedback>
-                                    <TouchableWithoutFeedback onPress={() => this.setState({ yesNoModalVisible: false })} >
+                                    <TouchableWithoutFeedback
+                                        onPress={() => this.setYesNoDialogVisible(false)}
+                                    >
                                         <View style={styles.modalNo}>
                                             <Text>No</Text>
                                         </View>
@@ -170,7 +191,7 @@ class LoginScreen extends Component {
                         <Modal
                             style={styles.modal}
                             isVisible={this.state.uploadImageDialogVisible}
-                            cancelled
+                            onBackdropPress={() => this.setState({ uploadImageDialogVisible: false })}
                             backdropOpacity={0.2}
                             onSwipe={() => this.setState({ uploadImageDialogVisible: false })}
                             swipeDirection="left"
@@ -181,8 +202,8 @@ class LoginScreen extends Component {
                                 </View>
                                 <TouchableWithoutFeedback
                                     onPress={() => {
-                                        this.pickImageFromCamera();
                                         this.setState({ uploadImageDialogVisible: false });
+                                        this.pickImageFromCamera();
                                     }}
                                 >
                                     <View style={styles.modalOptionCamera}>
@@ -191,8 +212,8 @@ class LoginScreen extends Component {
                                 </TouchableWithoutFeedback>
                                 <TouchableWithoutFeedback
                                     onPress={() => {
-                                        this.pickImageFromLibrary();
                                         this.setState({ uploadImageDialogVisible: false });
+                                        this.pickImageFromLibrary();
                                     }}
                                 >
                                     <View style={styles.modalOptionCamera}>
@@ -227,11 +248,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#c5a4f2',
         padding: width / 20,
     },
-    avatarView: {
+    topContainer: {
         height: (height / 3),
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 20,
+    },
+    avatarView: {
+        width: 150,
+        height: 150,
     },
     avatarImage: {
         width: 150,
@@ -239,6 +264,10 @@ const styles = StyleSheet.create({
         borderRadius: 75,
         borderWidth: 2,
         borderColor: '#268bff'
+    },
+    avatarIcon: {
+        width: 32,
+        height: 32,
     },
     textInput: {
         height: height / 13,
