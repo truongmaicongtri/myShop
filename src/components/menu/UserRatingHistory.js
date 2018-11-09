@@ -18,8 +18,7 @@ class UserRatingHistory extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            starCount: 0,
-            stringrating: ''
+            starCount: 3,
         };
     }
 
@@ -49,29 +48,28 @@ class UserRatingHistory extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.ratingwrapper}>
-                    <Text style={styles.txtrate}>Rate for us</Text>
+                    <Text style={styles.txtrate}>King Shop</Text>
                     <View style={styles.rate}>
                         <StarRating
-                            disabled={false}
+                            disabled={true}
+                            emptyStar={'md-star-outline'}
+                            fullStar={'md-star'}
+                            iconSet={'Ionicons'}
                             maxStars={5}
                             rating={this.state.starCount}
                             selectedStar={(rating) => this.onStarRatingPress(rating)}
-                            fullStarColor={'yellow'}
+                            fullStarColor={'red'}
+                            emptyStarColor={'red'}
                         />
-                    </View>
-                    <Text style={styles.ratenumber}>Rating: {this.state.starCount} / 5</Text>
-                    <View style={{ alignItems: 'center' }}>
-                        <TouchableOpacity onPress={showAlert} style={styles.button}>
+                        <View style={{ justifyContent: 'center' }}>
                             <Text
-                                style={{
-                                    fontSize: 15,
-                                    textAlign: 'center'
-                                }}
+                                style={styles.ratenumber}
                             >
-                                Update
-                        </Text>
-                        </TouchableOpacity>
+                                Rating: {this.state.starCount} / 5
+                            </Text>
+                        </View>
                     </View>
+                    <Text style={styles.date}>20-10-2018</Text>
                 </View>
             </ScrollView>
         );
@@ -88,38 +86,44 @@ const styles = StyleSheet.create({
     shopname: {
         justifyContent: 'space-between',
         flexDirection: 'row',
-        marginBottom: 60
+        marginBottom: height / 10
     },
 
     ratingwrapper: {
         backgroundColor: '#fff',
-        height: height / 2.3,
+        height: height / 4.5,
         padding: 10,
         borderRadius: 15
     },
 
     txtrate: {
         fontSize: 25,
-        textAlign: 'center'
+        color: '#B10D65'
     },
 
     rate: {
-        marginTop: 20
+        marginTop: 20,
+        flexDirection: 'row',
+        borderBottomWidth: 1,
+        borderTopWidth: 1,
+        borderBottomColor: '#000',
+        borderTopColor: '#000',
+        padding: 15,
     },
 
     ratenumber: {
         fontSize: 15,
         textAlign: 'center',
-        marginTop: 20
+        marginLeft: width / 12,
+        justifyContent: 'center',
+        color: '#B10D65'
     },
 
-    button: {
-        backgroundColor: '#268bff',
-        height: height / 14,
-        width: width / 2,
-        justifyContent: 'center',
-        borderRadius: height / 14,
-        marginTop: height / 13
+    date: {
+        fontSize: 10,
+        textAlign: 'right',
+        marginTop: 10
     }
+
 });
 export default UserRatingHistory;
