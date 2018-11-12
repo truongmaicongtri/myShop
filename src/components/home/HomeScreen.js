@@ -50,45 +50,45 @@ import { CategoryWithAnImage } from '../../models/CategoryWithAnImage';
 import { CategoryWithListItem } from '../../models/CategoryWithListView';
 import { CategoryWithSwiper } from '../../models/CategoryWithSwiper';
 
-const item1 = new Item('001', 'Product 001', '1.500.000',
+const item1 = new Item('001', 'Product 001', 1500000,
   [productImage1, productImage14, productImage1], 'Hello! This is 001');
-const item2 = new Item('002', 'Product 002', '2.500.000',
+const item2 = new Item('002', 'Product 002', 2500000,
   [productImage2, productImage2, productImage2], 'Hello! This is 002');
-const item3 = new Item('003', 'Product 003', '3.500.000',
+const item3 = new Item('003', 'Product 003', 3500000,
   [productImage3, productImage3, productImage3], 'Hello! This is 003');
-const item4 = new Item('004', 'Product 004', '4.500.000',
+const item4 = new Item('004', 'Product 004', 4500000,
   [productImage4, productImage4, productImage4], 'Hello! This is 004');
-const item5 = new Item('005', 'Product 005', '5.500.000',
+const item5 = new Item('005', 'Product 005', 5500000,
   [productImage5, productImage5, productImage5], 'Hello! This is 005');
-const item6 = new Item('006', 'Product 006', '6.500.000',
+const item6 = new Item('006', 'Product 006', 6500000,
   [productImage6, productImage6, productImage6], 'Hello! This is 006');
-const item7 = new Item('007', 'Product 007', '7.500.000',
+const item7 = new Item('007', 'Product 007', 7500000,
   [productImage7, productImage7, productImage7], 'Hello! This is 007');
-const item8 = new Item('008', 'Product 008', '8.500.000',
+const item8 = new Item('008', 'Product 008', 8500000,
   [productImage8, productImage8, productImage8], 'Hello! This is 008');
-const item9 = new Item('009', 'Product 009', '9.500.000',
+const item9 = new Item('009', 'Product 009', 9500000,
   [productImage9, productImage9, productImage9], 'Hello! This is 009');
-const item10 = new Item('010', 'Product 010', '10.500.000',
+const item10 = new Item('010', 'Product 010', 10500000,
   [productImage10, productImage10, productImage10], 'Hello! This is 010');
-const item11 = new Item('011', 'Product 011', '10.500.000',
+const item11 = new Item('011', 'Product 011', 10500000,
   [productImage11, productImage11, productImage11], 'Hello! This is 011');
-const item12 = new Item('012', 'Product 012', '10.500.000',
+const item12 = new Item('012', 'Product 012', 10500000,
   [productImage12, productImage12, productImage12], 'Hello! This is 012');
-const item13 = new Item('013', 'Product 013', '10.500.000',
+const item13 = new Item('013', 'Product 013', 10500000,
   [productImage13, productImage13, productImage13], 'Hello! This is 013');
-const item14 = new Item('014', 'Product 014', '10.500.000',
+const item14 = new Item('014', 'Product 014', 10500000,
   [productImage14, productImage14, productImage14], 'Hello! This is 014');
-const item15 = new Item('015', 'Product 015', '10.500.000',
+const item15 = new Item('015', 'Product 015', 10500000,
   [productImage15, productImage15, productImage15], 'Hello! This is 015');
-const item16 = new Item('016', 'Product 016', '10.500.000',
+const item16 = new Item('016', 'Product 016', 10500000,
   [productImage16, productImage16, productImage16], 'Hello! This is 016');
-const item17 = new Item('017', 'Product 017', '10.500.000',
+const item17 = new Item('017', 'Product 017', 10500000,
   [productImage17, productImage17, productImage17], 'Hello! This is 017');
-const item18 = new Item('018', 'Product 018', '10.500.000',
+const item18 = new Item('018', 'Product 018', 10500000,
   [productImage18, productImage18, productImage18], 'Hello! This is 018');
-const item19 = new Item('019', 'Product 019', '10.500.000',
+const item19 = new Item('019', 'Product 019', 10500000,
   [productImage19, productImage19, productImage19], 'Hello! This is 019');
-const item20 = new Item('020', 'Product 020', '10.500.000',
+const item20 = new Item('020', 'Product 020', 10500000,
   [productImage20, productImage20, productImage20], 'Hello! This is 020');
 
 const categories = [];

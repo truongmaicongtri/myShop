@@ -17,7 +17,7 @@ class UserCheckOutHistory extends Component {
         return (
             <ScrollView style={styles.container}>
                 <View style={styles.shopname}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                         <Ionicons name="md-arrow-round-back" size={40} color="#fff" />
                     </TouchableOpacity>
                     <Text style={{ fontSize: 30, textAlign: 'center', color: '#fff' }}>
@@ -67,22 +67,21 @@ class UserCheckOutHistory extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        borderRightColor: '#268bff',
-        backgroundColor: '#c5a4f2',
-        padding: 10,
+        backgroundColor: '#67adfc',
+        justifyContent: 'flex-start',
+        padding: 20,
+        paddingTop: 60,
     },
-
+    shopname: {
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        marginBottom: 30,
+    },
     wrapper: {
         backgroundColor: '#fff',
         height: height / 3.5,
         padding: 10,
         borderRadius: 10
-    },
-
-    shopname: {
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        marginBottom: 60
     },
 
     namecus: {

@@ -30,6 +30,7 @@ class LoginScreen extends Component {
     }
 
     pickImageFromLibrary = async () => {
+        await Permissions.askAsync(Permissions.CAMERA);
         await Permissions.askAsync(Permissions.CAMERA_ROLL);
         let result = await ImagePicker.launchImageLibraryAsync({
             allowsEditing: true,
@@ -245,7 +246,7 @@ class LoginScreen extends Component {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        backgroundColor: '#c5a4f2',
+        backgroundColor: '#67adfc',
         padding: width / 20,
     },
     topContainer: {
@@ -301,7 +302,7 @@ const styles = StyleSheet.create({
     },
     logoutButton: {
         marginTop: 30,
-        backgroundColor: '#6caffc',
+        backgroundColor: '#acd0f9',
         height: height / 13,
         padding: 10,
         borderRadius: height / 13,

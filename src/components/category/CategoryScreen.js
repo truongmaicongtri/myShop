@@ -38,7 +38,7 @@ export default class CategoryScreen extends Component {
                     >
                         <Text style={styles.textName}>{dataSource.name}</Text>
                     </TouchableOpacity>
-                    <Text style={styles.textPrice}>{dataSource.cost}</Text>
+                    <Text style={styles.textPrice}>{dataSource.cost} VND</Text>
                     <Text style={styles.textMater}>Material: Cotton</Text>
                     <Text>Color: Black</Text>
                 </View>

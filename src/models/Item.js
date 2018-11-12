@@ -3,7 +3,7 @@ import Image from 'react-native';
 export default class Item {
   id: string;
   name: string;
-  cost: string;
+  cost: 0;
   img: Array<Image>;
   detail: string;
 

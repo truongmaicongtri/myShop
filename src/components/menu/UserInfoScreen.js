@@ -29,7 +29,7 @@ class UserInfoScreen extends Component {
                         <Ionicons name="md-arrow-round-back" size={40} color="#fff" />
                     </TouchableOpacity>
                     <Text style={{ fontSize: 30, textAlign: 'center', color: '#fff' }}>
-                        My Shop
+                        Information
                     </Text>
                     <TouchableOpacity style={{ marginTop: 5 }}>
                         <Ionicons name="ios-happy" size={35} color="#fff" />
@@ -62,13 +62,12 @@ const drawerWidth = width * 0.85;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#c5a4f2',
+        backgroundColor: '#67adfc',
         justifyContent: 'flex-start',
         padding: 20,
         paddingTop: 60,
     },
     shopname: {
-
         justifyContent: 'space-between',
         flexDirection: 'row',
         marginBottom: 30,

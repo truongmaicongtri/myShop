@@ -34,10 +34,11 @@ class UserRatingHistory extends Component {
                 'Thank for your rating'
             );
         };
+        const { navigation } = this.props;
         return (
             <ScrollView style={styles.container}>
                 <View style={styles.shopname}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
                         <Ionicons name="md-arrow-round-back" size={40} color="#fff" />
                     </TouchableOpacity>
                     <Text style={{ fontSize: 30, textAlign: 'center', color: '#fff' }}>
@@ -79,14 +80,15 @@ class UserRatingHistory extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#c5a4f2',
-        padding: 10
+        backgroundColor: '#67adfc',
+        justifyContent: 'flex-start',
+        padding: 20,
+        paddingTop: 60,
     },
-
     shopname: {
         justifyContent: 'space-between',
         flexDirection: 'row',
-        marginBottom: height / 10
+        marginBottom: 30,
     },
 
     ratingwrapper: {
