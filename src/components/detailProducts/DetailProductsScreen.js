@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
+import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import Swiper from 'react-native-swiper';
 import { Card, Title, Paragraph } from 'react-native-paper';
+import * as actions from '../../actions';
+import { CartItem } from '../../models/CartItem';
+import Item from '../../models/Item';
 
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
 
-export default class DetailProductScreen extends Component {
+class DetailProductScreen extends Component {
     static navigationOptions = {
         header: null
     }
@@ -15,6 +19,10 @@ export default class DetailProductScreen extends Component {
         super(props);
         this.state = {
         };
+    }
+
+    handleAddToCart(cartItem) {
+        this.props.addToCart(cartItem);
     }
 
     render() {
@@ -30,7 +38,9 @@ export default class DetailProductScreen extends Component {
                             <Ionicons name="md-arrow-back" size={25} color="#B10D65" />
                         </TouchableOpacity>
                         <View style={{ width: 30 }} />
-                        <TouchableOpacity>
+                        <TouchableOpacity 
+                        onPress={() => this.handleAddToCart(new CartItem(item, 1))}
+                        >
                             <Ionicons name="ios-cart" size={25} color="#B10D65" />
                         </TouchableOpacity>
                     </View>
@@ -132,3 +142,5 @@ const styles = StyleSheet.create({
         padding: 10
     }
 });
+
+export default connect(null, actions)(DetailProductScreen);

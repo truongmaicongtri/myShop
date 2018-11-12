@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { AppRegistry, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
+import { Provider } from 'react-redux';
 import Shop from './src/components/main/Shop';
+import store from './src/store/store';
 
 export default class MyShop extends Component {
   render() {
     return (
-      <Shop />
+      <Provider store={store}>
+        <Shop />
+      </Provider>
     );
   }
 }

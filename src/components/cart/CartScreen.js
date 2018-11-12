@@ -8,6 +8,7 @@ import {
     ScrollView,
     Image, ListView
 } from 'react-native';
+import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import { CartItem } from '../../models/CartItem';
 import Item from '../../models/Item';
@@ -19,49 +20,24 @@ import productImage4 from '../../../src/drawable/detailProductImage/productImage
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
 
-const cartItem1 = new CartItem(new Item('001', 'Product 001', 1500000,
-    [productImage1, productImage1, productImage1], 'Hello! This is 001'), 1);
-const cartItem2 = new CartItem(new Item('002', 'Product 002', 2500000,
-    [productImage2, productImage2, productImage2], 'Hello! This is 002'), 3);
-const cartItem3 = new CartItem(new Item('003', 'Product 003', 3500000,
-    [productImage3, productImage3, productImage3], 'Hello! This is 003'), 2);
-const cartItem4 = new CartItem(new Item('004', 'Product 004', 4500000,
-    [productImage4, productImage4, productImage4], 'Hello! This is 004'), 1);
-
-const cartItems = [cartItem1, cartItem2, cartItem3, cartItem4];
 const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-export default class CartScreen extends Component {
+class CartScreen extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            dataSource: ds.cloneWithRows(cartItems),
-            totalCost: cartItems.reduce((accumulator, currentItem) =>
-                accumulator + (currentItem.amount * currentItem.item.cost), 0)
+            dataSource: ds.cloneWithRows([]),
+            totalCost: 0
         };
     }
 
-    deleteRow(index) {
-        cartItems.splice(index, 1);
-        this.setState({ dataSource: ds.cloneWithRows(cartItems) });
-    }
-
-    changeAmount(rowIndex, action) {
-        if (action === 'increase') {
-            cartItems[rowIndex].amount++;
+    componentWillReceiveProps(newProps) {
+        if (newProps.cart !== this.props.cart) {
+            this.setState({ dataSource: ds.cloneWithRows(newProps.cart) });
+            this.setState({
+                totalCost: newProps.cart.reduce((total, currentItem) =>
+                total + (currentItem.amount * currentItem.item.cost), 0)
+            });
         }
-        if (action === 'decrease') {
-            cartItems[rowIndex].amount--;
-        }
-        if (cartItems[rowIndex].amount === 0) {
-            this.deleteRow(rowIndex);
-        } else {
-            this.setState({ dataSource: ds.cloneWithRows(cartItems) });
-        }
-        this.setState({
-            totalCost: cartItems.reduce((accumulator, currentItem) =>
-                accumulator + (currentItem.amount * currentItem.item.cost), 0)
-        });
     }
 
     renderRow(dataSource, sectionID, rowId) {
@@ -230,6 +206,10 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         paddingTop: 10
     }
-
 });
 
+const mapStateToProps = state => ({
+    cart: state.cart
+});
+
+export default connect(mapStateToProps, null)(CartScreen);

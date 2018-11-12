@@ -51,7 +51,7 @@ import { CategoryWithListItem } from '../../models/CategoryWithListView';
 import { CategoryWithSwiper } from '../../models/CategoryWithSwiper';
 
 const item1 = new Item('001', 'Product 001', 1500000,
-  [productImage1, productImage14, productImage1], 'Hello! This is 001');
+  [productImage1, productImage1, productImage1], 'Hello! This is 001');
 const item2 = new Item('002', 'Product 002', 2500000,
   [productImage2, productImage2, productImage2], 'Hello! This is 002');
 const item3 = new Item('003', 'Product 003', 3500000,

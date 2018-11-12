@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions } from 'react-native';
 import { createDrawerNavigator } from 'react-navigation';
+import { connect } from 'react-redux';
 import AppTabNavigation from './AppTabNavigation';
 import MenuStackNavigation from '../menu/MenuStackNavigation';
 import Login from '../menu/LoginScreen';
@@ -30,4 +31,4 @@ const DrawerNavigation = createDrawerNavigator({
     }
 );
 
-export default Shop;
+export default connect()(Shop);
