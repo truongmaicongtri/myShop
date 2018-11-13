@@ -2,18 +2,17 @@ import React, { Component } from 'react';
 import { createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
 import { View, Dimensions, Text } from 'react-native';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
-import HomeScreen from '../home/HomeScreen';
+import { connect } from 'react-redux';
+import ProductStackNavigator from './ProductStackNavigator';
 import NotifyScreen from '../notify/NotifyScreen';
 import CartScreen from '../cart/CartScreen';
 import ContactScreen from '../contact/ContactScreen';
-import CategoryScreen from '../category/CategoryScreen';
-import DetailProductScreen from '../detailProducts/DetailProductsScreen';
 import TopBar from './TopBar';
 
 
 const { height } = Dimensions.get('window');
 
-export default class AppTabNavigation extends Component {
+class BottomBarNavigator extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -29,22 +28,6 @@ export default class AppTabNavigation extends Component {
         );
     }
 }
-
-
-const ProductStackNavigator = createStackNavigator({
-    Home: {
-        screen: HomeScreen
-    },
-    Category: {
-        screen: CategoryScreen,
-    },
-    DetailProduct: DetailProductScreen,
-},
-    {
-        initialRouteName: 'Home',
-        headerMode: 'screen',
-    }
-);
 
 const BottomtabNavigator = createMaterialTopTabNavigator(
     {
@@ -169,4 +152,8 @@ const BottomtabNavigator = createMaterialTopTabNavigator(
         // barStyle: { backgroundColor: '#e2e2e2' },
     }
 );
+const mapStateToProps = state => ({
+    cart: state.cart
+});
 
+export default connect(mapStateToProps, null)(BottomBarNavigator);

@@ -8,9 +8,12 @@ import {
     ScrollView,
     ListView
 } from 'react-native';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 import { Ionicons } from '@expo/vector-icons';
+import { CartItem } from '../../models/CartItem';
 
-export default class CategoryScreen extends Component {
+class CategoryScreen extends Component {
     static navigationOptions = {
         header: null
     }
@@ -26,15 +29,19 @@ export default class CategoryScreen extends Component {
         };
     }
 
+    addToCart(cartItem) {
+        this.props.addToCart(cartItem);
+    }
+
     renderRow(dataSource) {
         return (
             <View style={styles.productContainer}>
                 <Image source={dataSource.img[0]} style={styles.productImg} />
                 <View style={styles.productInfo}>
                     <TouchableOpacity
-                    onPress={() =>
-                        this.props.navigation.navigate('DetailProduct',
-                            { item: dataSource })}
+                        onPress={() =>
+                            this.props.navigation.navigate('DetailProduct',
+                                { item: dataSource })}
                     >
                         <Text style={styles.textName}>{dataSource.name}</Text>
                     </TouchableOpacity>
@@ -42,7 +49,10 @@ export default class CategoryScreen extends Component {
                     <Text style={styles.textMater}>Material: Cotton</Text>
                     <Text>Color: Black</Text>
                 </View>
-                <TouchableOpacity style={styles.iconstyle}>
+                <TouchableOpacity
+                    style={styles.iconstyle}
+                    onPress={() => this.addToCart(new CartItem(dataSource, 1))}
+                >
                     <Ionicons name="ios-cart" size={30} color="#B10D65" />
                 </TouchableOpacity>
             </View>
@@ -155,3 +165,5 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end'
     }
 });
+
+export default connect(null, actions)(CategoryScreen);

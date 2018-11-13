@@ -10,12 +10,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
-import { CartItem } from '../../models/CartItem';
-import Item from '../../models/Item';
-import productImage1 from '../../../src/drawable/detailProductImage/productImage1.jpg';
-import productImage2 from '../../../src/drawable/detailProductImage/productImage2.jpg';
-import productImage3 from '../../../src/drawable/detailProductImage/productImage3.jpg';
-import productImage4 from '../../../src/drawable/detailProductImage/productImage4.jpg';
+import * as actions from '../../actions';
 
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
@@ -31,13 +26,20 @@ class CartScreen extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        if (newProps.cart !== this.props.cart) {
-            this.setState({ dataSource: ds.cloneWithRows(newProps.cart) });
-            this.setState({
-                totalCost: newProps.cart.reduce((total, currentItem) =>
+        console.log(newProps.cart);
+        this.setState({ dataSource: ds.cloneWithRows(newProps.cart) });
+        this.setState({
+            totalCost: newProps.cart.reduce((total, currentItem) =>
                 total + (currentItem.amount * currentItem.item.cost), 0)
-            });
-        }
+        });
+    }
+
+    handleIncrease(index) {
+        this.props.inCreaseItem(index);
+    }
+
+    handleDecrease(index) {
+        this.props.deCreaseItem(index);
     }
 
     renderRow(dataSource, sectionID, rowId) {
@@ -50,13 +52,19 @@ class CartScreen extends Component {
                     <Text style={styles.textMater}>Material: Cotton</Text>
                     <Text>Color: Black</Text>
                     <View style={styles.lastrowInfo}>
-                        <View style={styles.add}>
-                            <TouchableOpacity onPress={() => this.changeAmount(rowId, 'decrease')}>
-                                <Text style={styles.textColor}>-</Text>
+                        <View style={styles.amount}>
+                            <TouchableOpacity onPress={() => this.handleDecrease(rowId)}>
+                                <View style={styles.amountItem}>
+                                    <Text style={styles.textAmount}>-</Text>
+                                </View>
                             </TouchableOpacity >
-                            <Text style={styles.textColor}>{dataSource.amount}</Text>
-                            <TouchableOpacity onPress={() => this.changeAmount(rowId, 'increase')}>
-                                <Text style={styles.textColor}>+</Text>
+                            <View style={styles.amountItem}>
+                                <Text style={styles.textAmount}>{dataSource.amount}</Text>
+                            </View>
+                            <TouchableOpacity onPress={() => this.handleIncrease(rowId)}>
+                                <View style={styles.amountItem}>
+                                    <Text style={styles.textAmount}>+</Text>
+                                </View>
                             </TouchableOpacity>
                         </View>
                         <TouchableOpacity
@@ -79,24 +87,27 @@ class CartScreen extends Component {
                     <View style={styles.wrapper}>
                         <View style={styles.header}>
                             <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                                <Ionicons name="md-arrow-back" size={25} color="#B10D65" />
+                                <Ionicons name="md-arrow-back" size={35} color="#B10D65" />
                             </TouchableOpacity>
-                            <Text style={styles.title}>List Cart</Text>
+                            <Text style={styles.title}>MY CART</Text>
                             <View style={{ width: 30 }} />
                         </View>
                         <ListView
                             dataSource={this.state.dataSource}
                             renderRow={this.renderRow.bind(this)}
+                            enableEmptySections
                         />
                     </View>
                 </ScrollView>
                 <View style={styles.checkout}>
-                    <Text style={styles.txtTotal}>
+                    {/* <Text style={styles.txtTotal}>
                         Total cost:
-                    </Text>
-                    <Text style={styles.txtTotal}>{this.state.totalCost} VND</Text>
+                    </Text> */}
+                    <View style={{ flex: 1 }}>
+                        <Text style={styles.txtTotal}>{this.state.totalCost} VND</Text>
+                    </View>
                     <TouchableOpacity>
-                        <Ionicons name="md-checkmark-circle" size={32} color="white" />
+                        <Ionicons name="ios-checkmark-circle-outline" size={32} color="#ff0066" />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -126,7 +137,7 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        fontSize: 25,
+        fontSize: 20,
         color: '#B10D65'
     },
 
@@ -172,9 +183,10 @@ const styles = StyleSheet.create({
 
     },
 
-    textColor: {
+    textAmount: {
         fontSize: 20,
-        color: '#00A6AD'
+        color: '#00A6AD',
+        textAlign: 'center'
     },
 
     textDetail: {
@@ -197,14 +209,20 @@ const styles = StyleSheet.create({
     txtTotal: {
         color: '#3c95fc',
         fontSize: 25,
-        fontWeight: '400'
+        fontWeight: '400',
+        textAlign: 'center'
     },
 
-    add: {
+    amount: {
         flexDirection: 'row',
         width: width / 4,
-        justifyContent: 'space-around',
-        paddingTop: 10
+        height: width / 8,
+        justifyContent: 'space-between',
+        paddingTop: 10,
+    },
+    amountItem: {
+        width: width / 12,
+        height: width / 8,
     }
 });
 
@@ -212,4 +230,4 @@ const mapStateToProps = state => ({
     cart: state.cart
 });
 
-export default connect(mapStateToProps, null)(CartScreen);
+export default connect(mapStateToProps, actions)(CartScreen);

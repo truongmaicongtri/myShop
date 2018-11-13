@@ -1,17 +1,32 @@
-import { ADDTOCART, DECREASE } from '../actions/types';
+import { ADDTOCART, DECREASE, INCREASE, SETBADGE } from '../actions/types';
 
 export default function (state = [], action) {
     switch (action.type) {
         case ADDTOCART:
-            if (state.filter(e => e.item.id === action.cartItem.item.id).length > 0) {
-                const newArr = state;
-                newArr[0].amount++;
-                return newArr;
+            {
+                const sameItem = state.filter(e => e.item.id === action.cartItem.item.id);
+                if (sameItem.length > 0) {
+                    return [...state];
+                }
+                return [...state, action.cartItem];
             }
-            return [...state, action.cartItem];
+        case INCREASE:
+            {
+                const newArr = state;
+                newArr[action.index].amount++;
+                return [...newArr];
+            }
         case DECREASE:
-            return state - 1;
-
+            {
+                const newArr = state;
+                newArr[action.index].amount--;
+                const newState = newArr.filter(a => a.amount > 0);
+                return [...newState];
+            }
+        case SETBADGE:
+            {
+                return [...state];
+            }
         default:
             return state;
     }

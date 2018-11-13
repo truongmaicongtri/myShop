@@ -62,8 +62,7 @@ const drawerWidth = width * 0.85;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#67adfc',
-        justifyContent: 'flex-start',
+        backgroundColor: '#b4d6fd',
         padding: 20,
         paddingTop: 60,
     },

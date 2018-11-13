@@ -3,7 +3,7 @@ import { createStackNavigator } from 'react-navigation';
 import LoginScreen from './LoginScreen';
 import UserInfoScreen from './UserInfoScreen';
 import ChangePasswordScreen from './ChangePasswordScreen';
-import CheckOutHistoryScreen from './UserCheckOutHistory';
+import UserPurchaseHistory from './UserPurchaseHistory';
 import RatingHistoryScreen from './UserRatingHistory';
 
 export default class MenuStackNavigation extends Component {
@@ -24,7 +24,7 @@ const MenuStackNavigator = createStackNavigator({
   Login: LoginScreen,
   UserInfo: UserInfoScreen,
   ChangePassword: ChangePasswordScreen,
-  CheckOutHistory: CheckOutHistoryScreen,
+  PurchaseHistory: UserPurchaseHistory,
   RatingHistory: RatingHistoryScreen
 },
   {

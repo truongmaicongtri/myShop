@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { Dimensions } from 'react-native';
 import { createDrawerNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
-import AppTabNavigation from './AppTabNavigation';
+import BottomBarNavigator from './BottomBarNavigator';
 import MenuStackNavigation from '../menu/MenuStackNavigation';
-import Login from '../menu/LoginScreen';
 
 
 class Shop extends Component {
@@ -23,7 +22,7 @@ class Shop extends Component {
 
 const { width } = Dimensions.get('window');
 const DrawerNavigation = createDrawerNavigator({
-    TabNavigation: AppTabNavigation,
+    BottomBar: BottomBarNavigator,
     Menu: MenuStackNavigation
 }, {
         drawerWidth: width * 0.85,

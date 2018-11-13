@@ -5,7 +5,7 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
 
-class UserCheckOutHistory extends Component {
+class UserPurchaseHistory extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,7 +21,7 @@ class UserCheckOutHistory extends Component {
                         <Ionicons name="md-arrow-round-back" size={40} color="#fff" />
                     </TouchableOpacity>
                     <Text style={{ fontSize: 30, textAlign: 'center', color: '#fff' }}>
-                        Order History
+                        Orders
                     </Text>
                     <TouchableOpacity style={{ marginTop: 5 }}>
                         <Ionicons name="ios-happy" size={35} color="#fff" />
@@ -67,8 +67,7 @@ class UserCheckOutHistory extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#67adfc',
-        justifyContent: 'flex-start',
+        backgroundColor: '#b4d6fd',
         padding: 20,
         paddingTop: 60,
     },
@@ -144,4 +143,4 @@ const styles = StyleSheet.create({
     }
 
 });
-export default UserCheckOutHistory;
+export default UserPurchaseHistory;

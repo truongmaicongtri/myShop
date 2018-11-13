@@ -80,12 +80,15 @@ const styles = StyleSheet.create({
     mapview: {
         width: width - 20,
         height: height / 3,
+        backgroundColor: 'white',
+        elevation: 5
     },
 
     wrapper: {
         height: height / 2.6,
         marginTop: 5,
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        elevation: 5
     },
 
     inforow: {

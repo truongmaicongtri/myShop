@@ -133,9 +133,9 @@ class LoginScreen extends Component {
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={styles.btnStyle}
-                                onPress={() => this.props.navigation.navigate('CheckOutHistory')}
+                                onPress={() => this.props.navigation.navigate('PurchaseHistory')}
                             >
-                                <Text style={styles.txtButton}>Your checkout history</Text>
+                                <Text style={styles.txtButton}>Your purchase history</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={styles.btnStyle}
@@ -246,7 +246,7 @@ class LoginScreen extends Component {
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        backgroundColor: '#67adfc',
+        backgroundColor: '#82bbfc',
         padding: width / 20,
     },
     topContainer: {

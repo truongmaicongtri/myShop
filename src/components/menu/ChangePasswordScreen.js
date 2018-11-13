@@ -29,7 +29,7 @@ class ChangePasswordScreen extends Component {
                         <Ionicons name="md-arrow-round-back" size={40} color="#fff" />
                     </TouchableOpacity>
                     <Text style={{ fontSize: 30, textAlign: 'center', color: '#fff' }}>
-                        My Shop
+                        Password
                     </Text>
                     <TouchableOpacity style={{ marginTop: 5 }}>
                         <Ionicons name="ios-happy" size={35} color="#fff" />
@@ -44,7 +44,7 @@ class ChangePasswordScreen extends Component {
                     <TouchableOpacity style={styles.btnedit}>
                         <Text style={styles.txtButton}>Save</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.btnchange}>
+                    <TouchableOpacity style={styles.btnchange} onPress={() => navigation.goBack()}>
                         <Text style={styles.txtButton}>Cancel</Text>
                     </TouchableOpacity>
                 </View>
@@ -56,7 +56,7 @@ const drawerWidth = width * 0.85;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#67adfc',
+        backgroundColor: '#b4d6fd',
         justifyContent: 'flex-start',
         padding: 20,
         paddingTop: 60,
