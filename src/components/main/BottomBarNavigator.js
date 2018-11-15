@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
+import { createMaterialTopTabNavigator } from 'react-navigation';
 import { View, Dimensions, Text } from 'react-native';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
@@ -23,7 +23,7 @@ class BottomBarNavigator extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <TopBar {...this.props} navigate={this.props.navigation.navigate} />
-                <BottomtabNavigator />
+                <BottomtabNavigator screenProps={{ numberOfCartItem: this.props.numberOfCartItem }} />
             </View>
         );
     }
@@ -42,13 +42,14 @@ const BottomtabNavigator = createMaterialTopTabNavigator(
         },
         CartScreen: {
             screen: CartScreen,
-            navigationOptions: {
+            navigationOptions: ({ screenProps }) => ({
                 tabBarLabel: ' Cart',
                 tabBarIcon: ({ tintColor }) => (
                     <View>
                         <Ionicons name="ios-cart" size={20} color={tintColor} />
                         <View
                             style={{
+                                opacity: screenProps.numberOfCartItem > 0 ? 100 : 0,
                                 position: 'absolute',
                                 width: 12,
                                 height: 12,
@@ -69,13 +70,13 @@ const BottomtabNavigator = createMaterialTopTabNavigator(
                                     justifyContent: 'center'
                                 }}
                             >
-                                1
+                                {screenProps.numberOfCartItem}
                             </Text>
                         </View>
 
                     </View>
                 ),
-            }
+            })
         },
         Contact: {
             screen: ContactScreen,
@@ -153,7 +154,7 @@ const BottomtabNavigator = createMaterialTopTabNavigator(
     }
 );
 const mapStateToProps = state => ({
-    cart: state.cart
+    numberOfCartItem: state.cart.length
 });
 
 export default connect(mapStateToProps, null)(BottomBarNavigator);

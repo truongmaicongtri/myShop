@@ -8,10 +8,10 @@ import {
     ScrollView,
     ListView
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
-import { Ionicons } from '@expo/vector-icons';
-import { CartItem } from '../../models/CartItem';
+import CartItem from '../../models/CartItem';
 
 class CategoryScreen extends Component {
     static navigationOptions = {
@@ -29,7 +29,7 @@ class CategoryScreen extends Component {
         };
     }
 
-    addToCart(cartItem) {
+    handleAddToCart(cartItem) {
         this.props.addToCart(cartItem);
     }
 
@@ -51,7 +51,7 @@ class CategoryScreen extends Component {
                 </View>
                 <TouchableOpacity
                     style={styles.iconstyle}
-                    onPress={() => this.addToCart(new CartItem(dataSource, 1))}
+                    onPress={() => this.handleAddToCart(new CartItem(dataSource, 1))}
                 >
                     <Ionicons name="ios-cart" size={30} color="#B10D65" />
                 </TouchableOpacity>

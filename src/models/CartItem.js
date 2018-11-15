@@ -1,6 +1,6 @@
 import Item from './Item';
 
-export class CartItem {
+export default class CartItem {
     item: Item;
     amount: 0;
 

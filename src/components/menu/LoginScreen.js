@@ -2,246 +2,63 @@ import React, { Component } from 'react';
 import {
     View, Text, StyleSheet,
     TouchableOpacity, Image,
-    Dimensions, TextInput,
-    Alert, TouchableWithoutFeedback
+    Dimensions, TextInput
 } from 'react-native';
-import Modal from 'react-native-modal';
-import { ImagePicker, Permissions } from 'expo';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
-const { height } = Dimensions.get('window');
-const { width } = Dimensions.get('window');
 
 class LoginScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            screenTaget: 'Login',
-            avatarSource: null,
-            yesNoDialogVisible: false,
-            uploadImageDialogVisible: false
         };
     }
-    setYesNoDialogVisible(state) {
-        this.setState({ yesNoDialogVisible: state });
+
+    handleLogIn() {
+        this.props.logIn();
     }
-
-    setScreenTaget(state) {
-        this.setState({ screenTaget: state });
-    }
-
-    pickImageFromLibrary = async () => {
-        await Permissions.askAsync(Permissions.CAMERA);
-        await Permissions.askAsync(Permissions.CAMERA_ROLL);
-        let result = await ImagePicker.launchImageLibraryAsync({
-            allowsEditing: true,
-            aspect: [3, 3],
-        });
-
-        if (!result.cancelled) {
-            this.setState({ avatarSource: result.uri });
-        }
-    };
-    pickImageFromCamera = async () => {
-        await Permissions.askAsync(Permissions.CAMERA);
-        await Permissions.askAsync(Permissions.CAMERA_ROLL);
-        let result = await ImagePicker.launchCameraAsync({
-        });
-
-        if (!result.cancelled) {
-            this.setState({ avatarSource: result.uri });
-        }
-    };
 
     render() {
-        switch (this.state.screenTaget) {
-            case 'Login':
-                return (
-                    <View style={styles.screen}>
-                        <View style={styles.topContainer}>
-                            <Image
-                                style={styles.avatarView}
-                                source={require('../../drawable/icon/userDefaultAvater.png')}
-                            />
-                            <Text style={{ marginTop: 20 }}>Have a nice day!</Text>
-                        </View>
-                        <View>
-                            <TextInput
-                                style={styles.textInput}
-                                placeholder="USER"
-                                underlineColorAndroid='transparent'
-                            />
-                        </View>
-                        <View style={{ marginTop: 10 }}>
-                            <TextInput
-                                style={styles.textInput}
-                                placeholder="PASSWORD"
-                                underlineColorAndroid='transparent'
-                            />
-                        </View>
-                        <View style={{ marginTop: 10, alignItems: 'center' }}>
-                            <TouchableOpacity
-                                style={styles.loginButton}
-                                onPress={() => this.setScreenTaget('UserControlMenu')}
-                            >
-                                <View>
-                                    <Text style={{ color: 'white' }}>LOG IN</Text>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                );
-            case 'UserControlMenu':
-                return (
-                    <View style={styles.screen}>
-                        <View style={styles.topContainer}>
-                            <View style={styles.avatarView}>
-                                <TouchableOpacity
-                                    onPress={() =>
-                                        this.setState({ uploadImageDialogVisible: true })
-                                    }
-                                >
-                                    <Image
-                                        style={styles.avatarImage}
-                                        source={this.state.avatarSource != null
-                                            ?
-                                            { uri: this.state.avatarSource } :
-                                            require('../../drawable/icon/userDefaultAvater.png')}
-                                    />
-                                    <View
-                                        style={{
-                                            position: 'absolute',
-                                            justifyContent: 'center',
-                                            left: 110,
-                                            top: 110
-                                        }}
-                                    >
-                                        <Image
-                                            style={styles.avatarIcon}
-                                            source={require('../../drawable/icon/avatarPlus.png')}
-                                        />
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                            <Text style={{ marginTop: 20 }}>Have a nice day!</Text>
-                        </View>
-                        <View>
-                            <TouchableOpacity
-                                style={styles.btnStyle}
-                                onPress={() => this.props.navigation.navigate('UserInfo')}
-                            >
-                                <Text style={styles.txtButton}>Your information</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.btnStyle}
-                                onPress={() => this.props.navigation.navigate('PurchaseHistory')}
-                            >
-                                <Text style={styles.txtButton}>Your purchase history</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.btnStyle}
-                                onPress={() => this.props.navigation.navigate('RatingHistory')}
-                            >
-                                <Text style={styles.txtButton}>Shop rating history</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.btnStyle}>
-                                <Text style={styles.txtButton}>Share with friend!</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.logoutButton}
-                                onPress={() => this.setYesNoDialogVisible(true)}
-                            >
-                                <Text style={{ textAlign: 'center', color: 'black' }}>Log out</Text>
-                            </TouchableOpacity>
-
-                        </View>
-                        {/* YesNo Dialog */}
-                        <Modal
-                            style={styles.modal}
-                            isVisible={this.state.yesNoDialogVisible}
-                            onBackdropPress={() => this.setYesNoDialogVisible(false)}
-                            backdropOpacity={0.2}
-                            onSwipe={() => this.setYesNoDialogVisible(false)}
-                            swipeDirection="left"
-                        >
-                            <View>
-                                <View style={styles.modalAlert}>
-                                    <Text>Are you sure?</Text>
-                                </View>
-                                <View style={styles.modalOption}>
-                                    <TouchableWithoutFeedback
-                                        onPress={() => {
-                                            this.setYesNoDialogVisible(false);
-                                            this.setScreenTaget('Login');
-                                        }}
-                                    >
-                                        <View style={styles.modalYes}>
-                                            <Text>Yes</Text>
-                                        </View>
-                                    </TouchableWithoutFeedback>
-                                    <TouchableWithoutFeedback
-                                        onPress={() => this.setYesNoDialogVisible(false)}
-                                    >
-                                        <View style={styles.modalNo}>
-                                            <Text>No</Text>
-                                        </View>
-                                    </TouchableWithoutFeedback>
-                                </View>
-                            </View>
-                        </Modal>
-                        {/* Choose way to upload image Dialog */}
-                        <Modal
-                            style={styles.modal}
-                            isVisible={this.state.uploadImageDialogVisible}
-                            onBackdropPress={() => this.setState({ uploadImageDialogVisible: false })}
-                            backdropOpacity={0.2}
-                            onSwipe={() => this.setState({ uploadImageDialogVisible: false })}
-                            swipeDirection="left"
-                        >
-                            <View>
-                                <View style={styles.modalAlert}>
-                                    <Text>Upload avatar from:</Text>
-                                </View>
-                                <TouchableWithoutFeedback
-                                    onPress={() => {
-                                        this.setState({ uploadImageDialogVisible: false });
-                                        this.pickImageFromCamera();
-                                    }}
-                                >
-                                    <View style={styles.modalOptionCamera}>
-                                        <Text>Camera</Text>
-                                    </View>
-                                </TouchableWithoutFeedback>
-                                <TouchableWithoutFeedback
-                                    onPress={() => {
-                                        this.setState({ uploadImageDialogVisible: false });
-                                        this.pickImageFromLibrary();
-                                    }}
-                                >
-                                    <View style={styles.modalOptionCamera}>
-                                        <Text>Library</Text>
-                                    </View>
-                                </TouchableWithoutFeedback>
-                                <TouchableWithoutFeedback
-                                    onPress={() => {
-                                        this.setState({ uploadImageDialogVisible: false });
-                                    }}
-                                >
-                                    <View style={styles.modalOptionLibrary}>
-                                        <Text>Cancel</Text>
-                                    </View>
-                                </TouchableWithoutFeedback>
-                            </View>
-                        </Modal>
-                    </View >
-                );
-            default:
-                break;
-        }
         return (
-            this.renderLoginScreen()
+            <View style={styles.screen}>
+                <View style={styles.topContainer}>
+                    <Image
+                        style={styles.avatarView}
+                        source={require('../../drawable/icon/userDefaultAvater.png')}
+                    />
+                    <Text style={{ marginTop: 20 }}>Have a nice day!</Text>
+                </View>
+                <View>
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder="USER"
+                        underlineColorAndroid='transparent'
+                    />
+                </View>
+                <View style={{ marginTop: 10 }}>
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder="PASSWORD"
+                        underlineColorAndroid='transparent'
+                    />
+                </View>
+                <View style={{ marginTop: 10, alignItems: 'center' }}>
+                    <TouchableOpacity
+                        style={styles.loginButton}
+                        onPress={() => this.handleLogIn()}
+                    >
+                        <View>
+                            <Text style={{ color: 'white' }}>LOG IN</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </View>
         );
     }
 }
+const { height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     screen: {
@@ -258,17 +75,6 @@ const styles = StyleSheet.create({
     avatarView: {
         width: 150,
         height: 150,
-    },
-    avatarImage: {
-        width: 150,
-        height: 150,
-        borderRadius: 75,
-        borderWidth: 2,
-        borderColor: '#268bff'
-    },
-    avatarIcon: {
-        width: 32,
-        height: 32,
     },
     textInput: {
         height: height / 13,
@@ -291,99 +97,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         elevation: 5,
     },
-    btnStyle: {
-        marginTop: 20,
-        backgroundColor: '#268bff',
-        height: height / 13,
-        padding: 10,
-        borderRadius: height / 13,
-        justifyContent: 'center',
-        elevation: 5,
-    },
-    logoutButton: {
-        marginTop: 30,
-        backgroundColor: '#acd0f9',
-        height: height / 13,
-        padding: 10,
-        borderRadius: height / 13,
-        justifyContent: 'center',
-        elevation: 5,
-    },
-    txtButton: {
-        textAlign: 'center',
-        color: '#fff'
-    },
-    modal: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        height
-    },
-    modalAlert: {
-        width: width * 0.6,
-        height: height / 12,
-        backgroundColor: 'white',
-        borderTopWidth: 2,
-        borderLeftWidth: 2,
-        borderBottomWidth: 1,
-        borderRightWidth: 2,
-        borderTopLeftRadius: 25,
-        borderTopRightRadius: 25,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    modalOption: {
-        width: width * 0.6,
-        height: height / 12,
-        flexDirection: 'row',
-    },
-    modalYes: {
-        width: width * 0.3,
-        height: height / 12,
-        backgroundColor: 'white',
-        borderTopWidth: 1,
-        borderLeftWidth: 2,
-        borderBottomWidth: 2,
-        borderRightWidth: 1,
-        borderBottomLeftRadius: 25,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    modalNo: {
-        width: width * 0.3,
-        height: height / 12,
-        backgroundColor: 'white',
-        borderTopWidth: 1,
-        borderLeftWidth: 1,
-        borderBottomWidth: 2,
-        borderRightWidth: 2,
-        borderBottomRightRadius: 25,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    modalOptionCamera: {
-        width: width * 0.6,
-        height: height / 12,
-        backgroundColor: 'white',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderTopWidth: 1,
-        borderLeftWidth: 2,
-        borderBottomWidth: 1,
-        borderRightWidth: 2,
-    },
-    modalOptionLibrary: {
-        width: width * 0.6,
-        height: height / 12,
-        backgroundColor: 'white',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderTopWidth: 1,
-        borderLeftWidth: 2,
-        borderBottomWidth: 2,
-        borderRightWidth: 2,
-        borderBottomRightRadius: 25,
-        borderBottomLeftRadius: 25,
-    }
 });
 
-export default LoginScreen;
+export default connect(null, actions)(LoginScreen);

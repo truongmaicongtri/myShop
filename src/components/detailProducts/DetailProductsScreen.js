@@ -3,13 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'rea
 import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import Swiper from 'react-native-swiper';
-import { Card, Title, Paragraph } from 'react-native-paper';
+import { Card, Paragraph } from 'react-native-paper';
 import * as actions from '../../actions';
-import { CartItem } from '../../models/CartItem';
-import Item from '../../models/Item';
+import CartItem from '../../models/CartItem';
 
 const { width } = Dimensions.get('window');
-const { height } = Dimensions.get('window');
 
 class DetailProductScreen extends Component {
     static navigationOptions = {
@@ -27,7 +25,6 @@ class DetailProductScreen extends Component {
 
     render() {
         const { navigation } = this.props;
-        const { navigate } = navigation;
         const item = navigation.getParam('item');
 
         return (

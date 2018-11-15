@@ -6,9 +6,8 @@ import {
     Dimensions,
     TouchableOpacity,
     ScrollView,
-    Alert
 } from 'react-native';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating';
 
 const { width } = Dimensions.get('window');
@@ -29,11 +28,6 @@ class UserRatingHistory extends Component {
     }
 
     render() {
-        const showAlert = () => {
-            Alert.alert(
-                'Thank for your rating'
-            );
-        };
         const { navigation } = this.props;
         return (
             <ScrollView style={styles.container}>

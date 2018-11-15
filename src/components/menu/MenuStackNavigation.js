@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { createStackNavigator } from 'react-navigation';
+import MenuScreen from './MenuScreen';
 import LoginScreen from './LoginScreen';
+import UserControlScreen from './UserControlScreen';
 import UserInfoScreen from './UserInfoScreen';
 import ChangePasswordScreen from './ChangePasswordScreen';
 import UserPurchaseHistory from './UserPurchaseHistory';
@@ -21,7 +23,9 @@ export default class MenuStackNavigation extends Component {
 }
 
 const MenuStackNavigator = createStackNavigator({
+  Menu: MenuScreen,
   Login: LoginScreen,
+  UserControl: UserControlScreen,
   UserInfo: UserInfoScreen,
   ChangePassword: ChangePasswordScreen,
   PurchaseHistory: UserPurchaseHistory,

@@ -1,6 +1,3 @@
 {
-   "extends": "rallycoding",
-   "rules": {
-    "no-unused-vars": "off"
-   }
+   "extends": "rallycoding"
 }

@@ -26,7 +26,6 @@ class CartScreen extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        console.log(newProps.cart);
         this.setState({ dataSource: ds.cloneWithRows(newProps.cart) });
         this.setState({
             totalCost: newProps.cart.reduce((total, currentItem) =>
