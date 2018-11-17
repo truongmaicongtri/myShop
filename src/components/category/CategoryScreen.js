@@ -8,6 +8,7 @@ import {
     ScrollView,
     ListView
 } from 'react-native';
+import NumberFormat from 'react-number-format';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
@@ -45,7 +46,12 @@ class CategoryScreen extends Component {
                     >
                         <Text style={styles.textName}>{dataSource.name}</Text>
                     </TouchableOpacity>
-                    <Text style={styles.textPrice}>{dataSource.cost} VND</Text>
+                    <NumberFormat
+                        displayType={'text'}
+                        value={dataSource.cost}
+                        thousandSeparator=','
+                        renderText={value => <Text style={styles.textPrice}>{value} VND</Text>}
+                    />
                     <Text style={styles.textMater}>Material: Cotton</Text>
                     <Text>Color: Black</Text>
                 </View>

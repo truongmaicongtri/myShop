@@ -45,17 +45,16 @@ class LoginScreen extends Component {
                     />
                 </View>
                 <View style={{ marginTop: 10, alignItems: 'center' }}>
-                    <LinearGradient colors={['#4a9cf9', '#268bff']} style={styles.loginButton}>
+                    <LinearGradient colors={['#4a9cf9', '#268bff']} style={styles.loginButton} >
                         <TouchableOpacity
                             onPress={() => this.handleLogIn()}
+                            style={styles.touchableStyle}
                         >
-                            <View>
-                                <Text style={{ color: 'white' }}>LOG IN</Text>
-                            </View>
+                            <Text style={{ color: 'white' }}>LOG IN</Text>
                         </TouchableOpacity>
                     </LinearGradient>
                 </View>
-            </LinearGradient>
+            </LinearGradient >
         );
     }
 }
@@ -98,6 +97,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         elevation: 5,
+    },
+    touchableStyle: {
+        height: height / 13,
+        width: width / 3,
+        borderRadius: height / 13,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
 

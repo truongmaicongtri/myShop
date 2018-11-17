@@ -8,6 +8,7 @@ import {
 import { LinearGradient } from 'expo';
 import * as data from '../../data';
 
+
 import HvCategoryWithSwiper from './homeView/Hv_CategoryWithSwiper';
 import HvCategoryWithListItem from './homeView/Hv_CategoryWithListItem';
 import HvCategoryWithAnImage from './homeView/Hv_CategoryWithAnImage';
@@ -49,7 +50,12 @@ export default class HomeScreen extends Component {
 
   render() {
     return (
-      <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#dbf0ff', '#eaafc8']} style={styles.screen}>
+      <LinearGradient
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        colors={['#dbf0ff', '#eaafc8']}
+        style={styles.screen}
+      >
         <ScrollView
           style={styles.screen}
         >

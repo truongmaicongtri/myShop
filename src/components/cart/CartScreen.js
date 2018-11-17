@@ -9,6 +9,7 @@ import {
     Image, ListView
 } from 'react-native';
 import { connect } from 'react-redux';
+import NumberFormat from 'react-number-format';
 import { Ionicons } from '@expo/vector-icons';
 import * as actions from '../../actions';
 
@@ -44,7 +45,12 @@ class CartScreen extends Component {
                 <Image source={dataSource.item.img[0]} style={styles.productImg} />
                 <View style={styles.productInfo}>
                     <Text style={styles.textName}>{dataSource.item.name}</Text>
-                    <Text style={styles.textPrice}>{dataSource.item.cost} VND</Text>
+                    <NumberFormat
+                        displayType={'text'}
+                        value={dataSource.item.cost}
+                        thousandSeparator=','
+                        renderText={value => <Text style={styles.textPrice}>{value} VND</Text>}
+                    />
                     <Text style={styles.textMater}>Material: Cotton</Text>
                     <Text>Color: Black</Text>
                     <View style={styles.lastrowInfo}>
@@ -100,7 +106,12 @@ class CartScreen extends Component {
                         Total cost:
                     </Text> */}
                     <View style={{ flex: 1 }}>
-                        <Text style={styles.txtTotal}>{this.state.totalCost} VND</Text>
+                        <NumberFormat
+                            displayType={'text'}
+                            value={this.state.totalCost}
+                            thousandSeparator=','
+                            renderText={value => <Text style={styles.txtTotal}>{value} VND</Text>}
+                        />
                     </View>
                     <TouchableOpacity>
                         <Ionicons name="ios-checkmark-circle-outline" size={32} color="#ff0066" />

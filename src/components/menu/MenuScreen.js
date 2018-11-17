@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../../actions';
+import LoginScreen from './LoginScreen';
+import UserControlScreen from './UserControlScreen';
 
 class MenuScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLogin: false
         };
     }
 
@@ -13,9 +15,13 @@ class MenuScreen extends React.Component {
         const { navigate } = this.props.navigation;
         switch (this.props.isLogin) {
             case false:
-                return navigate('Login');
+                return (
+                    <LoginScreen navigate={navigate} />
+                );
             case true:
-                return navigate('UserControl');
+                return (
+                    <UserControlScreen navigate={navigate} />
+                );
             default:
                 break;
         }
@@ -26,4 +32,4 @@ const mapStateToProps = state => ({
     isLogin: state.login.isLogin
 });
 
-export default connect(mapStateToProps, actions)(MenuScreen);
+export default connect(mapStateToProps, null)(MenuScreen);

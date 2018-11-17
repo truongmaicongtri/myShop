@@ -8,9 +8,9 @@ import {
     TouchableOpacity,
     ListView
 } from 'react-native';
+import NumberFormat from 'react-number-format';
 
 const { width } = Dimensions.get('window');
-const { height } = Dimensions.get('window');
 
 
 class HvCategoryWithListItem extends Component {
@@ -40,30 +40,44 @@ class HvCategoryWithListItem extends Component {
     renderRow(dataSource) {
         return (
             <View style={styles.body}>
-                <TouchableOpacity
-                    onPress={() => {
-                        this.props.navigation.navigate('DetailProduct',
-                            { item: dataSource.item1 });
-                    }}
-                    style={styles.productContainer}
-                    delayPressIn={100}
-                >
-                    <Image source={dataSource.item1.img[0]} style={styles.imgStyle} />
-                    <Text style={styles.productname}>{dataSource.item1.name}</Text>
-                    <Text style={styles.productprice}>{dataSource.item1.cost} VND</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => {
-                        this.props.navigation.navigate('DetailProduct',
-                            { item: dataSource.item2 });
-                    }}
-                    style={styles.productContainer}
-                    delayPressIn={100}
-                >
-                    <Image source={dataSource.item2.img[0]} style={styles.imgStyle} />
-                    <Text style={styles.productname}>{dataSource.item2.name}</Text>
-                    <Text style={styles.productprice}>{dataSource.item2.cost} VND</Text>
-                </TouchableOpacity>
+                <View style={styles.productContainer}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            this.props.navigation.navigate('DetailProduct',
+                                { item: dataSource.item1 });
+                        }}
+                        delayPressIn={100}
+                    >
+                        <Image source={dataSource.item1.img[0]} style={styles.imgStyle} />
+                        <Text style={styles.productname}>{dataSource.item1.name}</Text>
+                        <NumberFormat
+                            displayType={'text'}
+                            value={dataSource.item1.cost}
+                            thousandSeparator=','
+                            renderText={value => <Text style={styles.productprice}>{value} VND</Text>}
+                        />
+                    </TouchableOpacity>
+                </View>
+
+                <View style={styles.productContainer}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            this.props.navigation.navigate('DetailProduct',
+                                { item: dataSource.item2 });
+                        }}
+                        delayPressIn={100}
+                    >
+                        <Image source={dataSource.item2.img[0]} style={styles.imgStyle} />
+                        <Text style={styles.productname}>{dataSource.item2.name}</Text>
+                        <NumberFormat
+                            displayType={'text'}
+                            value={dataSource.item2.cost}
+                            thousandSeparator=','
+                            renderText={value => <Text style={styles.productprice}>{value} VND</Text>}
+                        />
+                    </TouchableOpacity>
+                </View>
+
             </View>
 
         );
@@ -128,7 +142,9 @@ const styles = StyleSheet.create({
         shadowColor: '#2E272B',
         shadowOffset: { width: 0, height: 3 },
         shadowOpacity: 0.2,
-        elevation: 2
+        elevation: 5,
+        backgroundColor: '#fff',
+        paddingBottom: 10
     },
 
     imgStyle: {

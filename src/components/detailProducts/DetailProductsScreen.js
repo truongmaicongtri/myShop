@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import Swiper from 'react-native-swiper';
 import { Card, Paragraph } from 'react-native-paper';
+import NumberFormat from 'react-number-format';
 import * as actions from '../../actions';
 import CartItem from '../../models/CartItem';
 
@@ -35,8 +36,8 @@ class DetailProductScreen extends Component {
                             <Ionicons name="md-arrow-back" size={25} color="#B10D65" />
                         </TouchableOpacity>
                         <View style={{ width: 30 }} />
-                        <TouchableOpacity 
-                        onPress={() => this.handleAddToCart(new CartItem(item, 1))}
+                        <TouchableOpacity
+                            onPress={() => this.handleAddToCart(new CartItem(item, 1))}
                         >
                             <Ionicons name="ios-cart" size={25} color="#B10D65" />
                         </TouchableOpacity>
@@ -64,7 +65,14 @@ class DetailProductScreen extends Component {
                     <View style={styles.titleProduct}>
                         <Text style={{ color: '#BCBCBC', fontSize: 25 }}>{item.name}</Text>
                         <Text style={{ fontSize: 25 }}> / </Text>
-                        <Text style={{ color: '#B10D65', fontSize: 25 }}>{item.cost} VND</Text>
+                        <NumberFormat
+                            displayType={'text'}
+                            value={item.cost}
+                            thousandSeparator=','
+                            renderText={value =>
+                                <Text style={{ color: '#B10D65', fontSize: 25 }}>{value} VND</Text>
+                            }
+                        />
                     </View>
                     <View style={styles.detail}>
                         <Text style={{ color: '#489620', fontSize: 30 }}>

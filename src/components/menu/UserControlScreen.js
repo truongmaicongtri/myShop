@@ -95,21 +95,24 @@ class UserControlScreen extends Component {
         <View>
           <LinearGradient colors={['#4a9cf9', '#268bff']} style={styles.btnStyle}>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('UserInfo')}
+              onPress={() => this.props.navigate('UserInfo')}
+              style={styles.touchableStyle}
             >
               <Text style={styles.txtButton}>Your information</Text>
             </TouchableOpacity>
           </LinearGradient>
           <LinearGradient colors={['#4a9cf9', '#268bff']} style={styles.btnStyle}>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('PurchaseHistory')}
+              onPress={() => this.props.navigate('PurchaseHistory')}
+              style={styles.touchableStyle}
             >
               <Text style={styles.txtButton}>Your purchase history</Text>
             </TouchableOpacity>
           </LinearGradient>
           <LinearGradient colors={['#4a9cf9', '#268bff']} style={styles.btnStyle}>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('RatingHistory')}
+              onPress={() => this.props.navigate('RatingHistory')}
+              style={styles.touchableStyle}
             >
               <Text style={styles.txtButton}>Shop rating history</Text>
             </TouchableOpacity>
@@ -122,6 +125,7 @@ class UserControlScreen extends Component {
           <View style={styles.logoutButton}>
             <TouchableOpacity
               onPress={() => this.setYesNoDialogVisible(true)}
+              style={styles.touchableStyle}
             >
               <Text style={{ textAlign: 'center', color: 'black' }}>Log out</Text>
             </TouchableOpacity>
@@ -247,10 +251,14 @@ const styles = StyleSheet.create({
     marginTop: 20,
     backgroundColor: '#268bff',
     height: height / 13,
-    padding: 10,
     borderRadius: height / 13,
     justifyContent: 'center',
     elevation: 5,
+  },
+  touchableStyle: {
+    height: height / 13,
+    borderRadius: height / 13,
+    justifyContent: 'center',
   },
   logoutButton: {
     marginTop: 30,

@@ -3,12 +3,12 @@ import { createMaterialTopTabNavigator } from 'react-navigation';
 import { View, Dimensions, Text } from 'react-native';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
+
 import ProductStackNavigator from './ProductStackNavigator';
 import NotifyScreen from '../notify/NotifyScreen';
 import CartScreen from '../cart/CartScreen';
 import ContactScreen from '../contact/ContactScreen';
 import TopBar from './TopBar';
-
 
 const { height } = Dimensions.get('window');
 
@@ -23,7 +23,9 @@ class BottomBarNavigator extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <TopBar {...this.props} navigate={this.props.navigation.navigate} />
-                <BottomtabNavigator screenProps={{ numberOfCartItem: this.props.numberOfCartItem }} />
+                <BottomtabNavigator
+                    screenProps={{ numberOfCartItem: this.props.numberOfCartItem }}
+                />
             </View>
         );
     }
