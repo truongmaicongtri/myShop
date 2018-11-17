@@ -5,7 +5,7 @@ import {
   ListView,
   Text,
 } from 'react-native';
-
+import { LinearGradient } from 'expo';
 import * as data from '../../data';
 
 import HvCategoryWithSwiper from './homeView/Hv_CategoryWithSwiper';
@@ -49,20 +49,22 @@ export default class HomeScreen extends Component {
 
   render() {
     return (
-      <ScrollView
-        style={styles.screen}
-      >
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this.renderRow.bind(this)}
-        />
-      </ScrollView >
+      <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#dbf0ff', '#eaafc8']} style={styles.screen}>
+        <ScrollView
+          style={styles.screen}
+        >
+          <ListView
+            dataSource={this.state.dataSource}
+            renderRow={this.renderRow.bind(this)}
+          />
+        </ScrollView >
+      </LinearGradient>
     );
   }
 }
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#dbf0ff'
+    // backgroundColor: '#dbf0ff'
   },
 });

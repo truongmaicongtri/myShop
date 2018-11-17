@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo';
 
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
@@ -15,51 +16,53 @@ class UserPurchaseHistory extends Component {
 
     render() {
         return (
-            <ScrollView style={styles.container}>
-                <View style={styles.shopname}>
-                    <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                        <Ionicons name="md-arrow-round-back" size={40} color="#fff" />
-                    </TouchableOpacity>
-                    <Text style={{ fontSize: 30, textAlign: 'center', color: '#fff' }}>
-                        Orders
+            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#72b2f9', '#eaafc8']} style={styles.container}>
+                <ScrollView>
+                    <View style={styles.shopname}>
+                        <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                            <Ionicons name="md-arrow-round-back" size={40} color="#fff" />
+                        </TouchableOpacity>
+                        <Text style={{ fontSize: 30, textAlign: 'center', color: '#fff' }}>
+                            Orders
                     </Text>
-                    <TouchableOpacity style={{ marginTop: 5 }}>
-                        <Ionicons name="ios-happy" size={35} color="#fff" />
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.wrapper}>
-                    <TouchableOpacity>
-                        <View style={styles.namecus}>
-                            <Text style={styles.titlerow}>Customer's Name: </Text>
-                            <Text style={styles.contentrow}>David Beckam</Text>
-                        </View>
-                        <View style={styles.dateorder}>
-                            <Text style={styles.titlerow}>Order time: </Text>
-                            <Text style={styles.contentrow}>14:50PM 26-05-2018</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <View style={styles.orderinfo}>
-                        <View style={styles.cellinfo}>
-                            <Text style={styles.titlerowoder}>Order ID</Text>
-                            <Text style={styles.contentrowoder}>1531200040</Text>
-                        </View>
-                        <View style={styles.cellinfo}>
-                            <Text style={styles.titlerowoder}>Order Amount</Text>
-                            <Text style={styles.contentrowoder}>5.000.000 VND</Text>
-                        </View>
-                        <View style={styles.cellinfo}>
-                            <Text style={styles.titlerowoder}>Payment Type</Text>
-                            <Text style={styles.contentrowoder}>Credit Card</Text>
-                        </View>
+                        <TouchableOpacity style={{ marginTop: 5 }}>
+                            <Ionicons name="ios-happy" size={35} color="#fff" />
+                        </TouchableOpacity>
                     </View>
-                    <View style={styles.address}>
-                        <MaterialIcons name="place" size={23} color="#BCBCBC" />
-                        <Text style={styles.addtxt}>
-                            255, Dong Khoi st, Thu Dau Mot, Binh Duong Newcity
+                    <View style={styles.wrapper}>
+                        <TouchableOpacity>
+                            <View style={styles.namecus}>
+                                <Text style={styles.titlerow}>Customer's Name: </Text>
+                                <Text style={styles.contentrow}>David Beckam</Text>
+                            </View>
+                            <View style={styles.dateorder}>
+                                <Text style={styles.titlerow}>Order time: </Text>
+                                <Text style={styles.contentrow}>14:50PM 26-05-2018</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <View style={styles.orderinfo}>
+                            <View style={styles.cellinfo}>
+                                <Text style={styles.titlerowoder}>Order ID</Text>
+                                <Text style={styles.contentrowoder}>1531200040</Text>
+                            </View>
+                            <View style={styles.cellinfo}>
+                                <Text style={styles.titlerowoder}>Order Amount</Text>
+                                <Text style={styles.contentrowoder}>5.000.000 VND</Text>
+                            </View>
+                            <View style={styles.cellinfo}>
+                                <Text style={styles.titlerowoder}>Payment Type</Text>
+                                <Text style={styles.contentrowoder}>Credit Card</Text>
+                            </View>
+                        </View>
+                        <View style={styles.address}>
+                            <MaterialIcons name="place" size={23} color="#BCBCBC" />
+                            <Text style={styles.addtxt}>
+                                255, Dong Khoi st, Thu Dau Mot, Binh Duong Newcity
                         </Text>
+                        </View>
                     </View>
-                </View>
-            </ScrollView>
+                </ScrollView>
+            </LinearGradient>
         );
     }
 }

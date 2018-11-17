@@ -96,4 +96,4 @@ const category5 = new CategoryWithSwiper('ACCESSORIES', 'swiper', [
     item19, item20, item15, item16, item17, item18
 ], [categoryView11, categoryView12, categoryView13, categoryView14]);
 
-export const categories = [category1, category2, category3, category4, category5];
+export const categories = [category1, category2, category5, category4, category3];

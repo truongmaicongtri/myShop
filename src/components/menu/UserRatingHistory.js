@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     ScrollView,
 } from 'react-native';
+import { LinearGradient } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating';
 
@@ -30,43 +31,45 @@ class UserRatingHistory extends Component {
     render() {
         const { navigation } = this.props;
         return (
-            <ScrollView style={styles.container}>
-                <View style={styles.shopname}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Ionicons name="md-arrow-round-back" size={40} color="#fff" />
-                    </TouchableOpacity>
-                    <Text style={{ fontSize: 30, textAlign: 'center', color: '#fff' }}>
-                        Rating
+            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#72b2f9', '#eaafc8']} style={styles.container}>
+                <ScrollView >
+                    <View style={styles.shopname}>
+                        <TouchableOpacity onPress={() => navigation.goBack()}>
+                            <Ionicons name="md-arrow-round-back" size={40} color="#fff" />
+                        </TouchableOpacity>
+                        <Text style={{ fontSize: 30, textAlign: 'center', color: '#fff' }}>
+                            Rating
                     </Text>
-                    <TouchableOpacity style={{ marginTop: 5 }}>
-                        <Ionicons name="ios-happy" size={35} color="#fff" />
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.ratingwrapper}>
-                    <Text style={styles.txtrate}>King Shop</Text>
-                    <View style={styles.rate}>
-                        <StarRating
-                            disabled={true}
-                            emptyStar={'md-star-outline'}
-                            fullStar={'md-star'}
-                            iconSet={'Ionicons'}
-                            maxStars={5}
-                            rating={this.state.starCount}
-                            selectedStar={(rating) => this.onStarRatingPress(rating)}
-                            fullStarColor={'red'}
-                            emptyStarColor={'red'}
-                        />
-                        <View style={{ justifyContent: 'center' }}>
-                            <Text
-                                style={styles.ratenumber}
-                            >
-                                Rating: {this.state.starCount} / 5
-                            </Text>
-                        </View>
+                        <TouchableOpacity style={{ marginTop: 5 }}>
+                            <Ionicons name="ios-happy" size={35} color="#fff" />
+                        </TouchableOpacity>
                     </View>
-                    <Text style={styles.date}>20-10-2018</Text>
-                </View>
-            </ScrollView>
+                    <View style={styles.ratingwrapper}>
+                        <Text style={styles.txtrate}>King Shop</Text>
+                        <View style={styles.rate}>
+                            <StarRating
+                                disabled={true}
+                                emptyStar={'md-star-outline'}
+                                fullStar={'md-star'}
+                                iconSet={'Ionicons'}
+                                maxStars={5}
+                                rating={this.state.starCount}
+                                selectedStar={(rating) => this.onStarRatingPress(rating)}
+                                fullStarColor={'red'}
+                                emptyStarColor={'red'}
+                            />
+                            <View style={{ justifyContent: 'center' }}>
+                                <Text
+                                    style={styles.ratenumber}
+                                >
+                                    Rating: {this.state.starCount} / 5
+                            </Text>
+                            </View>
+                        </View>
+                        <Text style={styles.date}>20-10-2018</Text>
+                    </View>
+                </ScrollView>
+            </LinearGradient>
         );
     }
 }

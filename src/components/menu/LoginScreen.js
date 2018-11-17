@@ -4,6 +4,7 @@ import {
     TouchableOpacity, Image,
     Dimensions, TextInput
 } from 'react-native';
+import { LinearGradient } from 'expo';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
@@ -21,7 +22,7 @@ class LoginScreen extends Component {
 
     render() {
         return (
-            <View style={styles.screen}>
+            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#2980B9', '#6DD5FA']} style={styles.screen}>
                 <View style={styles.topContainer}>
                     <Image
                         style={styles.avatarView}
@@ -44,16 +45,17 @@ class LoginScreen extends Component {
                     />
                 </View>
                 <View style={{ marginTop: 10, alignItems: 'center' }}>
-                    <TouchableOpacity
-                        style={styles.loginButton}
-                        onPress={() => this.handleLogIn()}
-                    >
-                        <View>
-                            <Text style={{ color: 'white' }}>LOG IN</Text>
-                        </View>
-                    </TouchableOpacity>
+                    <LinearGradient colors={['#4a9cf9', '#268bff']} style={styles.loginButton}>
+                        <TouchableOpacity
+                            onPress={() => this.handleLogIn()}
+                        >
+                            <View>
+                                <Text style={{ color: 'white' }}>LOG IN</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </LinearGradient>
                 </View>
-            </View>
+            </LinearGradient>
         );
     }
 }
@@ -88,7 +90,7 @@ const styles = StyleSheet.create({
     },
     loginButton: {
         height: height / 13,
-        backgroundColor: '#268bff',
+        // backgroundColor: '#268bff',
         width: width / 3,
         borderRadius: height / 13,
         borderWidth: 1,

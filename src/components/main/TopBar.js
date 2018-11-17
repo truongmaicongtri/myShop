@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, TextInput } from 'react-native';
+import { LinearGradient } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
+
 
 class TopBar extends Component {
     constructor(props) {
@@ -15,7 +17,7 @@ class TopBar extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#4a9cf9', '#eaafc8']} style={styles.container}>
                 <View style={styles.shopname}>
                     <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
                         <Ionicons name="ios-menu" size={40} color="#fff" />
@@ -37,7 +39,7 @@ class TopBar extends Component {
                     placeholder="Product 's name"
                     underlineColorAndroid='transparent'
                 />
-            </View>
+            </LinearGradient>
         );
     }
 }

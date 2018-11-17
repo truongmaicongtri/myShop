@@ -54,7 +54,7 @@ const BottomtabNavigator = createMaterialTopTabNavigator(
                                 width: 12,
                                 height: 12,
                                 borderRadius: 10,
-                                backgroundColor: 'red',
+                                backgroundColor: '#B10D65',
                                 justifyContent: 'center',
                                 borderColor: '#fff',
                                 borderWidth: 0.5,
@@ -100,7 +100,7 @@ const BottomtabNavigator = createMaterialTopTabNavigator(
                                 width: 12,
                                 height: 12,
                                 borderRadius: 10,
-                                backgroundColor: 'red',
+                                backgroundColor: '#B10D65',
                                 justifyContent: 'center',
                                 borderColor: '#fff',
                                 borderWidth: 0.5,
@@ -116,7 +116,7 @@ const BottomtabNavigator = createMaterialTopTabNavigator(
                                     justifyContent: 'center'
                                 }}
                             >
-                                2
+                                3
                             </Text>
                         </View>
 

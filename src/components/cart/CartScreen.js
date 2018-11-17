@@ -12,9 +12,6 @@ import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import * as actions from '../../actions';
 
-const { width } = Dimensions.get('window');
-const { height } = Dimensions.get('window');
-
 const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 class CartScreen extends Component {
     constructor(props) {
@@ -113,6 +110,9 @@ class CartScreen extends Component {
         );
     }
 }
+
+const { width } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     screen: {

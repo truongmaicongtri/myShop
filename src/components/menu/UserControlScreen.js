@@ -6,7 +6,7 @@ import {
   TouchableWithoutFeedback
 } from 'react-native';
 import Modal from 'react-native-modal';
-import { ImagePicker, Permissions } from 'expo';
+import { ImagePicker, Permissions, LinearGradient } from 'expo';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
@@ -60,7 +60,7 @@ class UserControlScreen extends Component {
 
   render() {
     return (
-      <View style={styles.screen}>
+      <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#2980B9', '#6DD5FA']} style={styles.screen}>
         <View style={styles.topContainer}>
           <View style={styles.avatarView}>
             <TouchableOpacity
@@ -93,36 +93,44 @@ class UserControlScreen extends Component {
           <Text style={{ marginTop: 20 }}>Have a nice day!</Text>
         </View>
         <View>
-          <TouchableOpacity
-            style={styles.btnStyle}
-            onPress={() => this.props.navigation.navigate('UserInfo')}
-          >
-            <Text style={styles.txtButton}>Your information</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.btnStyle}
-            onPress={() => this.props.navigation.navigate('PurchaseHistory')}
-          >
-            <Text style={styles.txtButton}>Your purchase history</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.btnStyle}
-            onPress={() => this.props.navigation.navigate('RatingHistory')}
-          >
-            <Text style={styles.txtButton}>Shop rating history</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btnStyle}>
-            <Text style={styles.txtButton}>Share with friend!</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.logoutButton}
-            onPress={() => this.setYesNoDialogVisible(true)}
-          >
-            <Text style={{ textAlign: 'center', color: 'black' }}>Log out</Text>
-          </TouchableOpacity>
-
+          <LinearGradient colors={['#4a9cf9', '#268bff']} style={styles.btnStyle}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('UserInfo')}
+            >
+              <Text style={styles.txtButton}>Your information</Text>
+            </TouchableOpacity>
+          </LinearGradient>
+          <LinearGradient colors={['#4a9cf9', '#268bff']} style={styles.btnStyle}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('PurchaseHistory')}
+            >
+              <Text style={styles.txtButton}>Your purchase history</Text>
+            </TouchableOpacity>
+          </LinearGradient>
+          <LinearGradient colors={['#4a9cf9', '#268bff']} style={styles.btnStyle}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('RatingHistory')}
+            >
+              <Text style={styles.txtButton}>Shop rating history</Text>
+            </TouchableOpacity>
+          </LinearGradient>
+          <LinearGradient colors={['#4a9cf9', '#268bff']} style={styles.btnStyle}>
+            <TouchableOpacity>
+              <Text style={styles.txtButton}>Share with friend!</Text>
+            </TouchableOpacity>
+          </LinearGradient>
+          <View style={styles.logoutButton}>
+            <TouchableOpacity
+              onPress={() => this.setYesNoDialogVisible(true)}
+            >
+              <Text style={{ textAlign: 'center', color: 'black' }}>Log out</Text>
+            </TouchableOpacity>
+          </View>
         </View>
+
+
         {/* YesNo Dialog */}
+
         <Modal
           style={styles.modal}
           isVisible={this.state.yesNoDialogVisible}
@@ -200,7 +208,7 @@ class UserControlScreen extends Component {
             </TouchableWithoutFeedback>
           </View>
         </Modal>
-      </View >
+      </LinearGradient >
     );
   }
 }
