@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import ProductStackNavigator from './ProductStackNavigator';
 import NotifyScreen from '../notify/NotifyScreen';
-import CartScreen from '../cart/CartScreen';
+import CartStackNavigator from '../cart/CartStackNavigator';
 import ContactScreen from '../contact/ContactScreen';
 import TopBar from './TopBar';
 
@@ -42,8 +42,8 @@ const BottomtabNavigator = createMaterialTopTabNavigator(
                 )
             }
         },
-        CartScreen: {
-            screen: CartScreen,
+        Cart: {
+            screen: CartStackNavigator,
             navigationOptions: ({ screenProps }) => ({
                 tabBarLabel: ' Cart',
                 tabBarIcon: ({ tintColor }) => (

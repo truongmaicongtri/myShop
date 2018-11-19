@@ -1,6 +1,7 @@
 import { CategoryWithAnImage } from '../models/CategoryWithAnImage';
 import { CategoryWithListItem } from '../models/CategoryWithListView';
 import { CategoryWithSwiper } from '../models/CategoryWithSwiper';
+import AccountInfo from '../models/AccountInfo';
 
 import categoryView1 from '../../src/drawable/categoryView/categoryView1.jpg';
 import categoryView2 from '../../src/drawable/categoryView/categoryView2.jpg';
@@ -97,3 +98,4 @@ const category5 = new CategoryWithSwiper('ACCESSORIES', 'swiper', [
 ], [categoryView11, categoryView12, categoryView13, categoryView14]);
 
 export const categories = [category1, category2, category5, category4, category3];
+export const accountInfo = new AccountInfo('tri.truong.dsn', 'Tri', 'Truong Mai Cong', 'tri.truong.set15@eiu.edu.vn', 'Binh Duong');

@@ -6,9 +6,12 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
+import { accountInfo } from '../../data';
 
 const { height } = Dimensions.get('window');
 const { width } = Dimensions.get('window');
+
+let info = accountInfo;
 
 class UserInfoScreen extends Component {
     static navigationOptions = {
@@ -17,9 +20,26 @@ class UserInfoScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isEditButtonPressed: false,
+            info: { ...info }
         };
     }
 
+    handleEditButtonOnPress() {
+        if (this.state.isEditButtonPressed) {
+            //update lai info
+            info = { ...this.state.info };
+        }
+        this.setState({ isEditButtonPressed: !this.state.isEditButtonPressed });
+    }
+
+    handleChangePasswordButtonOnPress() {
+        if (this.state.isEditButtonPressed === false) {
+            this.props.navigation.navigate('ChangePassword');
+        } else {
+            this.setState({ isEditButtonPressed: !this.state.isEditButtonPressed });
+        }
+    }
     render() {
         const { navigation } = this.props;
         return (
@@ -36,21 +56,61 @@ class UserInfoScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View>
-                    <TextInput style={styles.txtrow} placeholder="FIRST NAME" />
-                    <TextInput style={styles.txtrow} placeholder="LAST NAME" />
-                    <TextInput style={styles.txtrow} placeholder="USERNAME" />
-                    <TextInput style={styles.txtrow} placeholder="EMAIL" />
-                    <TextInput style={styles.txtrow} placeholder="ADDRESS" />
+                    <TextInput
+                        style={styles.txtrow}
+                        editable={false}
+                        value={this.state.info.userName}
+                        placeholder="USERNAME"
+                    />
+                    <TextInput
+                        style={styles.txtrow}
+                        editable={this.state.isEditButtonPressed}
+                        value={this.state.info.firstName}
+                        placeholder="FIRST NAME"
+                        onChangeText={(typedText) => {
+                            this.setState({ info: { ...this.state.info, firstName: typedText } });
+                        }}
+                    />
+                    <TextInput
+                        style={styles.txtrow}
+                        editable={this.state.isEditButtonPressed}
+                        value={this.state.info.lastName}
+                        placeholder="LAST NAME"
+                        onChangeText={(typedText) => {
+                            this.setState({ info: { ...this.state.info, lastName: typedText } });
+                        }}
+                    />
+                    <TextInput
+                        style={styles.txtrow}
+                        editable={this.state.isEditButtonPressed}
+                        value={this.state.info.email}
+                        placeholder="EMAIL"
+                        onChangeText={(typedText) => {
+                            this.setState({ info: { ...this.state.info, email: typedText } });
+                        }}
+                    />
+                    <TextInput
+                        style={styles.txtrow}
+                        editable={this.state.isEditButtonPressed}
+                        value={this.state.info.address}
+                        placeholder="ADDRESS"
+                        onChangeText={(typedText) => {
+                            this.setState({ info: { ...this.state.info, address: typedText } });
+                        }}
+                    />
                 </View>
                 <View style={styles.btn}>
-                    <TouchableOpacity style={styles.btnedit}>
-                        <Text style={styles.txtButton}>Edit Information</Text>
+                    <TouchableOpacity
+                        style={styles.btnedit}
+                        onPress={() => this.handleEditButtonOnPress()}
+                    >
+                        <Text style={styles.txtButton}>{this.state.isEditButtonPressed ? 'Save' : 'Edit Infomation'}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.btnchange}
-                        onPress={() => navigation.navigate('ChangePassword')}
+                        onPress={() => this.handleChangePasswordButtonOnPress()}
                     >
-                        <Text style={styles.txtButton}>Change Password</Text>
+                        <Text style={styles.txtButton}>{this.state.isEditButtonPressed ? 'Cancel' : 'Change Password'}</Text>
                     </TouchableOpacity>
                 </View>
             </LinearGradient>

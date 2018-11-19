@@ -15,6 +15,10 @@ import * as actions from '../../actions';
 
 const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 class CartScreen extends Component {
+    static navigationOptions = {
+        header: null
+    }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -44,7 +48,13 @@ class CartScreen extends Component {
             <View style={styles.productContainer}>
                 <Image source={dataSource.item.img[0]} style={styles.productImg} />
                 <View style={styles.productInfo}>
-                    <Text style={styles.textName}>{dataSource.item.name}</Text>
+                    <TouchableOpacity
+                        onPress={() =>
+                            this.props.navigation.navigate('DetailProduct',
+                                { item: dataSource.item })}
+                    >
+                        <Text style={styles.textName}>{dataSource.item.name}</Text>
+                    </TouchableOpacity>
                     <NumberFormat
                         displayType={'text'}
                         value={dataSource.item.cost}
@@ -70,9 +80,9 @@ class CartScreen extends Component {
                             </TouchableOpacity>
                         </View>
                         <TouchableOpacity
-                            onPress={() =>
-                                this.props.navigation.navigate('DetailProduct',
-                                    { item: dataSource.item })}
+                            onPress={() => {
+                                this.props.navigation.navigate('DetailProduct', { item: dataSource.item });
+                            }}
                         >
                             <Text style={styles.textDetail}>SHOW DETAIL</Text>
                         </TouchableOpacity>
@@ -88,11 +98,7 @@ class CartScreen extends Component {
                 <ScrollView style={styles.screen}>
                     <View style={styles.wrapper}>
                         <View style={styles.header}>
-                            <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                                <Ionicons name="md-arrow-back" size={35} color="#B10D65" />
-                            </TouchableOpacity>
                             <Text style={styles.title}>MY CART</Text>
-                            <View style={{ width: 30 }} />
                         </View>
                         <ListView
                             dataSource={this.state.dataSource}
@@ -140,15 +146,15 @@ const styles = StyleSheet.create({
 
     header: {
         height: 50,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         padding: 5,
         alignItems: 'center'
     },
 
     title: {
         fontSize: 20,
-        color: '#B10D65'
+        color: '#B10D65',
+        textAlign: 'center'
     },
 
     productContainer: {

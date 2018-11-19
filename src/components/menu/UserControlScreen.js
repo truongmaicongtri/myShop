@@ -9,6 +9,7 @@ import Modal from 'react-native-modal';
 import { ImagePicker, Permissions, LinearGradient } from 'expo';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
+import { accountInfo } from '../../data';
 
 
 class UserControlScreen extends Component {
@@ -90,7 +91,7 @@ class UserControlScreen extends Component {
               </View>
             </TouchableOpacity>
           </View>
-          <Text style={{ marginTop: 20 }}>Have a nice day!</Text>
+          <Text style={{ marginTop: 20 }}>Have a nice day, {accountInfo.firstName}!</Text>
         </View>
         <View>
           <LinearGradient colors={['#4a9cf9', '#268bff']} style={styles.btnStyle}>

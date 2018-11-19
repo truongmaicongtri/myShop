@@ -4,6 +4,7 @@ import {
     TouchableOpacity,
     Dimensions, TextInput,
 } from 'react-native';
+import { LinearGradient } from 'expo';
 
 import { Ionicons } from '@expo/vector-icons';
 
@@ -23,7 +24,7 @@ class ChangePasswordScreen extends Component {
     render() {
         const { navigation } = this.props;
         return (
-            <View style={styles.container}>
+            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#72b2f9', '#eaafc8']} style={styles.container}>
                 <View style={styles.shopname}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <Ionicons name="md-arrow-round-back" size={40} color="#fff" />
@@ -48,7 +49,7 @@ class ChangePasswordScreen extends Component {
                         <Text style={styles.txtButton}>Cancel</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </LinearGradient>
         );
     }
 }
