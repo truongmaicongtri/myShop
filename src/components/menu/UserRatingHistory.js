@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
 
     ratingwrapper: {
         backgroundColor: '#fff',
-        height: height / 4.5,
+        height: height / 4,
         padding: 10,
         borderRadius: 15
     },

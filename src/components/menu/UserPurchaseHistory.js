@@ -37,7 +37,7 @@ class UserPurchaseHistory extends Component {
                             </View>
                             <View style={styles.dateorder}>
                                 <Text style={styles.titlerow}>Order time: </Text>
-                                <Text style={styles.contentrow}>14:50PM 26-05-2018</Text>
+                                <Text style={styles.contentrow}>14:50 26-05-2018</Text>
                             </View>
                         </TouchableOpacity>
                         <View style={styles.orderinfo}>
@@ -56,7 +56,7 @@ class UserPurchaseHistory extends Component {
                         </View>
                         <View style={styles.address}>
                             <MaterialIcons name="place" size={23} color="#BCBCBC" />
-                            <Text style={styles.addtxt}>
+                            <Text numberOfLines={3} style={styles.addtxt}>
                                 255, Dong Khoi st, Thu Dau Mot, Binh Duong Newcity
                         </Text>
                         </View>
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#b4d6fd',
-        padding: 20,
+        padding: 10,
         paddingTop: 60,
     },
     shopname: {
@@ -81,9 +81,9 @@ const styles = StyleSheet.create({
     },
     wrapper: {
         backgroundColor: '#fff',
-        height: height / 3.5,
-        padding: 10,
-        borderRadius: 10
+        height: height / 4.3,
+        padding: 8,
+        borderRadius: 10,
     },
 
     namecus: {
@@ -96,26 +96,26 @@ const styles = StyleSheet.create({
 
     titlerow: {
         color: '#BCBCBC',
-        fontSize: 13,
+        fontSize: 11,
         width: width / 2,
     },
 
     contentrow: {
         color: '#B10D65',
-        fontSize: 13,
+        fontSize: 11,
         width: width / 2,
     },
 
     titlerowoder: {
         color: '#BCBCBC',
-        fontSize: 13,
+        fontSize: 11,
         width: width / 2,
         textAlign: 'center'
     },
 
     contentrowoder: {
         color: '#B10D65',
-        fontSize: 13,
+        fontSize: 11,
         width: width / 2,
         textAlign: 'center'
     },
@@ -142,7 +142,8 @@ const styles = StyleSheet.create({
 
     addtxt: {
         color: '#B10D65',
-        fontSize: 13
+        fontSize: 11,
+        flex: 1
     }
 
 });
