@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
+import {
+    View, Text,
+    StyleSheet, Dimensions,
+    TouchableOpacity,
+    ScrollView, ListView
+} from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo';
+import NumberFormat from 'react-number-format';
+import { orders } from '../../data';
 
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
@@ -9,14 +16,64 @@ const { height } = Dimensions.get('window');
 class UserPurchaseHistory extends Component {
     constructor(props) {
         super(props);
+        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.state = {
-
+            dataSource: ds.cloneWithRows(orders)
         };
+    }
+
+    renderRow(dataSource) {
+        return (
+            <View style={styles.wrapper}>
+                <TouchableOpacity>
+                    <View style={styles.namecus}>
+                        <Text style={styles.titlerow}>Customer's Name: </Text>
+                        <Text style={styles.contentrow}>{dataSource.customerName}</Text>
+                    </View>
+                    <View style={styles.dateorder}>
+                        <Text style={styles.titlerow}>Order time: </Text>
+                        <Text style={styles.contentrow}>{dataSource.date}</Text>
+                    </View>
+                </TouchableOpacity>
+                <View style={styles.orderinfo}>
+                    <View style={styles.cellinfo}>
+                        <Text style={styles.titlerowoder}>Order ID</Text>
+                        <Text style={styles.contentrowoder}>{dataSource.id}</Text>
+                    </View>
+                    <View style={styles.cellinfo}>
+                        <Text style={styles.titlerowoder}>Order Amount</Text>
+                        <NumberFormat
+                            displayType={'text'}
+                            value={dataSource.totalCost}
+                            thousandSeparator=','
+                            renderText={value =>
+                                <Text style={styles.contentrowoder}>{value} VND</Text>
+                            }
+                        />
+                    </View>
+                    <View style={styles.cellinfo}>
+                        <Text style={styles.titlerowoder}>Payment Type</Text>
+                        <Text style={styles.contentrowoder}>{dataSource.paymentType}</Text>
+                    </View>
+                </View>
+                <View style={styles.address}>
+                    <MaterialIcons name="place" size={23} color="#BCBCBC" />
+                    <Text numberOfLines={3} style={styles.addtxt}>
+                        {dataSource.address}
+                    </Text>
+                </View>
+            </View>
+        );
     }
 
     render() {
         return (
-            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#72b2f9', '#eaafc8']} style={styles.container}>
+            <LinearGradient
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                colors={['#72b2f9', '#eaafc8']}
+                style={styles.container}
+            >
                 <ScrollView>
                     <View style={styles.shopname}>
                         <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
@@ -29,38 +86,10 @@ class UserPurchaseHistory extends Component {
                             <Ionicons name="ios-happy" size={35} color="#fff" />
                         </TouchableOpacity>
                     </View>
-                    <View style={styles.wrapper}>
-                        <TouchableOpacity>
-                            <View style={styles.namecus}>
-                                <Text style={styles.titlerow}>Customer's Name: </Text>
-                                <Text style={styles.contentrow}>David Beckam</Text>
-                            </View>
-                            <View style={styles.dateorder}>
-                                <Text style={styles.titlerow}>Order time: </Text>
-                                <Text style={styles.contentrow}>14:50 26-05-2018</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <View style={styles.orderinfo}>
-                            <View style={styles.cellinfo}>
-                                <Text style={styles.titlerowoder}>Order ID</Text>
-                                <Text style={styles.contentrowoder}>1531200040</Text>
-                            </View>
-                            <View style={styles.cellinfo}>
-                                <Text style={styles.titlerowoder}>Order Amount</Text>
-                                <Text style={styles.contentrowoder}>5.000.000 VND</Text>
-                            </View>
-                            <View style={styles.cellinfo}>
-                                <Text style={styles.titlerowoder}>Payment Type</Text>
-                                <Text style={styles.contentrowoder}>Credit Card</Text>
-                            </View>
-                        </View>
-                        <View style={styles.address}>
-                            <MaterialIcons name="place" size={23} color="#BCBCBC" />
-                            <Text numberOfLines={3} style={styles.addtxt}>
-                                255, Dong Khoi st, Thu Dau Mot, Binh Duong Newcity
-                        </Text>
-                        </View>
-                    </View>
+                    <ListView
+                        dataSource={this.state.dataSource}
+                        renderRow={this.renderRow.bind(this)}
+                    />
                 </ScrollView>
             </LinearGradient>
         );
@@ -84,6 +113,7 @@ const styles = StyleSheet.create({
         height: height / 4.3,
         padding: 8,
         borderRadius: 10,
+        marginBottom: 10
     },
 
     namecus: {

@@ -32,6 +32,7 @@ const MenuStackNavigator = createStackNavigator({
   RatingHistory: RatingHistoryScreen
 },
   {
+    initialRouteName: 'Menu',
     headerMode: 'none'
   }
 );

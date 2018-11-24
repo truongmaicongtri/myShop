@@ -32,7 +32,10 @@ class DetailProductScreen extends Component {
             <View style={styles.container}>
                 <View style={styles.top}>
                     <View style={styles.title}>
-                        <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                        <TouchableOpacity
+                            onPress={() => this.props.navigation.goBack()}
+                            style={{ width: 50 }}
+                        >
                             <Ionicons name="md-arrow-back" size={25} color="#B10D65" />
                         </TouchableOpacity>
                         <View style={{ width: 30 }} />

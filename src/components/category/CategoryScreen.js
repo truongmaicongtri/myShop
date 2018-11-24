@@ -37,7 +37,15 @@ class CategoryScreen extends Component {
     renderRow(dataSource) {
         return (
             <View style={styles.productContainer}>
-                <Image source={dataSource.img[0]} style={styles.productImg} />
+                <TouchableOpacity
+                    onPress={() =>
+                        this.props.navigation.navigate('DetailProduct',
+                            { item: dataSource })}
+                    delayPressIn={100}
+                >
+                    <Image source={dataSource.img[0]} style={styles.productImg} />
+                </TouchableOpacity>
+
                 <View style={styles.productInfo}>
                     <TouchableOpacity
                         onPress={() =>
@@ -72,7 +80,10 @@ class CategoryScreen extends Component {
                 <ScrollView style={styles.screen}>
                     <View style={styles.wrapper}>
                         <View style={styles.header}>
-                            <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                            <TouchableOpacity
+                                onPress={() => this.props.navigation.goBack()}
+                                style={{ width: 50 }}
+                            >
                                 <Ionicons name="md-arrow-back" size={35} color="#B10D65" />
                             </TouchableOpacity>
                             <Text style={styles.title}>{category.name}</Text>

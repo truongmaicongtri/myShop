@@ -2,6 +2,9 @@ import { CategoryWithAnImage } from '../models/CategoryWithAnImage';
 import { CategoryWithListItem } from '../models/CategoryWithListView';
 import { CategoryWithSwiper } from '../models/CategoryWithSwiper';
 import AccountInfo from '../models/AccountInfo';
+import Order from '../models/Order';
+import NotifyMessage from '../models/NotifyMessage';
+import Item from '../models/Item';
 
 import categoryView1 from '../../src/drawable/categoryView/categoryView1.jpg';
 import categoryView2 from '../../src/drawable/categoryView/categoryView2.jpg';
@@ -35,7 +38,7 @@ import productImage18 from '../../src/drawable/detailProductImage/productImage18
 import productImage19 from '../../src/drawable/detailProductImage/productImage19.jpg';
 import productImage20 from '../../src/drawable/detailProductImage/productImage20.jpg';
 
-import Item from '../models/Item';
+////////////////Items and Products////////////////////////////////////////////////////////
 
 const item1 = new Item('001', 'Product 001', 1500000,
     [productImage1, productImage1, productImage1], 'Hello! This is 001');
@@ -78,7 +81,8 @@ const item19 = new Item('019', 'Product 019', 1000000,
 const item20 = new Item('020', 'Product 020', 500000,
     [productImage20, productImage20, productImage20], 'Hello! This is 020');
 
-//list category:
+////////////////All categories///////////////////////////////////////////////////////////
+
 const category1 = new CategoryWithAnImage('SPRING COLLECTION', 'oneView', [
     item1, item2, item3, item4, item5, item6
 ], categoryView1);
@@ -98,4 +102,31 @@ const category5 = new CategoryWithSwiper('ACCESSORIES', 'swiper', [
 ], [categoryView11, categoryView12, categoryView13, categoryView14]);
 
 export const categories = [category1, category2, category5, category4, category3];
-export const accountInfo = new AccountInfo('tri.truong.dsn', 'Tri', 'Truong Mai Cong', 'tri.truong.set15@eiu.edu.vn', 'Binh Duong');
+
+////////////////Purchase History////////////////////////////////////////////////////////
+
+const order1 = new Order('Tien Van Bui', '14:50 26-05-2018', '1531200040',
+    5000000, 'Credit Card', '255, Dong Khoi st, Thu Dau Mot, Binh Duong Newcity');
+const order2 = new Order('Tri Truong Mai', '14:50 23-03-2018', '1531200028',
+    2000000, 'COD', 'Viet Nam');
+
+export const orders = [order1, order2];
+
+////////////////Notifications///////////////////////////////////////////////////////////
+
+const message1 = new NotifyMessage('Discounted up to 20% for all items', '20-10-2018');
+const message2 = new NotifyMessage('Discounted up to 20% for all items', '15-10-2018');
+const message3 =
+    new NotifyMessage('Discounted up to 50% for all items with MickeyCard', '7-11-2018');
+
+export const messages = [message1, message2, message3];
+
+////////////////Acount Infomation//////////////////////////////////////////////////////
+
+export const accountInfo = new AccountInfo(
+    'tri.truong.dsn', 'Tri',
+    'Truong Mai Cong',
+    'tri.truong.set15@eiu.edu.vn',
+    'Binh Duong'
+);
+

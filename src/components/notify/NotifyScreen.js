@@ -1,22 +1,14 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions, ListView } from 'react-native';
 import { Foundation } from '@expo/vector-icons';
+import { messages } from '../../data';
 
-import NotifyMessage from '../../models/NotifyMessage';
-
-const { width } = Dimensions.get('window');
-const message1 = new NotifyMessage('Discounted up to 20% for all items', '20-10-2018');
-const message2 = new NotifyMessage('Discounted up to 20% for all items', '15-10-2018');
-const message3 =
-    new NotifyMessage('Discounted up to 50% for all items with MickeyCard', '7-11-2018');
-
-export default class NotifyScreen extends Component {
+class NotifyScreen extends Component {
     constructor(props) {
         super(props);
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-        const data = [message1, message2, message3];
         this.state = {
-            dataSource: ds.cloneWithRows(data)
+            dataSource: ds.cloneWithRows(messages)
         };
     }
 
@@ -43,6 +35,7 @@ export default class NotifyScreen extends Component {
         );
     }
 }
+const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
@@ -77,3 +70,5 @@ const styles = StyleSheet.create({
         fontSize: 8
     }
 });
+
+export default NotifyScreen;

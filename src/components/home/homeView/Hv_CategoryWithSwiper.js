@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
+import {
+    View, Text,
+    StyleSheet, Dimensions,
+    Image, TouchableOpacity,
+    TouchableWithoutFeedback
+} from 'react-native';
 import Swiper from 'react-native-swiper';
 
 
@@ -29,10 +34,26 @@ class HvCategoryWithSwiper extends Component {
                 </View>
                 <View style={{ flex: 4, elevation: 5, }}>
                     <Swiper>
-                        <Image source={category.swiperSource[0]} style={styles.imageStyle1} />
-                        <Image source={category.swiperSource[1]} style={styles.imageStyle2} />
-                        <Image source={category.swiperSource[2]} style={styles.imageStyle3} />
-                        <Image source={category.swiperSource[3]} style={styles.imageStyle4} />
+                        <TouchableWithoutFeedback
+                            onPress={() => navigation.navigate('Category', { category })}
+                        >
+                            <Image source={category.swiperSource[0]} style={styles.imageStyle1} />
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback
+                            onPress={() => navigation.navigate('Category', { category })}
+                        >
+                            <Image source={category.swiperSource[1]} style={styles.imageStyle2} />
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback
+                            onPress={() => navigation.navigate('Category', { category })}
+                        >
+                            <Image source={category.swiperSource[2]} style={styles.imageStyle3} />
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback
+                            onPress={() => navigation.navigate('Category', { category })}
+                        >
+                            <Image source={category.swiperSource[3]} style={styles.imageStyle4} />
+                        </TouchableWithoutFeedback>
                     </Swiper>
                 </View>
             </View>

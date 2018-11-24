@@ -46,7 +46,14 @@ class CartScreen extends Component {
     renderRow(dataSource, sectionID, rowId) {
         return (
             <View style={styles.productContainer}>
-                <Image source={dataSource.item.img[0]} style={styles.productImg} />
+                <TouchableOpacity
+                    onPress={() =>
+                        this.props.navigation.navigate('DetailProduct',
+                            { item: dataSource.item })}
+                    delayPressIn={100}
+                >
+                    <Image source={dataSource.item.img[0]} style={styles.productImg} />
+                </TouchableOpacity>
                 <View style={styles.productInfo}>
                     <TouchableOpacity
                         onPress={() =>
