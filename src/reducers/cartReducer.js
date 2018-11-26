@@ -1,13 +1,4 @@
 import { ADDTOCART, DECREASECARTAMOUNT, INCREASECARTAMOUNT } from '../actions/types';
-// import CartItem from '../models/CartItem';
-// import Item from '../models/Item';
-
-// import productImage1 from '../../src/drawable/detailProductImage/productImage1.jpg';
-
-// const item1 = new Item('001', 'Product 001', 1500000,
-//     [productImage1, productImage1, productImage1], 'Hello! This is 001');
-
-// const initialCart = [new CartItem(item1, 1)];
 
 export default function (state = [], action) {
     switch (action.type) {

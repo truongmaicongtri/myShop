@@ -5,6 +5,7 @@ import AccountInfo from '../models/AccountInfo';
 import Order from '../models/Order';
 import NotifyMessage from '../models/NotifyMessage';
 import Item from '../models/Item';
+import RatedUnit from '../models/RatedUnit';
 
 import categoryView1 from '../../src/drawable/categoryView/categoryView1.jpg';
 import categoryView2 from '../../src/drawable/categoryView/categoryView2.jpg';
@@ -38,7 +39,8 @@ import productImage18 from '../../src/drawable/detailProductImage/productImage18
 import productImage19 from '../../src/drawable/detailProductImage/productImage19.jpg';
 import productImage20 from '../../src/drawable/detailProductImage/productImage20.jpg';
 
-////////////////Items and Products////////////////////////////////////////////////////////
+
+////////////////Products ////////////////////////////////////////////////////////
 
 const item1 = new Item('001', 'Product 001', 1500000,
     [productImage1, productImage1, productImage1], 'Hello! This is 001');
@@ -84,22 +86,22 @@ const item20 = new Item('020', 'Product 020', 500000,
 ////////////////All categories///////////////////////////////////////////////////////////
 
 const category1 = new CategoryWithAnImage('SPRING COLLECTION', 'oneView', [
-    item1, item2, item3, item4, item5, item6
-], categoryView1);
+    item1, item2, item3, item4, item5, item6], categoryView1);
 
 const category2 = new CategoryWithSwiper('ALL PRODUCTS', 'swiper', [
-    item1, item2, item3, item4, item5, item6, item7, item8
-], [categoryView2, categoryView3, categoryView4, categoryView5]);
+    item1, item2, item3, item4, item5, item6, item7, item8],
+    [categoryView2, categoryView3, categoryView4, categoryView5]);
 
-const category3 = new CategoryWithListItem('HOT ITEMS', 'listItem', [
-    item6, item7, item8, item9, item10
-]);
+const category3 = new CategoryWithListItem('HOT ITEMS', 'listItem',
+    [item6, item7, item8, item9, item10]);
+
 const category4 = new CategoryWithAnImage('NEW PRODUCTS', 'oneView', [
     item11, item12, item13, item14
 ], categoryView10);
-const category5 = new CategoryWithSwiper('ACCESSORIES', 'swiper', [
-    item19, item20, item15, item16, item17, item18
-], [categoryView11, categoryView12, categoryView13, categoryView14]);
+
+const category5 = new CategoryWithSwiper('ACCESSORIES', 'swiper',
+    [item19, item20, item15, item16, item17, item18],
+    [categoryView11, categoryView12, categoryView13, categoryView14]);
 
 export const categories = [category1, category2, category5, category4, category3];
 
@@ -129,4 +131,10 @@ export const accountInfo = new AccountInfo(
     'tri.truong.set15@eiu.edu.vn',
     'Binh Duong'
 );
+
+///////////////Rated History///////////////////////////////////////////////////////////
+
+const rated1 = new RatedUnit('King Shop', 3, '20-10-2018');
+
+export const ratedHistory = [rated1];
 

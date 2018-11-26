@@ -6,7 +6,7 @@ import {
   Text,
 } from 'react-native';
 import { LinearGradient } from 'expo';
-import * as data from '../../data';
+import { categories } from '../../data';
 
 
 import HvCategoryWithSwiper from './homeView/Hv_CategoryWithSwiper';
@@ -24,7 +24,7 @@ export default class HomeScreen extends Component {
     const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
     this.state = {
-      dataSource: ds.cloneWithRows(data.categories)
+      dataSource: ds.cloneWithRows(categories)
     };
   }
   renderRow(dataSource) {

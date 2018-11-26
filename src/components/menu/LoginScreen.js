@@ -22,7 +22,12 @@ class LoginScreen extends Component {
 
     render() {
         return (
-            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#2980B9', '#6DD5FA']} style={styles.screen}>
+            <LinearGradient
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                colors={['#2980B9', '#6DD5FA']}
+                style={styles.screen}
+            >
                 <View style={styles.topContainer}>
                     <Image
                         style={styles.avatarView}

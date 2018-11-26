@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    View,
+    View, ListView,
     Text,
     StyleSheet,
     Dimensions,
@@ -10,28 +10,60 @@ import {
 import { LinearGradient } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating';
+import { ratedHistory } from '../../data';
 
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
 
 class UserRatingHistory extends Component {
+
     constructor(props) {
         super(props);
+
+        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.state = {
-            starCount: 3,
+            dataSource: ds.cloneWithRows(ratedHistory)
         };
     }
 
-    onStarRatingPress(rating) {
-        this.setState({
-            starCount: rating
-        });
+    renderRow(dataSource) {
+        return (
+            <View style={styles.ratingwrapper}>
+                <Text style={styles.txtrate}>{dataSource.shopName}</Text>
+                <View style={styles.rate}>
+                    <StarRating
+                        disabled
+                        emptyStar={'md-star-outline'}
+                        fullStar={'md-star'}
+                        iconSet={'Ionicons'}
+                        maxStars={5}
+                        rating={dataSource.star}
+                        selectedStar={(rating) => this.onStarRatingPress(rating)}
+                        fullStarColor={'red'}
+                        emptyStarColor={'red'}
+                    />
+                    <View style={{ justifyContent: 'center' }}>
+                        <Text
+                            style={styles.ratenumber}
+                        >
+                            Rating: {dataSource.star} / 5
+                            </Text>
+                    </View>
+                </View>
+                <Text style={styles.date}>{dataSource.date}</Text>
+            </View>
+        );
     }
 
     render() {
         const { navigation } = this.props;
         return (
-            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#72b2f9', '#eaafc8']} style={styles.container}>
+            <LinearGradient
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                colors={['#72b2f9', '#eaafc8']}
+                style={styles.container}
+            >
                 <ScrollView >
                     <View style={styles.shopname}>
                         <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -44,30 +76,11 @@ class UserRatingHistory extends Component {
                             <Ionicons name="ios-happy" size={35} color="#fff" />
                         </TouchableOpacity>
                     </View>
-                    <View style={styles.ratingwrapper}>
-                        <Text style={styles.txtrate}>King Shop</Text>
-                        <View style={styles.rate}>
-                            <StarRating
-                                disabled={true}
-                                emptyStar={'md-star-outline'}
-                                fullStar={'md-star'}
-                                iconSet={'Ionicons'}
-                                maxStars={5}
-                                rating={this.state.starCount}
-                                selectedStar={(rating) => this.onStarRatingPress(rating)}
-                                fullStarColor={'red'}
-                                emptyStarColor={'red'}
-                            />
-                            <View style={{ justifyContent: 'center' }}>
-                                <Text
-                                    style={styles.ratenumber}
-                                >
-                                    Rating: {this.state.starCount} / 5
-                            </Text>
-                            </View>
-                        </View>
-                        <Text style={styles.date}>20-10-2018</Text>
-                    </View>
+                    <ListView
+                        dataSource={this.state.dataSource}
+                        renderRow={this.renderRow.bind(this)}
+                    />
+
                 </ScrollView>
             </LinearGradient>
         );
