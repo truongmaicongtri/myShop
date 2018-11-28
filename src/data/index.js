@@ -6,6 +6,8 @@ import Order from '../models/Order';
 import NotifyMessage from '../models/NotifyMessage';
 import Item from '../models/Item';
 import RatedUnit from '../models/RatedUnit';
+import Shop from '../models/Shop';
+import ShopInfo from '../models/ShopInfo';
 
 import categoryView1 from '../../src/drawable/categoryView/categoryView1.jpg';
 import categoryView2 from '../../src/drawable/categoryView/categoryView2.jpg';
@@ -17,6 +19,9 @@ import categoryView11 from '../../src/drawable/categoryView/categoryView11.jpg';
 import categoryView12 from '../../src/drawable/categoryView/categoryView12.jpg';
 import categoryView13 from '../../src/drawable/categoryView/categoryView13.jpg';
 import categoryView14 from '../../src/drawable/categoryView/categoryView14.jpg';
+
+import categoryView15 from '../../src/drawable/categoryView/raudalat.jpg';
+import categoryView16 from '../../src/drawable/categoryView/rausachVietGap.jpg';
 
 import productImage1 from '../../src/drawable/detailProductImage/productImage1.jpg';
 import productImage2 from '../../src/drawable/detailProductImage/productImage2.jpg';
@@ -39,6 +44,15 @@ import productImage18 from '../../src/drawable/detailProductImage/productImage18
 import productImage19 from '../../src/drawable/detailProductImage/productImage19.jpg';
 import productImage20 from '../../src/drawable/detailProductImage/productImage20.jpg';
 
+
+import productImage21 from '../../src/drawable/detailProductImage/cai-thao.jpg';
+import productImage22 from '../../src/drawable/detailProductImage/cantay.jpg';
+import productImage23 from '../../src/drawable/detailProductImage/mongtoi.jpg';
+import productImage24 from '../../src/drawable/detailProductImage/raucaingong.jpg';
+import productImage25 from '../../src/drawable/detailProductImage/rauden.jpg';
+import productImage26 from '../../src/drawable/detailProductImage/raumuong.jpg';
+import productImage27 from '../../src/drawable/detailProductImage/xalachoakleaf.jpg';
+import productImage28 from '../../src/drawable/detailProductImage/xalachxoan.jpg';
 
 ////////////////Products ////////////////////////////////////////////////////////
 
@@ -83,8 +97,27 @@ const item19 = new Item('019', 'Product 019', 1000000,
 const item20 = new Item('020', 'Product 020', 500000,
     [productImage20, productImage20, productImage20], 'Hello! This is 020');
 
+
+const item21 = new Item('021', 'Product 001', 15000,
+    [productImage21, productImage21, productImage21], 'Hello! This is cai thao');
+const item22 = new Item('022', 'Product 002', 15000,
+    [productImage22, productImage22, productImage22], 'Hello! This is can tay');
+const item23 = new Item('023', 'Product 003', 10000,
+    [productImage23, productImage23, productImage23], 'Hello! This is mong toi');
+const item24 = new Item('024', 'Product 004', 5000,
+    [productImage24, productImage24, productImage24], 'Hello! This is rau cai ngong');
+const item25 = new Item('025', 'Product 005', 13000,
+    [productImage25, productImage25, productImage25], 'Hello! This is rau den');
+const item26 = new Item('026', 'Product 006', 5000,
+    [productImage26, productImage26, productImage26], 'Hello! This is rau muong');
+const item27 = new Item('027', 'Product 007', 20000,
+    [productImage27, productImage27, productImage27], 'Hello! This is xa lach oakleaf');
+const item28 = new Item('028', 'Product 008', 17000,
+    [productImage28, productImage28, productImage28], 'Hello! This is xa lach xoan');
+
 ////////////////All categories///////////////////////////////////////////////////////////
 
+//bui shop
 const category1 = new CategoryWithAnImage('SPRING COLLECTION', 'oneView', [
     item1, item2, item3, item4, item5, item6], categoryView1);
 
@@ -103,16 +136,31 @@ const category5 = new CategoryWithSwiper('ACCESSORIES', 'swiper',
     [item19, item20, item15, item16, item17, item18],
     [categoryView11, categoryView12, categoryView13, categoryView14]);
 
-export const categories = [category1, category2, category5, category4, category3];
+export const categories1 = [category1, category2, category5, category4, category3];
 
-////////////////Purchase History////////////////////////////////////////////////////////
+//Tri shop
+const category6 = new CategoryWithAnImage('RAU SẠCH ĐÀ LẠT', 'oneView', [
+    item21, item22, item23, item24
+], categoryView15);
+const category7 = new CategoryWithAnImage('RAU SẠCH VIETGAP', 'oneView', [
+    item25, item26, item27, item28
+], categoryView16);
+const category8 = new CategoryWithListItem('TẤT CẢ MẶT HÀNG', 'listItem',
+    [item21, item22, item23, item24, item25, item26, item27, item28]);
+export const categories2 = [category6, category7, category8];
 
-const order1 = new Order('Tien Van Bui', '14:50 26-05-2018', '1531200040',
-    5000000, 'Credit Card', '255, Dong Khoi st, Thu Dau Mot, Binh Duong Newcity');
-const order2 = new Order('Tri Truong Mai', '14:50 23-03-2018', '1531200028',
-    2000000, 'COD', 'Viet Nam');
+////////////////Contact ////////////////////////////////////////////////////////////////
+//bui shop
+const shopInfo1 = new ShopInfo(11.053683, 106.666986,
+    '255, Nam Ky Khoi Nghia st, Binh Duong Newcity',
+    '(+84)0397408460', 'tienbui237.550@gmail.com',
+    ' (+84)0397408460');
 
-export const orders = [order1, order2];
+//tri Shop
+const shopInfo2 = new ShopInfo(10.9634671, 106.7125004,
+    'T25/9, Tổ 25, Khu Phố Bình Thuận 2, Phường Thuận Giao, Thị Xã Thuận An, Tỉnh Bình Dương, Khu dân cư Thuận giao, Thuận An, Bình Dương, Việt Nam',
+    '(+84)0397408460', 'tri.truong.dsn@gmail.com',
+    ' (+84)0397408460');
 
 ////////////////Notifications///////////////////////////////////////////////////////////
 
@@ -123,6 +171,13 @@ const message3 =
 
 export const messages = [message1, message2, message3];
 
+//////////////Shop/////////////////////////////////////////////////////////////////////
+
+const buiShop = new Shop("Bui's shop", categories1, messages, shopInfo1);
+const triShop = new Shop("Tri's shop", categories2, messages, shopInfo2);
+
+export const currentShop = triShop;
+
 ////////////////Acount Infomation//////////////////////////////////////////////////////
 
 export const accountInfo = new AccountInfo(
@@ -131,10 +186,17 @@ export const accountInfo = new AccountInfo(
     'tri.truong.set15@eiu.edu.vn',
     'Binh Duong'
 );
+////////////////Purchase History////////////////////////////////////////////////////////
+
+const order1 = new Order('Tien Van Bui', '14:50 26-05-2018', '1531200040',
+    5000000, 'Credit Card', '255, Dong Khoi st, Thu Dau Mot, Binh Duong Newcity');
+const order2 = new Order('Tri Truong Mai', '14:50 23-03-2018', '1531200028',
+    2000000, 'COD', 'Viet Nam');
+
+export const orders = [order1, order2];
 
 ///////////////Rated History///////////////////////////////////////////////////////////
 
 const rated1 = new RatedUnit('King Shop', 3, '20-10-2018');
 
 export const ratedHistory = [rated1];
-

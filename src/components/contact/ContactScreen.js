@@ -2,17 +2,19 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { FontAwesome, Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
+import { currentShop } from '../../data';
 
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
+const shopInfo = currentShop.shopInfo;
 
 export default class ContactScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
             region: {
-                latitude: 11.053683,
-                longitude: 106.666986,
+                latitude: shopInfo.latitude,
+                longitude: shopInfo.longitude,
                 latitudeDelta: 0.002,
                 longitudeDelta: 0.002,
             },
@@ -42,25 +44,25 @@ export default class ContactScreen extends Component {
                         />
                         <View style={{ width: 11 }} />
                         <Text style={styles.info}>
-                            255, Nam Ky Khoi Nghia st, Binh Duong Newcity
+                            {shopInfo.address}
                         </Text>
                     </View>
                     <View style={styles.inforow}>
                         <Entypo name="phone" size={33} color="#B10D65" />
                         <Text style={styles.info}>
-                            (+84)0397408460
+                            {shopInfo.phoneNumber}
                         </Text>
                     </View>
                     <View style={styles.inforow}>
                         <MaterialCommunityIcons name="gmail" size={33} color="#B10D65" />
                         <Text style={styles.info}>
-                            tienbui237.550@gmail.com
+                            {shopInfo.email}
                         </Text>
                     </View>
                     <View style={styles.inforow}>
                         <Entypo name="mobile" size={33} color="#B10D65" />
                         <Text style={styles.info}>
-                            (+84)0397408460
+                            {shopInfo.mobile}
                         </Text>
                     </View>
                 </View>

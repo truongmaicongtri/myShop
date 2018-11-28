@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, TextInput } from 'react-native';
 import { LinearGradient } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
+import { currentShop } from '../../data';
 
 
 class TopBar extends Component {
@@ -23,7 +24,7 @@ class TopBar extends Component {
                         <Ionicons name="ios-menu" size={40} color="#fff" />
                     </TouchableOpacity>
                     <Text style={{ fontSize: 30, textAlign: 'center', color: '#fff' }}>
-                        My Shop
+                        {currentShop.shopName}
                     </Text>
                     <TouchableOpacity style={{ marginTop: 5 }}>
                         <Ionicons name="ios-happy" size={35} color="#fff" />

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions, ListView } from 'react-native';
 import { Foundation } from '@expo/vector-icons';
-import { messages } from '../../data';
+import { currentShop } from '../../data';
 
 class NotifyScreen extends Component {
     constructor(props) {
         super(props);
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.state = {
-            dataSource: ds.cloneWithRows(messages)
+            dataSource: ds.cloneWithRows(currentShop.notifyMessages)
         };
     }
 
