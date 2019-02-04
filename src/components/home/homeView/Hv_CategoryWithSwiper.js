@@ -29,7 +29,7 @@ class HvCategoryWithSwiper extends Component {
                         onPress={() => navigation.navigate('Category', { category })}
                         delayPressIn={100}
                     >
-                        <Text style={styles.textStyle}>{category.name}</Text>
+                        <Text style={styles.textStyle}>{category.categoryname}</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 4, elevation: 5, }}>
@@ -37,22 +37,22 @@ class HvCategoryWithSwiper extends Component {
                         <TouchableWithoutFeedback
                             onPress={() => navigation.navigate('Category', { category })}
                         >
-                            <Image source={category.swiperSource[0]} style={styles.imageStyle1} />
+                            <Image source={{ uri: category.categoryview[0] }} style={styles.imageStyle1} />
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback
                             onPress={() => navigation.navigate('Category', { category })}
                         >
-                            <Image source={category.swiperSource[1]} style={styles.imageStyle2} />
+                            <Image source={{ uri: category.categoryview[1] }} style={styles.imageStyle2} />
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback
                             onPress={() => navigation.navigate('Category', { category })}
                         >
-                            <Image source={category.swiperSource[2]} style={styles.imageStyle3} />
+                            <Image source={{ uri: category.categoryview[2] }} style={styles.imageStyle3} />
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback
                             onPress={() => navigation.navigate('Category', { category })}
                         >
-                            <Image source={category.swiperSource[3]} style={styles.imageStyle4} />
+                            <Image source={{ uri: category.categoryview[3] }} style={styles.imageStyle4} />
                         </TouchableWithoutFeedback>
                     </Swiper>
                 </View>

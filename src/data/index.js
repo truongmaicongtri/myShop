@@ -167,7 +167,7 @@ const shopInfo2 = new ShopInfo(10.9634671, 106.7125004,
 const message1 = new NotifyMessage('Discounted up to 20% for all items', '20-10-2018');
 const message2 = new NotifyMessage('Discounted up to 20% for all items', '15-10-2018');
 const message3 =
-    new NotifyMessage('Discounted up to 50% for all items with MickeyCard', '7-11-2018');
+    new NotifyMessage('Discounted up to 50% for all items with HandsomeCard', '7-11-2018');
 
 export const messages = [message1, message2, message3];
 
@@ -176,7 +176,7 @@ export const messages = [message1, message2, message3];
 const buiShop = new Shop("Bui's shop", categories1, messages, shopInfo1);
 const triShop = new Shop("Tri's shop", categories2, messages, shopInfo2);
 
-export const currentShop = triShop;
+export const currentShop = buiShop;
 
 ////////////////Acount Infomation//////////////////////////////////////////////////////
 

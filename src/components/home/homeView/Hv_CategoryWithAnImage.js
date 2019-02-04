@@ -14,7 +14,7 @@ class HvCategoryWithAnImage extends Component {
         const { navigation } = this.props;
         const { category } = this.props;
         return (
-            <View style={styles.collect}>
+            <View style={styles.container}>
                 <View style={{ flex: 1, justifyContent: 'flex-start' }}>
                     <TouchableOpacity
                         onPress={() =>
@@ -22,7 +22,7 @@ class HvCategoryWithAnImage extends Component {
                         }
                         delayPressIn={100}
                     >
-                        <Text style={styles.textStyle}>{category.name}</Text>
+                        <Text style={styles.textStyle}>{category.categoryname}</Text>
                     </TouchableOpacity>
 
                 </View>
@@ -33,7 +33,7 @@ class HvCategoryWithAnImage extends Component {
                         }
                         delayPressIn={100}
                     >
-                        <Image source={category.imageView} style={styles.imageStyle} />
+                        <Image source={{ uri: category.categoryview[0] }} style={styles.imageStyle} />
                     </TouchableOpacity>
                 </View>
             </View >
@@ -44,7 +44,7 @@ class HvCategoryWithAnImage extends Component {
 const imgWidth = width - 40;
 const imgHeight = (imgWidth / 2400) * 1230;
 const styles = StyleSheet.create({
-    collect: {
+    container: {
         height: height * 0.35,
         marginLeft: 10,
         marginRight: 10,

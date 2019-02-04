@@ -4,7 +4,7 @@ export default function (state = [], action) {
     switch (action.type) {
         case ADDTOCART:
             {
-                const sameItem = state.filter(e => e.item.id === action.cartItem.item.id);
+                const sameItem = state.filter(e => e.item.productid === action.cartItem.item.productid);
                 if (sameItem.length > 0) {
                     return [...state];
                 }

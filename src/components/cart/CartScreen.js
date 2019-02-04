@@ -31,7 +31,7 @@ class CartScreen extends Component {
         this.setState({ dataSource: ds.cloneWithRows(newProps.cart) });
         this.setState({
             totalCost: newProps.cart.reduce((total, currentItem) =>
-                total + (currentItem.amount * currentItem.item.cost), 0)
+                total + (currentItem.amount * currentItem.item.price), 0)
         });
     }
 
@@ -52,7 +52,7 @@ class CartScreen extends Component {
                             { item: dataSource.item })}
                     delayPressIn={100}
                 >
-                    <Image source={dataSource.item.img[0]} style={styles.productImg} />
+                    <Image source={{ uri: dataSource.item.productimgs[0] }} style={styles.productImg} />
                 </TouchableOpacity>
                 <View style={styles.productInfo}>
                     <TouchableOpacity
@@ -60,11 +60,11 @@ class CartScreen extends Component {
                             this.props.navigation.navigate('DetailProduct',
                                 { item: dataSource.item })}
                     >
-                        <Text style={styles.textName}>{dataSource.item.name}</Text>
+                        <Text style={styles.textName}>{dataSource.item.productname}</Text>
                     </TouchableOpacity>
                     <NumberFormat
                         displayType={'text'}
-                        value={dataSource.item.cost}
+                        value={dataSource.item.price}
                         thousandSeparator=','
                         renderText={value => <Text style={styles.textPrice}>{value} VND</Text>}
                     />

@@ -9,8 +9,8 @@
     "orientation": "portrait",
     "icon": "./src/drawable/icon/shop-app-icon.png",
     "splash": {
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./src/drawable/splashIcon/whatsapp.png",
+      "resizeMode": "cover"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

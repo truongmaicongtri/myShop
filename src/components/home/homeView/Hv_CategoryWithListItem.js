@@ -20,16 +20,16 @@ class HvCategoryWithListItem extends Component {
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
         //get listItem
-        const { listItem } = this.props.category;
+        const { products } = this.props.category;
 
         //create data
         const data = [];
 
         //convert listItem to data (2 items on a line)
-        const lineOfListView = (listItem.length % 2 === 0) ?
-            listItem.length / 2 : (listItem.length - 1) / 2;
+        const lineOfListView = (products.length % 2 === 0) ?
+            products.length / 2 : (products.length - 1) / 2;
         for (let index = 0; index < lineOfListView; index++) {
-            const dataItem = { item1: listItem[index * 2], item2: listItem[(index * 2) + 1] };
+            const dataItem = { product1: products[index * 2], product2: products[(index * 2) + 1] };
             data.push(dataItem);
         }
         this.state = {
@@ -44,15 +44,15 @@ class HvCategoryWithListItem extends Component {
                     <TouchableOpacity
                         onPress={() => {
                             this.props.navigation.navigate('DetailProduct',
-                                { item: dataSource.item1 });
+                                { item: dataSource.product1 });
                         }}
                         delayPressIn={100}
                     >
-                        <Image source={dataSource.item1.img[0]} style={styles.imgStyle} />
-                        <Text style={styles.productname}>{dataSource.item1.name}</Text>
+                        <Image source={{ uri: dataSource.product1.productimgs[0] }} style={styles.imgStyle} />
+                        <Text style={styles.productname}>{dataSource.product1.productname}</Text>
                         <NumberFormat
                             displayType={'text'}
-                            value={dataSource.item1.cost}
+                            value={dataSource.product1.price}
                             thousandSeparator=','
                             renderText={value => <Text style={styles.productprice}>{value} VND</Text>}
                         />
@@ -63,15 +63,15 @@ class HvCategoryWithListItem extends Component {
                     <TouchableOpacity
                         onPress={() => {
                             this.props.navigation.navigate('DetailProduct',
-                                { item: dataSource.item2 });
+                                { item: dataSource.product2 });
                         }}
                         delayPressIn={100}
                     >
-                        <Image source={dataSource.item2.img[0]} style={styles.imgStyle} />
-                        <Text style={styles.productname}>{dataSource.item2.name}</Text>
+                        <Image source={{ uri: dataSource.product2.productimgs[0] }} style={styles.imgStyle} />
+                        <Text style={styles.productname}>{dataSource.product2.productname}</Text>
                         <NumberFormat
                             displayType={'text'}
-                            value={dataSource.item2.cost}
+                            value={dataSource.product2.price}
                             thousandSeparator=','
                             renderText={value => <Text style={styles.productprice}>{value} VND</Text>}
                         />
@@ -96,7 +96,7 @@ class HvCategoryWithListItem extends Component {
                         activeOpacity={this.state.scrollBegin ? 1.0 : 0}
                         delayPressIn={100}
                     >
-                        <Text style={styles.title}> {category.name} </Text>
+                        <Text style={styles.title}> {category.categoryname} </Text>
                     </TouchableOpacity>
                 </View>
                 <ListView
@@ -114,7 +114,9 @@ const productimgheight = (productwidth / 783) * 1200;
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
-        margin: 10,
+        marginLeft: 10,
+        marginRight: 10,
+        marginTop: 10,
         elevation: 5,
     },
 

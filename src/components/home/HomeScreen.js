@@ -21,25 +21,33 @@ export default class HomeScreen extends Component {
   constructor(props) {
     super(props);
 
-    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-
     this.state = {
-      dataSource: ds.cloneWithRows(currentShop.listCategories)
+      dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
     };
   }
-  renderRow(dataSource) {
-    switch (dataSource.viewDisplay) {
-      case 'oneView':
+
+  async componentWillMount() {
+    const url = 'http://192.168.1.12/my_shop_webservice/getHomeScreen.php?shopid=shop01';
+    const response = await fetch(url, { method: 'POST', body: null });
+    const json = await response.json();
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(json)
+    });
+  }
+
+  renderRow(category) {
+    switch (category.displayview) {
+      case 'oneview':
         return (
-          <HvCategoryWithAnImage {...this.props} category={dataSource} />
+          <HvCategoryWithAnImage {...this.props} category={category} />
         );
       case 'swiper':
         return (
-          <HvCategoryWithSwiper {...this.props} category={dataSource} />
+          <HvCategoryWithSwiper {...this.props} category={category} />
         );
-      case 'listItem':
+      case 'listitem':
         return (
-          <HvCategoryWithListItem {...this.props} category={dataSource} />
+          <HvCategoryWithListItem {...this.props} category={category} />
         );
       default:
         return (
@@ -60,6 +68,7 @@ export default class HomeScreen extends Component {
           style={styles.screen}
         >
           <ListView
+            style={{ marginBottom: 10 }}
             dataSource={this.state.dataSource}
             renderRow={this.renderRow.bind(this)}
           />

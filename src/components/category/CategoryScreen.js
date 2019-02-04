@@ -24,9 +24,9 @@ class CategoryScreen extends Component {
 
         const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         const category = this.props.navigation.getParam('category');
-        const data = category.listItem;
+        const { products } = category;
         this.state = {
-            dataSource: ds.cloneWithRows(data)
+            dataSource: ds.cloneWithRows(products)
         };
     }
 
@@ -34,29 +34,29 @@ class CategoryScreen extends Component {
         this.props.addToCart(cartItem);
     }
 
-    renderRow(dataSource) {
+    renderRow(product) {
         return (
             <View style={styles.productContainer}>
                 <TouchableOpacity
                     onPress={() =>
                         this.props.navigation.navigate('DetailProduct',
-                            { item: dataSource })}
+                            { product })}
                     delayPressIn={100}
                 >
-                    <Image source={dataSource.img[0]} style={styles.productImg} />
+                    <Image source={{ uri: product.productimgs[0] }} style={styles.productImg} />
                 </TouchableOpacity>
 
                 <View style={styles.productInfo}>
                     <TouchableOpacity
                         onPress={() =>
                             this.props.navigation.navigate('DetailProduct',
-                                { item: dataSource })}
+                                { item: product })}
                     >
-                        <Text style={styles.textName}>{dataSource.name}</Text>
+                        <Text style={styles.textName}>{product.productname}</Text>
                     </TouchableOpacity>
                     <NumberFormat
                         displayType={'text'}
-                        value={dataSource.cost}
+                        value={product.price}
                         thousandSeparator=','
                         renderText={value => <Text style={styles.textPrice}>{value} VND</Text>}
                     />
@@ -65,7 +65,7 @@ class CategoryScreen extends Component {
                 </View>
                 <TouchableOpacity
                     style={styles.iconstyle}
-                    onPress={() => this.handleAddToCart(new CartItem(dataSource, 1))}
+                    onPress={() => this.handleAddToCart(new CartItem(product, 1))}
                 >
                     <Ionicons name="ios-cart" size={30} color="#B10D65" />
                 </TouchableOpacity>
@@ -86,7 +86,7 @@ class CategoryScreen extends Component {
                             >
                                 <Ionicons name="md-arrow-back" size={35} color="#B10D65" />
                             </TouchableOpacity>
-                            <Text style={styles.title}>{category.name}</Text>
+                            <Text style={styles.title}>{category.categoryname}</Text>
                             <View style={{ width: 30 }} />
                         </View>
                         <ListView

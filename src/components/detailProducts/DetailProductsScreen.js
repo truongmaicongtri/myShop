@@ -20,13 +20,13 @@ class DetailProductScreen extends Component {
         };
     }
 
-    handleAddToCart(cartItem) {
-        this.props.addToCart(cartItem);
+    handleAddToCart(product) {
+        this.props.addToCart(product);
     }
 
     render() {
         const { navigation } = this.props;
-        const item = navigation.getParam('item');
+        const product = navigation.getParam('item');
 
         return (
             <View style={styles.container}>
@@ -40,7 +40,7 @@ class DetailProductScreen extends Component {
                         </TouchableOpacity>
                         <View style={{ width: 30 }} />
                         <TouchableOpacity
-                            onPress={() => this.handleAddToCart(new CartItem(item, 1))}
+                            onPress={() => this.handleAddToCart(new CartItem(product, 1))}
                         >
                             <Ionicons name="ios-cart" size={25} color="#B10D65" />
                         </TouchableOpacity>
@@ -50,14 +50,14 @@ class DetailProductScreen extends Component {
                             <View style={{ alignItems: 'center' }}>
                                 <Image
                                     style={styles.img1}
-                                    source={item.img[1]}
+                                    source={{ uri: product.productimgs[0] }}
                                     resizeMode='contain'
-                                />
+                                />                 
                             </View>
                             <View style={{ alignItems: 'center' }}>
                                 <Image
                                     style={styles.img1}
-                                    source={item.img[2]}
+                                    source={{ uri: product.productimgs[0] }}
                                     resizeMode='contain'
                                 />
                             </View>
@@ -66,11 +66,11 @@ class DetailProductScreen extends Component {
                 </View >
                 <View style={styles.infoContainer}>
                     <View style={styles.titleProduct}>
-                        <Text style={{ color: '#BCBCBC', fontSize: 25 }}>{item.name}</Text>
+                        <Text style={{ color: '#BCBCBC', fontSize: 25 }}>{product.productname}</Text>
                         <Text style={{ fontSize: 25 }}> / </Text>
                         <NumberFormat
                             displayType={'text'}
-                            value={item.cost}
+                            value={product.price}
                             thousandSeparator=','
                             renderText={value =>
                                 <Text style={{ color: '#B10D65', fontSize: 25 }}>{value} VND</Text>
@@ -85,7 +85,7 @@ class DetailProductScreen extends Component {
                     <Card>
                         <Card.Content>
                             <Paragraph style={{ fontSize: 18, paddingLeft: 40, }}>
-                                {item.detail}
+                                {product.detail}
                             </Paragraph>
                         </Card.Content>
                     </Card>
