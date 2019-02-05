@@ -2,15 +2,25 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, TextInput } from 'react-native';
 import { LinearGradient } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import { currentShop } from '../../data';
 
 
 class TopBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            shopname: ''
         };
     }
+
+    async componentDidMount() {
+        const url = 'http://192.168.1.12/my_shop_webservice/getShopname.php?shopid=shop01';
+        const response = await fetch(url, { method: 'POST', body: null });
+        const json = await response.text();
+        this.setState({
+            shopname: json
+        });
+    }
+
     openMenu() {
         const { open } = this.props;
         open();
@@ -24,7 +34,7 @@ class TopBar extends Component {
                         <Ionicons name="ios-menu" size={40} color="#fff" />
                     </TouchableOpacity>
                     <Text style={{ fontSize: 30, textAlign: 'center', color: '#fff' }}>
-                        {currentShop.shopName}
+                        {this.state.shopname}
                     </Text>
                     <TouchableOpacity style={{ marginTop: 5 }}>
                         <Ionicons name="ios-happy" size={35} color="#fff" />

@@ -2,23 +2,42 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { FontAwesome, Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
-import { currentShop } from '../../data';
 
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
-const shopInfo = currentShop.shopInfo;
 
 export default class ContactScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            address: '',
+            cellphone: '',
+            email: '',
+            phone: '',
             region: {
-                latitude: shopInfo.latitude,
-                longitude: shopInfo.longitude,
+                latitude: 0,
+                longitude: 0,
                 latitudeDelta: 0.002,
                 longitudeDelta: 0.002,
             },
         };
+    }
+
+    async componentWillMount() {
+        const url = 'http://192.168.1.12/my_shop_webservice/getContactScreen.php?shopid=shop01';
+        const response = await fetch(url, { method: 'POST', body: null });
+        const bundle = await response.json();
+
+        const bundleLatitude = parseFloat(bundle.latitude.replace(',', '.'));
+        const bundleLongitude = parseFloat(bundle.longitude.replace(',', '.'));
+
+        this.setState({
+            region: { ...this.state.region, latitude: bundleLatitude, longitude: bundleLongitude },
+            address: bundle.address,
+            cellphone: bundle.cellphone,
+            email: bundle.email,
+            phone: bundle.phone,
+        });
     }
 
     render() {
@@ -44,25 +63,25 @@ export default class ContactScreen extends Component {
                         />
                         <View style={{ width: 11 }} />
                         <Text style={styles.info}>
-                            {shopInfo.address}
+                            {this.state.address}
                         </Text>
                     </View>
                     <View style={styles.inforow}>
                         <Entypo name="phone" size={33} color="#B10D65" />
                         <Text style={styles.info}>
-                            {shopInfo.phoneNumber}
+                            {this.state.cellphone}
                         </Text>
                     </View>
                     <View style={styles.inforow}>
                         <MaterialCommunityIcons name="gmail" size={33} color="#B10D65" />
                         <Text style={styles.info}>
-                            {shopInfo.email}
+                            {this.state.email}
                         </Text>
                     </View>
                     <View style={styles.inforow}>
                         <Entypo name="mobile" size={33} color="#B10D65" />
                         <Text style={styles.info}>
-                            {shopInfo.mobile}
+                            {this.state.phone}
                         </Text>
                     </View>
                 </View>

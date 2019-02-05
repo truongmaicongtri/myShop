@@ -26,12 +26,12 @@ export default class HomeScreen extends Component {
     };
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     const url = 'http://192.168.1.12/my_shop_webservice/getHomeScreen.php?shopid=shop01';
     const response = await fetch(url, { method: 'POST', body: null });
-    const json = await response.json();
+    const categories = await response.json();
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(json)
+      dataSource: this.state.dataSource.cloneWithRows(categories)
     });
   }
 
