@@ -1,23 +1,37 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions, ListView } from 'react-native';
 import { Foundation } from '@expo/vector-icons';
-import { currentShop } from '../../data';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
 class NotifyScreen extends Component {
     constructor(props) {
         super(props);
-        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.state = {
-            dataSource: ds.cloneWithRows(currentShop.notifyMessages)
+            dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
         };
     }
 
-    renderRow(dataSource) {
+    async componentDidMount() {
+        const url = 'http://192.168.1.12/my_shop_webservice/getNotification.php?shopid=shop01';
+        const response = await fetch(url, { method: 'POST', body: null });
+        const messages = await response.json();
+        this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(messages)
+        });
+        this.handleChangeNumberOfNotification(messages.length);
+    }
+
+    handleChangeNumberOfNotification(number) {
+        this.props.changeNotification(number);
+    }
+
+    renderRow(mesages) {
         return (
             <View style={styles.row}>
                 <Foundation name="burst-sale" size={35} color="#B10D65" />
-                <Text style={styles.txtinfo}>{dataSource.message}</Text>
-                <Text style={styles.txtdate}>{dataSource.date}</Text>
+                <Text style={styles.txtinfo}>{mesages.detail}</Text>
+                <Text style={styles.txtdate}>{mesages.date}</Text>
             </View>
         );
     }
@@ -71,4 +85,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default NotifyScreen;
+export default connect(null, actions)(NotifyScreen);

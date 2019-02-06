@@ -37,9 +37,24 @@ class ChangePasswordScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View>
-                    <TextInput style={styles.txtrow} placeholder="OLD PASSWORD" />
-                    <TextInput style={styles.txtrow} placeholder="NEW PASSWORD" />
-                    <TextInput style={styles.txtrow} placeholder="CONFIRM PASSWORD" />
+                    <TextInput
+                        style={styles.txtrow}
+                        autoCapitalize='none'
+                        secureTextEntry
+                        placeholder="OLD PASSWORD"
+                    />
+                    <TextInput
+                        style={styles.txtrow}
+                        autoCapitalize='none'
+                        secureTextEntry
+                        placeholder="NEW PASSWORD"
+                    />
+                    <TextInput
+                        style={styles.txtrow}
+                        autoCapitalize='none'
+                        secureTextEntry
+                        placeholder="CONFIRM PASSWORD"
+                    />
                 </View>
                 <View style={styles.btn}>
                     <TouchableOpacity style={styles.btnedit}>

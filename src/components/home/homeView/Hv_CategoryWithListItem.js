@@ -17,10 +17,16 @@ class HvCategoryWithListItem extends Component {
     constructor(props) {
         super(props);
 
-        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+        this.fetchProduct(this.props.category.categoryid);
+        this.state = {
+            dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
+        };
+    }
 
-        //get listItem
-        const { products } = this.props.category;
+    async fetchProduct(categoryid) {
+        const url = 'http://192.168.1.12/my_shop_webservice/getProduct.php?categoryid=' + categoryid;
+        const response = await fetch(url, { method: 'POST', body: null });
+        const products = await response.json();
 
         //create data
         const data = [];
@@ -32,9 +38,10 @@ class HvCategoryWithListItem extends Component {
             const dataItem = { product1: products[index * 2], product2: products[(index * 2) + 1] };
             data.push(dataItem);
         }
-        this.state = {
-            dataSource: ds.cloneWithRows(data),
-        };
+
+        this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(data)
+        });
     }
 
     renderRow(dataSource) {

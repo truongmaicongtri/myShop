@@ -1,9 +1,9 @@
-import Item from './Item';
+import Product from './Product';
 
 export class Category {
     name: string;
     viewDisplay: string;
-    listItem: Array<Item>;
+    listItem: Array<Product>;
 
     constructor(name, viewDisplay, listItem) {
         this.name = name;

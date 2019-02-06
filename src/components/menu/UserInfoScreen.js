@@ -11,8 +11,6 @@ import { accountInfo } from '../../data';
 const { height } = Dimensions.get('window');
 const { width } = Dimensions.get('window');
 
-let info = accountInfo;
-
 class UserInfoScreen extends Component {
     static navigationOptions = {
         header: null
@@ -21,14 +19,31 @@ class UserInfoScreen extends Component {
         super(props);
         this.state = {
             isEditButtonPressed: false,
-            info: { ...info }
+            username: '',
+            firstName: '',
+            lastName: '',
+            email: '',
+            address: '',
+            info: {
+                username: 'awdasd',
+                firstName: 'sadawds',
+                lastName: 'awdsadwd',
+                email: 'adwdsda',
+                address: 'wdawdsad'
+            }
         };
     }
 
     handleEditButtonOnPress() {
         if (this.state.isEditButtonPressed) {
-            //update lai info
-            info = { ...this.state.info };
+            this.setState({
+                info: {
+                    firstName: this.state.firstName,
+                    lastName: this.state.lastName,
+                    email: this.state.email,
+                    address: this.state.address,
+                }
+            });
         }
         this.setState({ isEditButtonPressed: !this.state.isEditButtonPressed });
     }
@@ -37,6 +52,12 @@ class UserInfoScreen extends Component {
         if (this.state.isEditButtonPressed === false) {
             this.props.navigation.navigate('ChangePassword');
         } else {
+            this.setState({
+                firstName: this.state.info.firstName,
+                lastName: this.state.info.lastName,
+                email: this.state.info.email,
+                address: this.state.info.address,
+            });
             this.setState({ isEditButtonPressed: !this.state.isEditButtonPressed });
         }
     }
@@ -59,43 +80,44 @@ class UserInfoScreen extends Component {
                     <TextInput
                         style={styles.txtrow}
                         editable={false}
-                        value={this.state.info.userName}
+                        value={this.state.username}
                         placeholder="USERNAME"
                     />
                     <TextInput
                         style={styles.txtrow}
                         editable={this.state.isEditButtonPressed}
-                        value={this.state.info.firstName}
+                        value={this.state.firstName}
                         placeholder="FIRST NAME"
-                        onChangeText={(typedText) => {
-                            this.setState({ info: { ...this.state.info, firstName: typedText } });
-                        }}
+                        onChangeText={firstName =>
+                            this.setState({ firstName })
+                        }
                     />
                     <TextInput
                         style={styles.txtrow}
                         editable={this.state.isEditButtonPressed}
-                        value={this.state.info.lastName}
+                        value={this.state.lastName}
                         placeholder="LAST NAME"
-                        onChangeText={(typedText) => {
-                            this.setState({ info: { ...this.state.info, lastName: typedText } });
+                        onChangeText={lastName => {
+                            this.setState({ lastName });
                         }}
                     />
                     <TextInput
                         style={styles.txtrow}
                         editable={this.state.isEditButtonPressed}
-                        value={this.state.info.email}
+                        value={this.state.email}
+                        autoCapitalize='none'
                         placeholder="EMAIL"
-                        onChangeText={(typedText) => {
-                            this.setState({ info: { ...this.state.info, email: typedText } });
+                        onChangeText={email => {
+                            this.setState({ email });
                         }}
                     />
                     <TextInput
                         style={styles.txtrow}
                         editable={this.state.isEditButtonPressed}
-                        value={this.state.info.address}
+                        value={this.state.address}
                         placeholder="ADDRESS"
-                        onChangeText={(typedText) => {
-                            this.setState({ info: { ...this.state.info, address: typedText } });
+                        onChangeText={address => {
+                            this.setState({ address });
                         }}
                     />
                 </View>

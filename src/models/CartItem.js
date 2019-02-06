@@ -1,7 +1,7 @@
-import Item from './Item';
+import Product from './Product';
 
 export default class CartItem {
-    item: Item;
+    item: Product;
     amount: 0;
 
     constructor(item, amount) {

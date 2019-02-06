@@ -24,7 +24,8 @@ class BottomBarNavigator extends Component {
             <View style={{ flex: 1 }}>
                 <TopBar {...this.props} navigate={this.props.navigation.navigate} />
                 <BottomtabNavigator
-                    screenProps={{ numberOfCartItem: this.props.numberOfCartItem }}
+                    screenProps={{ numberOfCartItem: this.props.numberOfCartItem,
+                         numberOfMessage: this.props.numberOfMessage }}
                 />
             </View>
         );
@@ -91,7 +92,7 @@ const BottomtabNavigator = createMaterialTopTabNavigator(
         },
         NotifyScreen: {
             screen: NotifyScreen,
-            navigationOptions: {
+            navigationOptions: ({ screenProps }) => ({
                 tabBarLabel: 'Notification',
                 tabBarIcon: ({ tintColor }) => (
                     <View>
@@ -118,18 +119,18 @@ const BottomtabNavigator = createMaterialTopTabNavigator(
                                     justifyContent: 'center'
                                 }}
                             >
-                                3
+                                {screenProps.numberOfMessage}
                             </Text>
                         </View>
 
                     </View>
                 )
-            }
+            })
         }
     },
     {
         initialRouteName: 'HomeInStackNavigator',
-        swipeEnabled: true,
+        swipeEnabled: false,
         tabBarPosition: 'bottom',
         tabBarOptions: {
             activeTintColor: 'white',
@@ -156,7 +157,8 @@ const BottomtabNavigator = createMaterialTopTabNavigator(
     }
 );
 const mapStateToProps = state => ({
-    numberOfCartItem: state.cart.length
+    numberOfCartItem: state.cart.length,
+    numberOfMessage: state.notification.numberOfMessage,
 });
 
 export default connect(mapStateToProps, null)(BottomBarNavigator);

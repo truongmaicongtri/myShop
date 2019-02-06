@@ -20,14 +20,23 @@ class CategoryScreen extends Component {
     }
 
     constructor(props) {
+        console.log('call category');
         super(props);
-
-        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         const category = this.props.navigation.getParam('category');
-        const { products } = category;
+        this.fetchProduct(category.categoryid);
         this.state = {
-            dataSource: ds.cloneWithRows(products)
+            dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
         };
+    }
+
+    async fetchProduct(categoryid) {
+        const url = 'http://192.168.1.12/my_shop_webservice/getProduct.php?categoryid=' + categoryid;
+        const response = await fetch(url, { method: 'POST', body: null });
+        const products = await response.json();
+
+        this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(products)
+        });
     }
 
     handleAddToCart(cartItem) {
@@ -40,7 +49,7 @@ class CategoryScreen extends Component {
                 <TouchableOpacity
                     onPress={() =>
                         this.props.navigation.navigate('DetailProduct',
-                            { product })}
+                            { item: product })}
                     delayPressIn={100}
                 >
                     <Image source={{ uri: product.productimgs[0] }} style={styles.productImg} />

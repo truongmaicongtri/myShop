@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
     View, Text, StyleSheet,
     TouchableOpacity, Image,
-    Dimensions, TextInput
+    Dimensions, TextInput,
+    ToastAndroid
 } from 'react-native';
 import { LinearGradient } from 'expo';
 import { connect } from 'react-redux';
@@ -13,12 +14,34 @@ class LoginScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            username: '',
+            password: ''
         };
     }
 
-    handleLogIn() {
-        this.props.logIn();
+    async handleLogInButtonPress() {
+        const dataObj = {
+            user_name: this.state.username,
+            userpassword: this.state.password
+        };
+        const url = 'http://192.168.1.12/my_shop_webservice/login.php';
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataObj)
+        });
+        const loginState = await response.json();
+
+        ToastAndroid.show(JSON.stringify(loginState), ToastAndroid.SHORT);
+        if (loginState === 'Login successful!') {
+            this.props.logIn();
+            this.props.changeUser(dataObj.user_name);
+        }
     }
+
 
     render() {
         return (
@@ -39,20 +62,25 @@ class LoginScreen extends Component {
                     <TextInput
                         style={styles.textInput}
                         placeholder="USER"
+                        autoCapitalize='none'
                         underlineColorAndroid='transparent'
+                        onChangeText={username => this.setState({ username })}
                     />
                 </View>
                 <View style={{ marginTop: 10 }}>
                     <TextInput
                         style={styles.textInput}
                         placeholder="PASSWORD"
+                        autoCapitalize='none'
+                        secureTextEntry
                         underlineColorAndroid='transparent'
+                        onChangeText={password => this.setState({ password })}
                     />
                 </View>
                 <View style={{ marginTop: 10, alignItems: 'center' }}>
                     <LinearGradient colors={['#4a9cf9', '#268bff']} style={styles.loginButton} >
                         <TouchableOpacity
-                            onPress={() => this.handleLogIn()}
+                            onPress={() => this.handleLogInButtonPress()}
                             style={styles.touchableStyle}
                         >
                             <Text style={{ color: 'white' }}>LOG IN</Text>
