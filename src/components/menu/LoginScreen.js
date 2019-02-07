@@ -24,7 +24,7 @@ class LoginScreen extends Component {
             user_name: this.state.username,
             userpassword: this.state.password
         };
-        const url = 'http://192.168.1.12/my_shop_webservice/login.php';
+        const url = 'http://192.168.1.19/my_shop_webservice/login.php';
         const response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -37,8 +37,7 @@ class LoginScreen extends Component {
 
         ToastAndroid.show(JSON.stringify(loginState), ToastAndroid.SHORT);
         if (loginState === 'Login successful!') {
-            this.props.logIn();
-            this.props.changeUser(dataObj.user_name);
+            this.props.logIn(dataObj.user_name);
         }
     }
 

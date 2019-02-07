@@ -191,7 +191,7 @@ export const accountInfo = new AccountInfo(
 const order1 = new Order('Tien Van Bui', '14:50 26-05-2018', '1531200040',
     5000000, 'Credit Card', '255, Dong Khoi st, Thu Dau Mot, Binh Duong Newcity');
 const order2 = new Order('Tri Truong Mai', '14:50 23-03-2018', '1531200028',
-    2000000, 'COD', 'Viet Nam');
+    2000000, 'COD', 'Viet Nam, Da Nang, 738 Bui Thi Xuan');
 
 export const orders = [order1, order2];
 

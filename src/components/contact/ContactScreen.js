@@ -24,7 +24,7 @@ export default class ContactScreen extends Component {
     }
 
     async componentWillMount() {
-        const url = 'http://192.168.1.12/my_shop_webservice/getContactScreen.php?shopid=shop01';
+        const url = 'http://192.168.1.19/my_shop_webservice/getContactScreen.php?shopid=shop01';
         const response = await fetch(url, { method: 'POST', body: null });
         const bundle = await response.json();
 

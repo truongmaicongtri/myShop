@@ -13,7 +13,7 @@ class TopBar extends Component {
     }
 
     async componentDidMount() {
-        const url = 'http://192.168.1.12/my_shop_webservice/getShopname.php?shopid=shop01';
+        const url = 'http://192.168.1.19/my_shop_webservice/getShopname.php?shopid=shop01';
         const response = await fetch(url, { method: 'POST', body: null });
         const json = await response.text();
         this.setState({

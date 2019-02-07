@@ -7,7 +7,7 @@ class MenuScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLogin: false
+            isLogin: false,
         };
     }
 
@@ -29,7 +29,7 @@ class MenuScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    isLogin: state.login.isLogin
+    isLogin: state.login.isLogin,
 });
 
 export default connect(mapStateToProps, null)(MenuScreen);

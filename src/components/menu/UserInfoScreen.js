@@ -4,9 +4,9 @@ import {
     TouchableOpacity,
     Dimensions, TextInput,
 } from 'react-native';
+import { connect } from 'react-redux';
 import { LinearGradient } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import { accountInfo } from '../../data';
 
 const { height } = Dimensions.get('window');
 const { width } = Dimensions.get('window');
@@ -23,15 +23,30 @@ class UserInfoScreen extends Component {
             firstName: '',
             lastName: '',
             email: '',
+            phone: '',
             address: '',
             info: {
                 username: 'awdasd',
                 firstName: 'sadawds',
                 lastName: 'awdsadwd',
                 email: 'adwdsda',
+                phone: '9239123',
                 address: 'wdawdsad'
             }
         };
+    }
+
+    async componentDidMount() {
+        const url = 'http://192.168.1.19/my_shop_webservice/getAccountInfo.php?user_name=' + this.props.username;
+        const response = await fetch(url, { method: 'POST', body: null });
+        const bundle = await response.json();
+        this.setState({
+            firstName: bundle.firstname,
+            lastName: bundle.lastname,
+            email: bundle.email,
+            phone: bundle.phone,
+            address: bundle.address,
+        });
     }
 
     handleEditButtonOnPress() {
@@ -41,6 +56,7 @@ class UserInfoScreen extends Component {
                     firstName: this.state.firstName,
                     lastName: this.state.lastName,
                     email: this.state.email,
+                    phone: this.state.phone,
                     address: this.state.address,
                 }
             });
@@ -56,6 +72,7 @@ class UserInfoScreen extends Component {
                 firstName: this.state.info.firstName,
                 lastName: this.state.info.lastName,
                 email: this.state.info.email,
+                phone: this.state.info.phone,
                 address: this.state.info.address,
             });
             this.setState({ isEditButtonPressed: !this.state.isEditButtonPressed });
@@ -80,7 +97,7 @@ class UserInfoScreen extends Component {
                     <TextInput
                         style={styles.txtrow}
                         editable={false}
-                        value={this.state.username}
+                        value={this.props.username}
                         placeholder="USERNAME"
                     />
                     <TextInput
@@ -109,6 +126,16 @@ class UserInfoScreen extends Component {
                         placeholder="EMAIL"
                         onChangeText={email => {
                             this.setState({ email });
+                        }}
+                    />
+                    <TextInput
+                        style={styles.txtrow}
+                        editable={this.state.isEditButtonPressed}
+                        value={this.state.phone}
+                        autoCapitalize='none'
+                        placeholder="PHONE NUMBER"
+                        onChangeText={phone => {
+                            this.setState({ phone });
                         }}
                     />
                     <TextInput
@@ -198,4 +225,8 @@ const styles = StyleSheet.create({
     }
 });
 
-export default UserInfoScreen;
+const mapStateToProps = state => ({
+    username: state.login.username
+});
+
+export default connect(mapStateToProps, null)(UserInfoScreen);

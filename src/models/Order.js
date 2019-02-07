@@ -1,14 +1,14 @@
 
 export default class Order {
-    customerName: string;
+    shopName: string;
     date: string;
     id: string;
     totalCost: number;
     paymentType: string;
     address: string;
 
-    constructor(customerName, date, id, totalCost, paymentType, address) {
-        this.customerName = customerName;
+    constructor(shopName, date, id, totalCost, paymentType, address) {
+        this.shopName = shopName;
         this.date = date;
         this.id = id;
         this.totalCost = totalCost;

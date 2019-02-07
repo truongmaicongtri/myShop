@@ -8,6 +8,7 @@ import {
     ScrollView,
 } from 'react-native';
 import { LinearGradient } from 'expo';
+import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating';
 import { ratedHistory } from '../../data';
@@ -26,10 +27,19 @@ class UserRatingHistory extends Component {
         };
     }
 
+    async componentDidMount() {
+        const url = 'http://192.168.1.19/my_shop_webservice/getRatingHis.php?user_name=' + this.props.username;
+        const response = await fetch(url, { method: 'POST', body: null });
+        const bundles = await response.json();
+        this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(bundles)
+        });
+    }
+
     renderRow(dataSource) {
         return (
             <View style={styles.ratingwrapper}>
-                <Text style={styles.txtrate}>{dataSource.shopName}</Text>
+                <Text style={styles.txtrate}>{dataSource.shopname}</Text>
                 <View style={styles.rate}>
                     <StarRating
                         disabled
@@ -37,18 +47,13 @@ class UserRatingHistory extends Component {
                         fullStar={'md-star'}
                         iconSet={'Ionicons'}
                         maxStars={5}
-                        rating={dataSource.star}
+                        rating={
+                            parseFloat(dataSource.ratingstar)
+                        }
                         selectedStar={(rating) => this.onStarRatingPress(rating)}
                         fullStarColor={'red'}
                         emptyStarColor={'red'}
                     />
-                    <View style={{ justifyContent: 'center' }}>
-                        <Text
-                            style={styles.ratenumber}
-                        >
-                            Rating: {dataSource.star} / 5
-                            </Text>
-                    </View>
                 </View>
                 <Text style={styles.date}>{dataSource.date}</Text>
             </View>
@@ -137,4 +142,8 @@ const styles = StyleSheet.create({
     }
 
 });
-export default UserRatingHistory;
+const mapStateToProps = state => ({
+    username: state.login.username
+});
+
+export default connect(mapStateToProps, null)(UserRatingHistory);

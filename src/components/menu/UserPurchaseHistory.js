@@ -6,9 +6,9 @@ import {
     ScrollView, ListView
 } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { connect } from 'react-redux';
 import { LinearGradient } from 'expo';
 import NumberFormat from 'react-number-format';
-import { orders } from '../../data';
 
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
@@ -16,35 +16,43 @@ const { height } = Dimensions.get('window');
 class UserPurchaseHistory extends Component {
     constructor(props) {
         super(props);
-        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.state = {
-            dataSource: ds.cloneWithRows(orders)
+            dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
         };
     }
 
-    renderRow(dataSource) {
+    async componentDidMount() {
+        const url = 'http://192.168.1.19/my_shop_webservice/getOrderHis.php?user_name=' + this.props.username;
+        const response = await fetch(url, { method: 'POST', body: null });
+        const orders = await response.json();
+        this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(orders)
+        });
+    }
+
+    renderRow(order) {
         return (
             <View style={styles.wrapper}>
                 <TouchableOpacity>
                     <View style={styles.namecus}>
-                        <Text style={styles.titlerow}>Customer's Name: </Text>
-                        <Text style={styles.contentrow}>{dataSource.customerName}</Text>
+                        <Text style={styles.titlerow}>Shop name: </Text>
+                        <Text style={styles.contentrow}>{order.shopname}</Text>
                     </View>
                     <View style={styles.dateorder}>
                         <Text style={styles.titlerow}>Order time: </Text>
-                        <Text style={styles.contentrow}>{dataSource.date}</Text>
+                        <Text style={styles.contentrow}>{order.ordertime}</Text>
                     </View>
                 </TouchableOpacity>
                 <View style={styles.orderinfo}>
                     <View style={styles.cellinfo}>
                         <Text style={styles.titlerowoder}>Order ID</Text>
-                        <Text style={styles.contentrowoder}>{dataSource.id}</Text>
+                        <Text style={styles.contentrowoder}>{order.orderid}</Text>
                     </View>
                     <View style={styles.cellinfo}>
                         <Text style={styles.titlerowoder}>Order Amount</Text>
                         <NumberFormat
                             displayType={'text'}
-                            value={dataSource.totalCost}
+                            value={order.amount}
                             thousandSeparator=','
                             renderText={value =>
                                 <Text style={styles.contentrowoder}>{value} VND</Text>
@@ -53,13 +61,13 @@ class UserPurchaseHistory extends Component {
                     </View>
                     <View style={styles.cellinfo}>
                         <Text style={styles.titlerowoder}>Payment Type</Text>
-                        <Text style={styles.contentrowoder}>{dataSource.paymentType}</Text>
+                        <Text style={styles.contentrowoder}>{order.paymentType}</Text>
                     </View>
                 </View>
                 <View style={styles.address}>
                     <MaterialIcons name="place" size={23} color="#BCBCBC" />
                     <Text numberOfLines={3} style={styles.addtxt}>
-                        {dataSource.address}
+                        {order.address}
                     </Text>
                 </View>
             </View>
@@ -177,4 +185,8 @@ const styles = StyleSheet.create({
     }
 
 });
-export default UserPurchaseHistory;
+const mapStateToProps = state => ({
+    username: state.login.username
+});
+
+export default connect(mapStateToProps, null)(UserPurchaseHistory);

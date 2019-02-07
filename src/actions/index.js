@@ -12,9 +12,9 @@ export const addToCart = (cartItem) => ({ type: ADDTOCART, cartItem });
 export const inCreaseItem = (index) => ({ type: INCREASECARTAMOUNT, index });
 export const deCreaseItem = (index) => ({ type: DECREASECARTAMOUNT, index });
 
-export const logIn = () => ({ type: LOGIN });
+export const logIn = (username) => ({ type: LOGIN, username });
 export const logOut = () => ({ type: LOGOUT });
 
 export const changeNotification = (number) => ({ type: CHANGE_NOTIFICATION, number });
 
-export const changeUser = (userId) => ({ type: CHANGE_USER, userId });
+export const changeUser = (username) => ({ type: CHANGE_USER, username });

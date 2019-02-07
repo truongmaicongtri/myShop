@@ -30,7 +30,7 @@ class CategoryScreen extends Component {
     }
 
     async fetchProduct(categoryid) {
-        const url = 'http://192.168.1.12/my_shop_webservice/getProduct.php?categoryid=' + categoryid;
+        const url = 'http://192.168.1.19/my_shop_webservice/getProduct.php?categoryid=' + categoryid;
         const response = await fetch(url, { method: 'POST', body: null });
         const products = await response.json();
 
