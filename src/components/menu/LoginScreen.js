@@ -8,6 +8,7 @@ import {
 import { LinearGradient } from 'expo';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
+import { LOGIN_URL } from '../../backend/url';
 
 
 class LoginScreen extends Component {
@@ -24,8 +25,7 @@ class LoginScreen extends Component {
             user_name: this.state.username,
             userpassword: this.state.password
         };
-        const url = 'http://192.168.1.19/my_shop_webservice/login.php';
-        const response = await fetch(url, {
+        const response = await fetch(LOGIN_URL, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

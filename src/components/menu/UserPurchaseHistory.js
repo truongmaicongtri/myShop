@@ -8,6 +8,7 @@ import {
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { LinearGradient } from 'expo';
+import { GET_ORDER_HISTORY_URL } from '../../backend/url';
 import NumberFormat from 'react-number-format';
 
 const { width } = Dimensions.get('window');
@@ -22,7 +23,7 @@ class UserPurchaseHistory extends Component {
     }
 
     async componentDidMount() {
-        const url = 'http://192.168.1.19/my_shop_webservice/getOrderHis.php?user_name=' + this.props.username;
+        const url = GET_ORDER_HISTORY_URL(this.props.username);
         const response = await fetch(url, { method: 'POST', body: null });
         const orders = await response.json();
         this.setState({

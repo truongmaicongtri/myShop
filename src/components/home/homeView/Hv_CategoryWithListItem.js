@@ -9,6 +9,7 @@ import {
     ListView
 } from 'react-native';
 import NumberFormat from 'react-number-format';
+import { GET_PRODUCT_URL } from '../../../backend/url';
 
 const { width } = Dimensions.get('window');
 
@@ -24,7 +25,7 @@ class HvCategoryWithListItem extends Component {
     }
 
     async fetchProduct(categoryid) {
-        const url = 'http://192.168.1.19/my_shop_webservice/getProduct.php?categoryid=' + categoryid;
+        const url = GET_PRODUCT_URL(categoryid);
         const response = await fetch(url, { method: 'POST', body: null });
         const products = await response.json();
 

@@ -6,7 +6,7 @@ import {
   Text,
 } from 'react-native';
 import { LinearGradient } from 'expo';
-import { currentShop } from '../../data';
+import { GET_CATEGORY_URL } from '../../backend/url';
 
 
 import HvCategoryWithSwiper from './homeView/Hv_CategoryWithSwiper';
@@ -27,8 +27,7 @@ export default class HomeScreen extends Component {
   }
 
   async componentDidMount() {
-    const url = 'http://192.168.1.19/my_shop_webservice/getCategories.php?shopid=shop01';
-    const response = await fetch(url, { method: 'POST', body: null });
+    const response = await fetch(GET_CATEGORY_URL, { method: 'POST', body: null });
     const categories = await response.json();
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(categories)

@@ -11,7 +11,7 @@ import { LinearGradient } from 'expo';
 import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating';
-import { ratedHistory } from '../../data';
+import { GET_RATING_HISTORY_URL } from '../../backend/url';
 
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
@@ -20,15 +20,13 @@ class UserRatingHistory extends Component {
 
     constructor(props) {
         super(props);
-
-        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.state = {
-            dataSource: ds.cloneWithRows(ratedHistory)
+            dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
         };
     }
 
     async componentDidMount() {
-        const url = 'http://192.168.1.19/my_shop_webservice/getRatingHis.php?user_name=' + this.props.username;
+        const url = GET_RATING_HISTORY_URL(this.props.username);
         const response = await fetch(url, { method: 'POST', body: null });
         const bundles = await response.json();
         this.setState({

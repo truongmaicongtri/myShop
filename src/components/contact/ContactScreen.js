@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { FontAwesome, Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
+import { GET_CONTACT_SCREEN_URL } from '../../backend/url';
 
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
@@ -24,8 +25,7 @@ export default class ContactScreen extends Component {
     }
 
     async componentWillMount() {
-        const url = 'http://192.168.1.19/my_shop_webservice/getContactScreen.php?shopid=shop01';
-        const response = await fetch(url, { method: 'POST', body: null });
+        const response = await fetch(GET_CONTACT_SCREEN_URL, { method: 'POST', body: null });
         const bundle = await response.json();
 
         const bundleLatitude = parseFloat(bundle.latitude.replace(',', '.'));

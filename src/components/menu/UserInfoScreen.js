@@ -7,6 +7,7 @@ import {
 import { connect } from 'react-redux';
 import { LinearGradient } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
+import { GET_ACCOUNT_INFO_URL } from '../../backend/url';
 
 const { height } = Dimensions.get('window');
 const { width } = Dimensions.get('window');
@@ -37,7 +38,7 @@ class UserInfoScreen extends Component {
     }
 
     async componentDidMount() {
-        const url = 'http://192.168.1.19/my_shop_webservice/getAccountInfo.php?user_name=' + this.props.username;
+        const url = GET_ACCOUNT_INFO_URL(this.props.username);
         const response = await fetch(url, { method: 'POST', body: null });
         const bundle = await response.json();
         this.setState({

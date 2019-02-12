@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Dimensions, ListView } from 'react-native';
 import { Foundation } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
+import { GET_NOTIFICATION_URL } from '../../backend/url';
 
 class NotifyScreen extends Component {
     constructor(props) {
@@ -13,8 +14,7 @@ class NotifyScreen extends Component {
     }
 
     async componentDidMount() {
-        const url = 'http://192.168.1.19/my_shop_webservice/getNotification.php?shopid=shop01';
-        const response = await fetch(url, { method: 'POST', body: null });
+        const response = await fetch(GET_NOTIFICATION_URL, { method: 'POST', body: null });
         const messages = await response.json();
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(messages)

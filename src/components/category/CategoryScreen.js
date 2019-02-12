@@ -12,6 +12,7 @@ import NumberFormat from 'react-number-format';
 import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
+import { GET_PRODUCT_URL } from '../../backend/url';
 import CartItem from '../../models/CartItem';
 
 class CategoryScreen extends Component {
@@ -20,7 +21,6 @@ class CategoryScreen extends Component {
     }
 
     constructor(props) {
-        console.log('call category');
         super(props);
         const category = this.props.navigation.getParam('category');
         this.fetchProduct(category.categoryid);
@@ -30,7 +30,7 @@ class CategoryScreen extends Component {
     }
 
     async fetchProduct(categoryid) {
-        const url = 'http://192.168.1.19/my_shop_webservice/getProduct.php?categoryid=' + categoryid;
+        const url = GET_PRODUCT_URL(categoryid);
         const response = await fetch(url, { method: 'POST', body: null });
         const products = await response.json();
 

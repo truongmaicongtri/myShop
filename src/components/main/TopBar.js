@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, TextInput } from 'react-native';
 import { LinearGradient } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
+import { GET_SHOP_NAME_URL } from '../../backend/url';
 
 
 class TopBar extends Component {
@@ -13,8 +14,7 @@ class TopBar extends Component {
     }
 
     async componentDidMount() {
-        const url = 'http://192.168.1.19/my_shop_webservice/getShopname.php?shopid=shop01';
-        const response = await fetch(url, { method: 'POST', body: null });
+        const response = await fetch(GET_SHOP_NAME_URL, { method: 'POST', body: null });
         const json = await response.text();
         this.setState({
             shopname: json
