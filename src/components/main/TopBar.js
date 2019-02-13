@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, TextInput } from 'react-native';
 import { LinearGradient } from 'expo';
+import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import { GET_SHOP_NAME_URL } from '../../backend/url';
 
@@ -13,11 +14,20 @@ class TopBar extends Component {
         };
     }
 
-    async componentDidMount() {
-        const response = await fetch(GET_SHOP_NAME_URL, { method: 'POST', body: null });
-        const json = await response.text();
+    componentDidMount() {
+        this.callApi();
+    }
+
+    async callApi() {
+        const url = GET_SHOP_NAME_URL(this.props.shopId);
+        const response = await fetch(url, { method: 'POST', body: null });
+        const json = await response.json();
+        this.updateState(json);
+    }
+
+    updateState(name) {
         this.setState({
-            shopname: json
+            shopname: name.replace('"', '')
         });
     }
 
@@ -73,4 +83,8 @@ const styles = StyleSheet.create({
     }
 });
 
-export default TopBar;
+const mapStateToProps = state => ({
+    shopId: state.shop.shopId
+});
+
+export default connect(mapStateToProps)(TopBar);

@@ -13,13 +13,22 @@ class NotifyScreen extends Component {
         };
     }
 
-    async componentDidMount() {
-        const response = await fetch(GET_NOTIFICATION_URL, { method: 'POST', body: null });
+    componentDidMount() {
+        this.callApi();
+    }
+
+    async callApi() {
+        const url = GET_NOTIFICATION_URL(this.props.shopId);
+        const response = await fetch(url, { method: 'POST', body: null });
         const messages = await response.json();
+        this.updateListView(messages);
+        this.handleChangeNumberOfNotification(messages.length);
+    }
+
+    updateListView(messages) {
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(messages)
         });
-        this.handleChangeNumberOfNotification(messages.length);
     }
 
     handleChangeNumberOfNotification(number) {
@@ -85,4 +94,8 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect(null, actions)(NotifyScreen);
+const mapStateToProps = state => ({
+    shopId: state.shop.shopId
+});
+
+export default connect(mapStateToProps, actions)(NotifyScreen);

@@ -17,17 +17,23 @@
     $products = array();
 
     // get product ids  to get list of product
-    $query = "SELECT products_in_cate.productid
+
+    if ($query= $conn->prepare("SELECT products_in_cate.productid
     FROM products_in_cate
-    WHERE products_in_cate.categoryid='{$categoryid}'";
+    WHERE products_in_cate.categoryid=?")){
 
-    $result = $conn->query($query);
+        $query->bind_param("s", $categoryid);
 
-    if ($result->num_rows > 0){
-        while ($row = $result->fetch_assoc()){
-            array_push($productids, $row['productid']);
+        $query->execute();
+
+        $query->bind_result($productid);
+        
+        while ($query->fetch()) {
+            array_push($productids, $productid );
         }
-    }
+
+        $query->close();
+    } 
 
     //get list of product by product id
     foreach ($productids as $productid) {

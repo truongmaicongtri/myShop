@@ -5,7 +5,8 @@ import {
     LOGIN,
     LOGOUT,
     CHANGE_NOTIFICATION,
-    CHANGE_USER
+    CHANGE_USER,
+    CHANGE_SHOP
 } from './types';
 
 export const addToCart = (cartItem) => ({ type: ADDTOCART, cartItem });
@@ -18,3 +19,5 @@ export const logOut = () => ({ type: LOGOUT });
 export const changeNotification = (number) => ({ type: CHANGE_NOTIFICATION, number });
 
 export const changeUser = (username) => ({ type: CHANGE_USER, username });
+
+export const changeShop = (shopId) => ({ type: CHANGE_SHOP, shopId });

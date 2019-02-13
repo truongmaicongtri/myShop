@@ -12,19 +12,24 @@
     parse_str($_SERVER['QUERY_STRING'], $parameters);
 
     $user_name = $parameters['user_name'];
-
-    $query = "SELECT shop_information.shopname, rating_history.ratingstar, rating_history.date
-    FROM shop_information, rating_history
-    WHERE rating_history.userid='$user_name' && rating_history.shopid=shop_information.shopid ";
-
-    $result = $conn->query($query);
     $bundles = array();
 
-    if ($result->num_rows > 0){
-        while ($row = $result->fetch_assoc()){
-            array_push($bundles, new Bundle($row['shopname'], $row['ratingstar'],$row['date']));
+    if ($query= $conn->prepare("SELECT shop_information.shopname, rating_history.ratingstar, rating_history.date
+    FROM shop_information, rating_history
+    WHERE rating_history.userid=? && rating_history.shopid=shop_information.shopid")){
+
+        $query->bind_param("s", $user_name);
+
+        $query->execute();
+
+        $query->bind_result($shopname, $ratingstar, $date);
+        
+        while ($query->fetch()) {
+            array_push($bundles, new Bundle($shopname, $ratingstar ,$date ));
         }
-    }
+
+        $query->close();
+    } 
 
     echo json_encode($bundles);
 

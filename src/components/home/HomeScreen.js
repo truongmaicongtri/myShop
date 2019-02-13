@@ -6,6 +6,7 @@ import {
   Text,
 } from 'react-native';
 import { LinearGradient } from 'expo';
+import { connect } from 'react-redux';
 import { GET_CATEGORY_URL } from '../../backend/url';
 
 
@@ -13,7 +14,7 @@ import HvCategoryWithSwiper from './homeView/Hv_CategoryWithSwiper';
 import HvCategoryWithListItem from './homeView/Hv_CategoryWithListItem';
 import HvCategoryWithAnImage from './homeView/Hv_CategoryWithAnImage';
 
-export default class HomeScreen extends Component {
+class HomeScreen extends Component {
   static navigationOptions = {
     title: 'Home',
     header: null
@@ -22,13 +23,23 @@ export default class HomeScreen extends Component {
     super(props);
 
     this.state = {
+      shopId: '',
       dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
     };
   }
 
-  async componentDidMount() {
-    const response = await fetch(GET_CATEGORY_URL, { method: 'POST', body: null });
+  componentDidMount() {
+    this.callApi();
+  }
+
+  async callApi() {
+    const url = GET_CATEGORY_URL(this.props.shopId);
+    const response = await fetch(url, { method: 'POST', body: null });
     const categories = await response.json();
+    this.updateListView(categories);
+  }
+
+  updateListView(categories) {
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(categories)
     });
@@ -70,6 +81,7 @@ export default class HomeScreen extends Component {
             style={{ marginBottom: 10 }}
             dataSource={this.state.dataSource}
             renderRow={this.renderRow.bind(this)}
+            enableEmptySections
           />
         </ScrollView >
       </LinearGradient>
@@ -82,3 +94,9 @@ const styles = StyleSheet.create({
     // backgroundColor: '#dbf0ff'
   },
 });
+
+const mapStateToProps = state => ({
+  shopId: state.shop.shopId
+});
+
+export default connect(mapStateToProps, null)(HomeScreen);

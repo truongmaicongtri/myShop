@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import { connect } from 'react-redux';
 import { FontAwesome, Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 import { GET_CONTACT_SCREEN_URL } from '../../backend/url';
 
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
 
-export default class ContactScreen extends Component {
+class ContactScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -25,7 +26,8 @@ export default class ContactScreen extends Component {
     }
 
     async componentWillMount() {
-        const response = await fetch(GET_CONTACT_SCREEN_URL, { method: 'POST', body: null });
+        const url = GET_CONTACT_SCREEN_URL(this.props.shopId);
+        const response = await fetch(url, { method: 'POST', body: null });
         const bundle = await response.json();
 
         const bundleLatitude = parseFloat(bundle.latitude.replace(',', '.'));
@@ -127,3 +129,9 @@ const styles = StyleSheet.create({
         marginLeft: 20,
     }
 });
+
+const mapStateToProps = state => ({
+    shopId: state.shop.shopId
+  });
+  
+export default connect(mapStateToProps)(ContactScreen);

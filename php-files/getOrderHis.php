@@ -12,19 +12,24 @@
     parse_str($_SERVER['QUERY_STRING'], $parameters);
 
     $user_name = $parameters['user_name'];
-
-    $query = "SELECT shop_information.shopname, order_history.ordertime, order_history.orderid, order_history.amount, order_history.paymentType, order_history.address
-    FROM shop_information, order_history
-    WHERE order_history.userid='{$user_name}' && shop_information.shopid=order_history.shopid";
-
-    $result = $conn->query($query);
     $bundles = array();
 
-    if ($result->num_rows > 0){
-        while ($row = $result->fetch_assoc()){
-            array_push($bundles, new Bundle($row['shopname'], $row['ordertime'],$row['orderid'], $row['amount'],$row['paymentType'], $row['address']));
+    if ($query= $conn->prepare("SELECT shop_information.shopname, order_history.ordertime, order_history.orderid, order_history.amount, order_history.paymentType, order_history.address
+    FROM shop_information, order_history
+    WHERE order_history.userid=? && shop_information.shopid=order_history.shopid")){
+
+        $query->bind_param("s", $user_name);
+
+        $query->execute();
+
+        $query->bind_result($shopname, $ordertime, $orderid, $amount, $paymentType, $address);
+        
+        while ($query->fetch()) {
+            array_push($bundles, new Bundle($shopname,$ordertime,$orderid, $amount,$paymentType, $address) );
         }
-    }
+
+        $query->close();
+    } 
 
     echo json_encode($bundles);
 

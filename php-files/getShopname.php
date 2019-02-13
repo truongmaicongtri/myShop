@@ -13,16 +13,21 @@
 
     $shopid = $parameters['shopid'];
 
-    $query = "SELECT shop_information.shopname
-    FROM shop_information
-    WHERE shop_information.shopid='{$shopid}'";
+    if ($query= $conn->prepare("SELECT shop_information.shopname
+        FROM shop_information
+        WHERE shop_information.shopid=?")){
 
-    $result = $conn->query($query);
+        $query->bind_param("s", $shopid);
 
-    $row = $result->fetch_assoc();
+        $query->execute();
 
-    $shopname = $row['shopname'];
+        $query->bind_result($result);
 
-    echo $shopname;
+        $query->fetch();
+    } 
+
+    $shopname = $result;
+
+    echo json_encode($shopname);
     $conn->close();
 ?>

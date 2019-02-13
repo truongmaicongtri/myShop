@@ -18,17 +18,23 @@ class HvCategoryWithListItem extends Component {
     constructor(props) {
         super(props);
 
-        this.fetchProduct(this.props.category.categoryid);
         this.state = {
             dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
         };
     }
 
-    async fetchProduct(categoryid) {
-        const url = GET_PRODUCT_URL(categoryid);
+    componentDidMount() {
+        this.callApi();
+    }
+
+    async callApi() {
+        const url = GET_PRODUCT_URL(this.props.category.categoryid);
         const response = await fetch(url, { method: 'POST', body: null });
         const products = await response.json();
+        this.updateListView(products);
+    }
 
+    updateListView(products) {
         //create data
         const data = [];
 
