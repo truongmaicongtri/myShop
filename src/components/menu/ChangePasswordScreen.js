@@ -3,10 +3,12 @@ import {
     View, Text, StyleSheet,
     TouchableOpacity,
     Dimensions, TextInput,
+    ToastAndroid
 } from 'react-native';
 import { LinearGradient } from 'expo';
-
+import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
+import { LOGIN_URL, CHANGE_PASSWORD_URL } from '../../backend/url';
 
 const { height } = Dimensions.get('window');
 const { width } = Dimensions.get('window');
@@ -18,7 +20,72 @@ class ChangePasswordScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            oldPassword: '',
+            newPassword: '',
+            confirmPassword: '',
         };
+    }
+
+    handleSave() {
+        const { oldPassword, newPassword, confirmPassword } = this.state;
+        if (oldPassword === '' || newPassword === '' || confirmPassword === '') {
+            ToastAndroid.show('Vui lòng nhập đầy đủ thông tin', ToastAndroid.SHORT);
+        } else if (newPassword !== confirmPassword) {
+            ToastAndroid.show('Mật khẩu xác thực chưa đúng', ToastAndroid.SHORT);
+        } else {
+            this.checkOldPassword();
+        }
+    }
+
+    async checkOldPassword() {
+        const dataObj = {
+            user_name: this.props.username,
+            userpassword: this.state.oldPassword
+        };
+        const response = await fetch(LOGIN_URL, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataObj)
+        });
+        const loginState = await response.json();
+
+        if (loginState === 'Login successful!') {
+            this.changePassword();
+        } else {
+            ToastAndroid.show('Mật khẩu cũ chưa đúng', ToastAndroid.SHORT);
+        }
+    }
+
+    async changePassword() {
+        const dataObj = {
+            user_name: this.props.username,
+            newpassword: this.state.newPassword
+        };
+        const response = await fetch(CHANGE_PASSWORD_URL, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataObj)
+        });
+        const loginState = await response.json();
+
+        if (loginState === 'OK') {
+            ToastAndroid.show('Đổi mật khẩu thành công', ToastAndroid.LONG);
+            this.props.navigation.goBack();
+        }
+    }
+
+    handleCancel() {
+        this.setState({
+            oldPassword: '',
+            newPassword: '',
+            confirmPassword: '',
+        });
     }
 
     render() {
@@ -41,26 +108,38 @@ class ChangePasswordScreen extends Component {
                         style={styles.txtrow}
                         autoCapitalize='none'
                         secureTextEntry
+                        value={this.state.oldPassword}
                         placeholder="OLD PASSWORD"
+                        onChangeText={(text) => this.setState({ oldPassword: text })}
                     />
                     <TextInput
                         style={styles.txtrow}
                         autoCapitalize='none'
                         secureTextEntry
+                        value={this.state.newPassword}
                         placeholder="NEW PASSWORD"
+                        onChangeText={(text) => this.setState({ newPassword: text })}
                     />
                     <TextInput
                         style={styles.txtrow}
                         autoCapitalize='none'
                         secureTextEntry
+                        value={this.state.confirmPassword}
                         placeholder="CONFIRM PASSWORD"
+                        onChangeText={(text) => this.setState({ confirmPassword: text })}
                     />
                 </View>
                 <View style={styles.btn}>
-                    <TouchableOpacity style={styles.btnedit}>
+                    <TouchableOpacity
+                        style={styles.btnedit}
+                        onPress={() => this.handleSave()}
+                    >
                         <Text style={styles.txtButton}>Save</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.btnchange} onPress={() => navigation.goBack()}>
+                    <TouchableOpacity
+                        style={styles.btnchange}
+                        onPress={() => this.handleCancel()}
+                    >
                         <Text style={styles.txtButton}>Cancel</Text>
                     </TouchableOpacity>
                 </View>
@@ -127,4 +206,8 @@ const styles = StyleSheet.create({
     }
 });
 
-export default ChangePasswordScreen;
+const mapStateToProps = state => ({
+    username: state.login.username
+});
+
+export default connect(mapStateToProps, null)(ChangePasswordScreen);

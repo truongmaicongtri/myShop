@@ -26,3 +26,7 @@ export const GET_ORDER_HISTORY_URL = (username) =>
 
 export const GET_RATING_HISTORY_URL = (username) =>
     HOST_URL + 'getRatingHis.php?user_name=' + username;
+
+export const CHANGE_PASSWORD_URL = HOST_URL + 'changePassword.php';
+
+export const UPDATE_USERINFO_URL = HOST_URL + 'updateUserInfo.php';

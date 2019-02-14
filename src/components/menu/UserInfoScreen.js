@@ -3,11 +3,12 @@ import {
     View, Text, StyleSheet,
     TouchableOpacity,
     Dimensions, TextInput,
+    ToastAndroid
 } from 'react-native';
 import { connect } from 'react-redux';
 import { LinearGradient } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import { GET_ACCOUNT_INFO_URL } from '../../backend/url';
+import { GET_ACCOUNT_INFO_URL, UPDATE_USERINFO_URL } from '../../backend/url';
 
 const { height } = Dimensions.get('window');
 const { width } = Dimensions.get('window');
@@ -20,19 +21,17 @@ class UserInfoScreen extends Component {
         super(props);
         this.state = {
             isEditButtonPressed: false,
-            username: '',
             firstName: '',
             lastName: '',
             email: '',
             phone: '',
             address: '',
-            info: {
-                username: 'awdasd',
-                firstName: 'sadawds',
-                lastName: 'awdsadwd',
-                email: 'adwdsda',
-                phone: '9239123',
-                address: 'wdawdsad'
+            oldInfo: {
+                ofirstName: '',
+                olastName: '',
+                oemail: '',
+                ophone: '',
+                oaddress: ''
             }
         };
     }
@@ -47,38 +46,106 @@ class UserInfoScreen extends Component {
             email: bundle.email,
             phone: bundle.phone,
             address: bundle.address,
+            oldInfo: {
+                ofirstName: bundle.firstname,
+                olastName: bundle.lastname,
+                oemail: bundle.email,
+                ophone: bundle.phone,
+                oaddress: bundle.address,
+            }
+        });
+    }
+
+    async updateUserInfo() {
+        const dataObj = {
+            user_name: this.props.username,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.email,
+            phone: this.state.phone,
+            address: this.state.address,
+        };
+        const response = await fetch(UPDATE_USERINFO_URL, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataObj)
+        });
+        const loginState = await response.json();
+
+        if (loginState === 'OK') {
+            ToastAndroid.show('Cập nhật thông tin thành công', ToastAndroid.LONG);
+            this.updateTempInfo();
+        } else {
+            ToastAndroid.show('Cập nhật thông tin thất bại', ToastAndroid.LONG);
+            this.loadTempInfo();
+        }
+    }
+
+    updateTempInfo() {
+        this.setState({
+            oldInfo: {
+                ofirstName: this.state.firstName,
+                olastName: this.state.lastName,
+                oemail: this.state.email,
+                ophone: this.state.phone,
+                oaddress: this.state.address,
+            }
+        });
+    }
+
+    loadTempInfo() {
+        this.setState({
+            firstName: this.state.oldInfo.ofirstName,
+            lastName: this.state.oldInfo.olastName,
+            email: this.state.oldInfo.oemail,
+            phone: this.state.oldInfo.ophone,
+            address: this.state.oldInfo.oaddress,
         });
     }
 
     handleEditButtonOnPress() {
         if (this.state.isEditButtonPressed) {
-            this.setState({
-                info: {
-                    firstName: this.state.firstName,
-                    lastName: this.state.lastName,
-                    email: this.state.email,
-                    phone: this.state.phone,
-                    address: this.state.address,
-                }
-            });
+            this.handleSaveButtonOnPress();
+        } else {
+            this.setState({ isEditButtonPressed: true });
         }
-        this.setState({ isEditButtonPressed: !this.state.isEditButtonPressed });
+    }
+
+    checkDuplicateInfo() {
+        const { firstName, lastName, email, phone, address } = this.state;
+        const { ofirstName, olastName, oemail, ophone, oaddress } = this.state.oldInfo;
+        return (firstName === ofirstName &&
+            lastName === olastName &&
+            email === oemail &&
+            phone === ophone &&
+            address === oaddress);
+    }
+
+    handleSaveButtonOnPress() {
+        if (!this.checkDuplicateInfo()) {
+            this.updateUserInfo();
+        } else {
+            ToastAndroid.show('Thông tin không có gì để cập nhật', ToastAndroid.LONG);
+        }
+        this.setState({ isEditButtonPressed: false });
     }
 
     handleChangePasswordButtonOnPress() {
         if (this.state.isEditButtonPressed === false) {
             this.props.navigation.navigate('ChangePassword');
         } else {
-            this.setState({
-                firstName: this.state.info.firstName,
-                lastName: this.state.info.lastName,
-                email: this.state.info.email,
-                phone: this.state.info.phone,
-                address: this.state.info.address,
-            });
-            this.setState({ isEditButtonPressed: !this.state.isEditButtonPressed });
+            this.handleCancelButtonOnPress();
         }
     }
+
+    handleCancelButtonOnPress() {
+        this.loadTempInfo();
+        this.setState({ isEditButtonPressed: false });
+    }
+
     render() {
         const { navigation } = this.props;
         return (

@@ -27,7 +27,7 @@ class TopBar extends Component {
 
     updateState(name) {
         this.setState({
-            shopname: name.replace('"', '')
+            shopname: name.replace('"', '') 
         });
     }
 
