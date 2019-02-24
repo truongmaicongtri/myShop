@@ -101,6 +101,7 @@ class CategoryScreen extends Component {
                         <ListView
                             dataSource={this.state.dataSource}
                             renderRow={this.renderRow.bind(this)}
+                            enableEmptySections
                         />
                     </View>
                 </ScrollView>

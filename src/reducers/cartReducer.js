@@ -1,4 +1,4 @@
-import { ADDTOCART, DECREASECARTAMOUNT, INCREASECARTAMOUNT } from '../actions/types';
+import { ADDTOCART, DECREASECARTAMOUNT, INCREASECARTAMOUNT, CLEANCART } from '../actions/types';
 
 export default function (state = [], action) {
     switch (action.type) {
@@ -9,6 +9,10 @@ export default function (state = [], action) {
                     return [...state];
                 }
                 return [...state, action.cartItem];
+            }
+        case CLEANCART:
+            {
+                return [];
             }
         case INCREASECARTAMOUNT:
             {

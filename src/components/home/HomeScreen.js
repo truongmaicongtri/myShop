@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  ScrollView,
-  ListView,
-  Text,
+  ScrollView, View,
+  ListView, Dimensions,
+  Text, TouchableOpacity
 } from 'react-native';
 import { LinearGradient } from 'expo';
 import { connect } from 'react-redux';
+import * as actions from '../../actions';
 import { GET_CATEGORY_URL } from '../../backend/url';
 
 
@@ -66,6 +67,10 @@ class HomeScreen extends Component {
     }
   }
 
+  handleExitButton() {
+    this.props.exitShop();
+  }
+
   render() {
     return (
       <LinearGradient
@@ -78,20 +83,45 @@ class HomeScreen extends Component {
           style={styles.screen}
         >
           <ListView
-            style={{ marginBottom: 10 }}
             dataSource={this.state.dataSource}
             renderRow={this.renderRow.bind(this)}
             enableEmptySections
           />
+          <View style={styles.container}>
+            <View style={{ flex: 1, justifyContent: 'flex-start' }}>
+              <TouchableOpacity
+                onPress={() => this.handleExitButton()}
+              >
+                <Text style={styles.textStyle}>EXIT</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </ScrollView >
       </LinearGradient>
     );
   }
 }
+
+const { height } = Dimensions.get('window');
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
     // backgroundColor: '#dbf0ff'
+  },
+  container: {
+    height: height / 11,
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 10,
+    backgroundColor: '#fff',
+    padding: 10,
+    elevation: 5,
+    alignItems: 'center',
+  },
+
+  textStyle: {
+    fontSize: 25,
+    color: '#AFAEAF'
   },
 });
 
@@ -99,4 +129,4 @@ const mapStateToProps = state => ({
   shopId: state.shop.shopId
 });
 
-export default connect(mapStateToProps, null)(HomeScreen);
+export default connect(mapStateToProps, actions)(HomeScreen);

@@ -82,6 +82,7 @@ class UserRatingHistory extends Component {
                     <ListView
                         dataSource={this.state.dataSource}
                         renderRow={this.renderRow.bind(this)}
+                        enableEmptySections
                     />
 
                 </ScrollView>
@@ -107,7 +108,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         height: height / 4,
         padding: 10,
-        borderRadius: 15
+        borderRadius: 15,
+        marginTop: 10
     },
 
     txtrate: {

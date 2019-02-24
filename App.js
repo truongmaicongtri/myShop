@@ -18,6 +18,7 @@ export default class MyShop extends Component {
       <Provider store={store}>
         <Shop />
       </Provider>
+      
     );
   }
 }

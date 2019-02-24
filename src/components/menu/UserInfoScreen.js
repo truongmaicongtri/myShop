@@ -208,6 +208,7 @@ class UserInfoScreen extends Component {
                     />
                     <TextInput
                         style={styles.txtrow}
+                        multiline
                         editable={this.state.isEditButtonPressed}
                         value={this.state.address}
                         placeholder="ADDRESS"

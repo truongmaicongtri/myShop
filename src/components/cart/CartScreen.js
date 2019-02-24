@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import {
-    View,
+    View, ToastAndroid,
     Text,
     StyleSheet,
     TouchableOpacity,
@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import NumberFormat from 'react-number-format';
 import { Ionicons } from '@expo/vector-icons';
 import * as actions from '../../actions';
+import { CREATE_ORDER_URL } from '../../backend/url';
 
 const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 class CartScreen extends Component {
@@ -22,14 +23,27 @@ class CartScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            cart: [],
             dataSource: ds.cloneWithRows([]),
-            totalCost: 0
+            totalCost: 0,
+            isLogin: false,
+            username: ''
         };
     }
 
     componentWillReceiveProps(newProps) {
-        this.setState({ dataSource: ds.cloneWithRows(newProps.cart) });
+        const productList = [];
+        newProps.cart.forEach((i) => {
+            productList.push({ productName: i.item.productname, amount: i.amount });
+        });
+        console.log(productList);
+
         this.setState({
+            dataSource: ds.cloneWithRows(newProps.cart),
+            cart: productList,
+            shopId: newProps.shopId,
+            isLogin: newProps.login.isLogin,
+            username: newProps.login.username,
             totalCost: newProps.cart.reduce((total, currentItem) =>
                 total + (currentItem.amount * currentItem.item.price), 0)
         });
@@ -41,6 +55,46 @@ class CartScreen extends Component {
 
     handleDecrease(index) {
         this.props.deCreaseItem(index);
+    }
+
+    handleMakeOrderButtonPressed() {
+        const { cart, isLogin } = this.state;
+        if (cart.length < 1) {
+            ToastAndroid.show('Your cart is empty!', ToastAndroid.SHORT);
+        } else if (!isLogin) {
+            ToastAndroid.show('Please login before make order!', ToastAndroid.SHORT);
+        } else {
+            this.makeOrder();
+        }
+    }
+
+    async makeOrder() {
+        const dataObj = {
+            orderTime: new Date(),
+            amount: this.state.totalCost,
+            paymentType: 'COD',
+            shopId: this.state.shopId,
+            user_name: this.state.username,
+            cart: this.state.cart
+        };
+        const response = await fetch(CREATE_ORDER_URL, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataObj)
+        });
+        const state = await response.json();
+
+        if (state === 'OK') {
+            ToastAndroid.show('Your order has been created successfully.', ToastAndroid.LONG);
+            this.cleanCart();
+        }
+    }
+
+    cleanCart() {
+        this.props.cleanCart();
     }
 
     renderRow(dataSource, sectionID, rowId) {
@@ -126,7 +180,7 @@ class CartScreen extends Component {
                             renderText={value => <Text style={styles.txtTotal}>{value} VND</Text>}
                         />
                     </View>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.handleMakeOrderButtonPressed()}>
                         <Ionicons name="ios-checkmark-circle-outline" size={32} color="#ff0066" />
                     </TouchableOpacity>
                 </View>
@@ -250,7 +304,9 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-    cart: state.cart
+    cart: state.cart,
+    login: state.login,
+    shopId: state.shop.shopId
 });
 
 export default connect(mapStateToProps, actions)(CartScreen);

@@ -8,13 +8,14 @@ import {
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import { LinearGradient } from 'expo';
-import { GET_ORDER_HISTORY_URL } from '../../backend/url';
 import NumberFormat from 'react-number-format';
+import { GET_ORDER_HISTORY_URL } from '../../backend/url';
+
 
 const { width } = Dimensions.get('window');
 const { height } = Dimensions.get('window');
 
-class UserPurchaseHistory extends Component {
+class UserOrderHistory extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -34,20 +35,27 @@ class UserPurchaseHistory extends Component {
     renderRow(order) {
         return (
             <View style={styles.wrapper}>
-                <TouchableOpacity>
-                    <View style={styles.namecus}>
-                        <Text style={styles.titlerow}>Shop name: </Text>
-                        <Text style={styles.contentrow}>{order.shopname}</Text>
+                <View style={styles.orderHeading}>
+                    <View style={{ flex: 2 }}>
+                        <TouchableOpacity>
+                            <View style={styles.namecus}>
+                                <Text style={styles.titlerow}>Shop name: </Text>
+                                <Text style={styles.contentrow}>{order.shopname}</Text>
+                            </View>
+                            <View style={styles.dateorder}>
+                                <Text style={styles.titlerow}>Order time: </Text>
+                                <Text style={styles.contentrow}>{order.ordertime}</Text>
+                            </View>
+                        </TouchableOpacity>
                     </View>
-                    <View style={styles.dateorder}>
-                        <Text style={styles.titlerow}>Order time: </Text>
-                        <Text style={styles.contentrow}>{order.ordertime}</Text>
+                    <View style={{ flex: 1 }}>
+                        <Text style={{ color: '#B10D65' }}>{order.state.toUpperCase()}</Text>
                     </View>
-                </TouchableOpacity>
+                </View>
                 <View style={styles.orderinfo}>
                     <View style={styles.cellinfo}>
                         <Text style={styles.titlerowoder}>Order ID</Text>
-                        <Text style={styles.contentrowoder}>{order.orderid}</Text>
+                        <Text style={styles.contentrowoder}>{10002200 + order.orderid}</Text>
                     </View>
                     <View style={styles.cellinfo}>
                         <Text style={styles.titlerowoder}>Order Amount</Text>
@@ -98,6 +106,7 @@ class UserPurchaseHistory extends Component {
                     <ListView
                         dataSource={this.state.dataSource}
                         renderRow={this.renderRow.bind(this)}
+                        enableEmptySections
                     />
                 </ScrollView>
             </LinearGradient>
@@ -134,15 +143,15 @@ const styles = StyleSheet.create({
     },
 
     titlerow: {
+        flex: 1,
         color: '#BCBCBC',
         fontSize: 11,
-        width: width / 2,
     },
 
     contentrow: {
+        flex: 1,
         color: '#B10D65',
         fontSize: 11,
-        width: width / 2,
     },
 
     titlerowoder: {
@@ -157,6 +166,10 @@ const styles = StyleSheet.create({
         fontSize: 11,
         width: width / 2,
         textAlign: 'center'
+    },
+
+    orderHeading: {
+        flexDirection: 'row',
     },
 
     orderinfo: {
@@ -190,4 +203,4 @@ const mapStateToProps = state => ({
     username: state.login.username
 });
 
-export default connect(mapStateToProps, null)(UserPurchaseHistory);
+export default connect(mapStateToProps, null)(UserOrderHistory);

@@ -55,6 +55,7 @@ class UserControlScreen extends Component {
 
   handleLogOut() {
     this.props.logOut();
+    this.props.cleanCart();
   }
 
 
@@ -103,7 +104,7 @@ class UserControlScreen extends Component {
           </LinearGradient>
           <LinearGradient colors={['#4a9cf9', '#268bff']} style={styles.btnStyle}>
             <TouchableOpacity
-              onPress={() => this.props.navigate('PurchaseHistory')}
+              onPress={() => this.props.navigate('UserOrderHistory')}
               style={styles.touchableStyle}
             >
               <Text style={styles.txtButton}>Your purchase history</Text>

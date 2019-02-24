@@ -5,7 +5,7 @@ import LoginScreen from './LoginScreen';
 import UserControlScreen from './UserControlScreen';
 import UserInfoScreen from './UserInfoScreen';
 import ChangePasswordScreen from './ChangePasswordScreen';
-import UserPurchaseHistory from './UserPurchaseHistory';
+import UserOrderHistoryScreen from './UserOrderHistory';
 import RatingHistoryScreen from './UserRatingHistory';
 
 export default class MenuStackNavigation extends Component {
@@ -28,7 +28,7 @@ const MenuStackNavigator = createStackNavigator({
   UserControl: UserControlScreen,
   UserInfo: UserInfoScreen,
   ChangePassword: ChangePasswordScreen,
-  PurchaseHistory: UserPurchaseHistory,
+  UserOrderHistory: UserOrderHistoryScreen,
   RatingHistory: RatingHistoryScreen
 },
   {
