@@ -11,7 +11,7 @@
     $obj = json_decode($json, true);
 
     $user_name = $obj['user_name'];
-    $newpassword = $obj['newpassword'];
+    $newpassword = password_hash($obj['newpassword'], PASSWORD_BCRYPT);
 
     if ($user_name!=""){
         if ($query= $conn->prepare("UPDATE account

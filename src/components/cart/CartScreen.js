@@ -36,7 +36,6 @@ class CartScreen extends Component {
         newProps.cart.forEach((i) => {
             productList.push({ productName: i.item.productname, amount: i.amount });
         });
-        console.log(productList);
 
         this.setState({
             dataSource: ds.cloneWithRows(newProps.cart),

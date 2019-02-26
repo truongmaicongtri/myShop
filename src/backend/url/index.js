@@ -1,6 +1,6 @@
 
 // export const HOST_URL = 'http://whatshop.ddns.net/what_shop_webservice/';
-export const HOST_URL = 'http://192.168.1.3/what_shop_webservice/';
+export const HOST_URL = 'http://192.168.8.104/what_shop_webservice/';
 export const GET_CATEGORY_URL = (shopId) =>
     HOST_URL + 'getCategories.php?shopid=' + shopId;
 
@@ -32,3 +32,6 @@ export const CHANGE_PASSWORD_URL = HOST_URL + 'changePassword.php';
 export const UPDATE_USERINFO_URL = HOST_URL + 'updateUserInfo.php';
 
 export const CREATE_ORDER_URL = HOST_URL + 'insertOrder.php';
+
+export const SEARCH_BY_SHOP_NAME = (shopName) =>
+    HOST_URL + 'searchShopname.php?shopname=' + shopName;

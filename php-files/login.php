@@ -14,11 +14,10 @@
     $userpassword = $obj['userpassword'];
     $state = "Try Again";
 
-
     if ($user_name!=""){
-        if ($query= $conn->prepare("SELECT username FROM account WHERE username= ? && password= ? ")){
+        if ($query= $conn->prepare("SELECT password FROM account WHERE username= ? ")){
 
-            $query->bind_param("ss", $user_name, $userpassword);
+            $query->bind_param("s", $user_name);
 
             $query->execute();
     
@@ -26,7 +25,7 @@
     
             $query->fetch();
     
-            if ($result!=""){
+            if (password_verify($userpassword, $result)){
                 $state = "Login successful!";
             } else {
                 $state = "Wrong user name or password";

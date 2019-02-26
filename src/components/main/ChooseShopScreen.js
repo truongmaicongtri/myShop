@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import {
     View, Text, StyleSheet,
-    TouchableOpacity,
+    TouchableOpacity, ListView,
     Dimensions, TextInput, ToastAndroid
 } from 'react-native';
+import { SearchBar } from 'react-native-elements';
 import { LinearGradient, BarCodeScanner, Permissions } from 'expo';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
-import { GET_SHOP_NAME_URL } from '../../backend/url';
+import { GET_SHOP_NAME_URL, SEARCH_BY_SHOP_NAME } from '../../backend/url';
 
 
 class ChooseShopScreen extends Component {
@@ -15,8 +16,10 @@ class ChooseShopScreen extends Component {
         super(props);
         this.state = {
             shopId: '',
+            shopName: '',
             hasCameraPermission: null,
-            isScanning: false
+            isScanning: false,
+            dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
         };
     }
 
@@ -46,8 +49,8 @@ class ChooseShopScreen extends Component {
     }
 
 
-    handleEnterButtonPress() {
-        this.callApi(this.state.shopId);
+    handleEnterButtonPress(shopId) {
+        this.callApi(shopId);
     }
 
     handleBarCodeScanned = ({ type, data }) => {
@@ -55,8 +58,48 @@ class ChooseShopScreen extends Component {
         this.callApi(data);
     }
 
+    async searchShopName() {
+        const url = SEARCH_BY_SHOP_NAME(this.state.shopName);
+        const response = await fetch(url, { method: 'POST', body: null });
+
+        const json = await response.json();
+
+        this.updateListView(json);
+    }
+
+    updateListView(json) {
+        this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(json)
+        });
+    }
+
+    async updateSearch(text) {
+        await this.setState({
+            shopName: text
+        });
+        this.searchShopName();
+    }
+
+    renderRow(data) {
+        return (
+            <TouchableOpacity onPress={() => this.handleEnterButtonPress(data.shopId)}>
+                <View style={styles.rowStyle}>
+                    <View style={{ flex: 1, flexDirection: 'row', backgroundColor: '#b8c6c6' }}>
+                        <View style={{ flex: 1, justifyContent: 'center' }}>
+                            <Text style={{ textAlign: 'center' }}>{data.shopName}</Text>
+                        </View>
+                        <View style={{ flex: 1, justifyContent: 'center' }}>
+                            <Text style={{ textAlign: 'center' }}>icon Here!!!!</Text>
+                        </View>
+
+                    </View>
+                </View>
+            </TouchableOpacity>
+        );
+    }
+
     render() {
-        const { hasCameraPermission, isScanning } = this.state;
+        const { isScanning } = this.state;
 
         if (isScanning) {
             return (
@@ -80,7 +123,7 @@ class ChooseShopScreen extends Component {
             <LinearGradient
                 start={{ x: 0, y: 1 }}
                 end={{ x: 1, y: 0 }}
-                colors={['#2980B9', '#6DD5FA']}
+                colors={['#ffffff', '#ffffff']}
                 style={styles.screen}
             >
 
@@ -115,54 +158,22 @@ class ChooseShopScreen extends Component {
                         </View>
                 }
                 <Text style={styles.textStyle}>Or enter shop ID: </Text>
-                <View style={{ marginTop: 10, alignItems: 'flex-start', flexDirection: 'row' }}>
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder="SHOP ID"
-                        autoCapitalize='none'
-                        underlineColorAndroid='transparent'
-                        onChangeText={shopId => this.setState({ shopId })}
-                    />
-
-                    <LinearGradient colors={['#aa4b6b', '#aa4b6b']} style={styles.loginButton} >
-                        <TouchableOpacity
-                            onPress={() => this.handleEnterButtonPress()}
-                            style={styles.touchableStyle}
-                        >
-                            <Text style={{ color: 'white' }}>ENTER</Text>
-                        </TouchableOpacity>
-                    </LinearGradient>
-                </View>
+                <View style={{ height: 10 }} />
+                <SearchBar
+                    placeholder="SHOP ID"
+                    autoCapitalize='none'
+                    lightTheme
+                    underlineColorAndroid='transparent'
+                    onChangeText={(text) => this.updateSearch(text)}
+                    value={this.state.shopName}
+                />
+                <ListView
+                    dataSource={this.state.dataSource}
+                    renderRow={this.renderRow.bind(this)}
+                    enableEmptySections
+                />
             </LinearGradient >
         );
-
-
-        // return (
-        //     <LinearGradient
-        //         start={{ x: 0, y: 0 }}
-        //         end={{ x: 1, y: 0 }}
-        //         colors={['#2980B9', '#6DD5FA']}
-        //         style={styles.screen}
-        //     >
-        //         <TextInput
-        //             style={styles.textInput}
-        //             placeholder="SHOP ID"
-        //             autoCapitalize='none'
-        //             underlineColorAndroid='transparent'
-        //             onChangeText={shopId => this.setState({ shopId })}
-        //         />
-        //         <View style={{ marginTop: 10, alignItems: 'center' }}>
-        //             <LinearGradient colors={['#4a9cf9', '#268bff']} style={styles.loginButton} >
-        //                 <TouchableOpacity
-        //                     onPress={() => this.handleEnterButtonPress()}
-        //                     style={styles.touchableStyle}
-        //                 >
-        //                     <Text style={{ color: 'white' }}>ENTER</Text>
-        //                 </TouchableOpacity>
-        //             </LinearGradient>
-        //         </View>
-        //     </LinearGradient >
-        // );
     }
 }
 const { width, height } = Dimensions.get('window');
@@ -172,21 +183,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#82bbfc',
         padding: width / 20,
         justifyContent: 'center',
-
-        paddingBottom: 200,
-    },
-    textInput: {
-        width: width * 0.6,
-        height: height / 13,
-        backgroundColor: '#fff',
-        paddingLeft: 20,
-        borderRadius: height / 13,
-        borderWidth: 1,
-        borderColor: '#268bff',
-        fontSize: 15,
-        elevation: 5,
+        paddingTop: 100,
     },
     loginButton: {
+        flex: 1,
         height: height / 13,
         // backgroundColor: '#268bff',
         width: width * 0.3,
@@ -211,6 +211,12 @@ const styles = StyleSheet.create({
     textStyle: {
         fontSize: 15,
         color: 'black'
+    },
+    rowStyle: {
+        flex: 1,
+        backgroundColor: '#dee2e8',
+        height: height / 13,
+        padding: 5
     }
 });
 
