@@ -39,31 +39,42 @@
     foreach ($productids as $productid) {
         $productimages = array();
 
-        $query = "SELECT media.imagelink
+        if ($query= $conn->prepare("SELECT media.imagelink
         FROM product_image ,media
-        WHERE media.mediaid=product_image.mediaid && product_image.productid='{$productid}'";
+        WHERE media.mediaid=product_image.mediaid && product_image.productid=?")){
 
-        $result = $conn->query($query);
-                
-        if ($result->num_rows > 0){
-            while ($row = $result->fetch_assoc()){
-                array_push($productimages, $row['imagelink']);
-            }
-        }
+            $query->bind_param("s", $productid);
+
+            $query->execute();
+
+            $query->bind_result($imagelink);
             
-        $query = "SELECT products_information.productname, products_information.material, products_information.color,
+            while ($query->fetch()) {
+                array_push($productimages, $imagelink);
+            }
+
+            $query->close();
+        } 
+
+        if ($query= $conn->prepare("SELECT products_information.productname, products_information.material, products_information.color,
         products_information.price, products_information.amount, products_information.detail
         FROM products_information
-        WHERE products_information.productid='{$productid}'";
-    
-        $result = $conn->query($query);
-    
-        if ($result->num_rows > 0){
-            while ($row = $result->fetch_assoc()){
-                array_push($products, new Product($productid,$row['productname'],$row['price'],$productimages, $row['detail']));
+        WHERE products_information.productid= ? ")){
+
+            $query->bind_param("s", $productid);
+
+            $query->execute();
+
+            $query->bind_result($productname, $material, $color, $price, $amount, $detail,);
+            
+            while ($query->fetch()) {
+                array_push($products, new Product($productid, $productname, $price, $productimages, $detail));
             }
-        }
+
+            $query->close();
+        } 
     }
+
     $products = str_replace("\\/", "/", json_encode($products));
     echo $products;
 

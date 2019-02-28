@@ -25,13 +25,20 @@ class ContactScreen extends Component {
         };
     }
 
-    async componentWillMount() {
-        const url = GET_CONTACT_SCREEN_URL(this.props.shopId);
-        const response = await fetch(url, { method: 'POST', body: null });
-        const bundle = await response.json();
+    componentWillMount() {
+        this.callApi();
+    }
 
-        const bundleLatitude = parseFloat(bundle.latitude.replace(',', '.'));
-        const bundleLongitude = parseFloat(bundle.longitude.replace(',', '.'));
+    async callApi() {
+        const url = GET_CONTACT_SCREEN_URL(this.props.shopId);
+        const response = await fetch(url, { method: 'GET', body: null });
+        const bundle = await response.json();
+        this.updateState(bundle);
+    }
+
+    updateState(bundle) {
+        const bundleLatitude = bundle.latitude;
+        const bundleLongitude = bundle.longitude;
 
         this.setState({
             region: { ...this.state.region, latitude: bundleLatitude, longitude: bundleLongitude },
@@ -132,6 +139,6 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
     shopId: state.shop.shopId
-  });
-  
+});
+
 export default connect(mapStateToProps)(ContactScreen);

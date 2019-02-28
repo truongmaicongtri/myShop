@@ -20,7 +20,7 @@ class TopBar extends Component {
 
     async callApi() {
         const url = GET_SHOP_NAME_URL(this.props.shopId);
-        const response = await fetch(url, { method: 'POST', body: null });
+        const response = await fetch(url, { method: 'GET', body: null });
         const json = await response.json();
         this.updateState(json);
     }

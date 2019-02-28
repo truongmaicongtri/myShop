@@ -4,6 +4,7 @@ import {
     TouchableOpacity, ListView,
     Dimensions, TextInput, ToastAndroid
 } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import { SearchBar } from 'react-native-elements';
 import { LinearGradient, BarCodeScanner, Permissions } from 'expo';
 import { connect } from 'react-redux';
@@ -19,18 +20,26 @@ class ChooseShopScreen extends Component {
             shopName: '',
             hasCameraPermission: null,
             isScanning: false,
+            isSearching: false,
+            typingTimer: {},
+            doneTypingInterval: 500,
             dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
         };
     }
 
-    async componentDidMount() {
+
+    componentDidMount() {
+        this.requireCameraPermission();
+    }
+
+    async requireCameraPermission() {
         const { status } = await Permissions.askAsync(Permissions.CAMERA);
         this.setState({ hasCameraPermission: status === 'granted' });
     }
 
-    async callApi(shopId) {
+    async callApiGetShopName(shopId) {
         const url = GET_SHOP_NAME_URL(shopId);
-        const response = await fetch(url, { method: 'POST', body: null });
+        const response = await fetch(url, { method: 'GET', body: null });
 
         const json = await response.json();
         this.checkShop(json, shopId);
@@ -50,51 +59,63 @@ class ChooseShopScreen extends Component {
 
 
     handleEnterButtonPress(shopId) {
-        this.callApi(shopId);
+        this.callApiGetShopName(shopId);
     }
 
     handleBarCodeScanned = ({ type, data }) => {
         this.setState({ isScanning: false, shopId: data });
-        this.callApi(data);
+        this.callApiGetShopName(data);
     }
 
-    async searchShopName() {
+    async calApiSearchShopName() {
         const url = SEARCH_BY_SHOP_NAME(this.state.shopName);
-        const response = await fetch(url, { method: 'POST', body: null });
+        const response = await fetch(url, { method: 'GET', body: null });
 
         const json = await response.json();
-
         this.updateListView(json);
     }
 
     updateListView(json) {
         this.setState({
+            isSearching: false,
             dataSource: this.state.dataSource.cloneWithRows(json)
         });
     }
 
-    async updateSearch(text) {
+    searchShopName() {
+        if (this.state.shopName.trim() !== '') {
+            this.calApiSearchShopName();
+        } else {
+            this.updateListView([]);
+        }
+    }
+
+    async handleSearchBarChangeText(text) {
+        clearTimeout(this.state.typingTimer);
         await this.setState({
-            shopName: text
+            shopName: text,
+            isSearching: true
         });
-        this.searchShopName();
+        await this.setState({
+            typingTimer: setTimeout(() => this.searchShopName(), this.state.doneTypingInterval)
+        });
     }
 
     renderRow(data) {
         return (
             <TouchableOpacity onPress={() => this.handleEnterButtonPress(data.shopId)}>
                 <View style={styles.rowStyle}>
-                    <View style={{ flex: 1, flexDirection: 'row', backgroundColor: '#b8c6c6' }}>
-                        <View style={{ flex: 1, justifyContent: 'center' }}>
+                    <View style={{ flex: 1, flexDirection: 'row', backgroundColor: '#bdc6cf', borderRadius: 3 }}>
+                        <View style={{ flex: 5, justifyContent: 'center' }}>
                             <Text style={{ textAlign: 'center' }}>{data.shopName}</Text>
                         </View>
-                        <View style={{ flex: 1, justifyContent: 'center' }}>
-                            <Text style={{ textAlign: 'center' }}>icon Here!!!!</Text>
+                        <View style={{ flex: 1, justifyContent: 'space-around' }}>
+                            <MaterialIcons name='touch-app' size={25} color='#4e5766' />
                         </View>
 
                     </View>
                 </View>
-            </TouchableOpacity>
+            </TouchableOpacity >
         );
     }
 
@@ -140,7 +161,7 @@ class ChooseShopScreen extends Component {
                         <View style={{ marginTop: 10, alignItems: 'center', width: width * 0.9, height: width / 4 }}>
                             {
                                 this.state.hasCameraPermission ?
-                                    <LinearGradient colors={['#6b6b83', '#6b6b83']} style={styles.scanButton} >
+                                    <LinearGradient colors={['#9badc9', '#9badc9']} style={styles.scanButton} >
                                         <TouchableOpacity
                                             onPress={() => this.handleScanButtonPress()}
                                             style={styles.touchableStyle}
@@ -157,14 +178,15 @@ class ChooseShopScreen extends Component {
 
                         </View>
                 }
-                <Text style={styles.textStyle}>Or enter shop ID: </Text>
+                <Text style={styles.textStyle}>Or enter shop name: </Text>
                 <View style={{ height: 10 }} />
                 <SearchBar
-                    placeholder="SHOP ID"
+                    placeholder="SHOP NAME"
                     autoCapitalize='none'
+                    showLoading={this.state.isSearching}
                     lightTheme
                     underlineColorAndroid='transparent'
-                    onChangeText={(text) => this.updateSearch(text)}
+                    onChangeText={(text) => this.handleSearchBarChangeText(text)}
                     value={this.state.shopName}
                 />
                 <ListView
@@ -202,8 +224,6 @@ const styles = StyleSheet.create({
         // backgroundColor: '#268bff',
         width: width * 0.9,
         borderRadius: height / 13,
-        borderWidth: 1,
-        borderColor: '#268bff',
         justifyContent: 'center',
         alignItems: 'center',
         elevation: 5,
@@ -214,9 +234,10 @@ const styles = StyleSheet.create({
     },
     rowStyle: {
         flex: 1,
-        backgroundColor: '#dee2e8',
+        backgroundColor: '#e1e8ee',
         height: height / 13,
-        padding: 5
+        padding: 8,
+        paddingTop: 0
     }
 });
 

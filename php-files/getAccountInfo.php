@@ -13,16 +13,22 @@
 
     $user_name = $parameters['user_name'];
 
-    $query = "SELECT user_information.firstname, user_information.lastname, user_information.email, user_information.phone, user_information.address
+    if ($query= $conn->prepare("SELECT user_information.firstname, user_information.lastname, user_information.email, user_information.phone, user_information.address
     FROM user_information
-    WHERE user_information.username = '{$user_name}'";
+    WHERE user_information.username = ?")){
 
-    $result = $conn->query($query);
+        $query->bind_param("s", $user_name);
 
-    $row = $result->fetch_assoc();
+        $query->execute();
 
-    $bundles = new Bundle($row['firstname'], $row['lastname'],$row['email'], $row['phone'],$row['address']);
+        $query->bind_result($firstname, $lastname, $email, $phone, $address);
+            
+        while ($query->fetch()) {
+            $bundles = new Bundle($firstname, $lastname, $email, $phone, $address);
+        }
 
+        $query->close();
+    } 
 
     echo json_encode($bundles);
 

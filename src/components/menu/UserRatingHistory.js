@@ -25,10 +25,18 @@ class UserRatingHistory extends Component {
         };
     }
 
-    async componentDidMount() {
+    componentDidMount() {
+        this.callApi();
+    }
+
+    async callApi() {
         const url = GET_RATING_HISTORY_URL(this.props.username);
-        const response = await fetch(url, { method: 'POST', body: null });
+        const response = await fetch(url, { method: 'GET', body: null });
         const bundles = await response.json();
+        this.updateListView(bundles);
+    }
+
+    updateListView(bundles) {
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(bundles)
         });

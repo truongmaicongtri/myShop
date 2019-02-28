@@ -31,9 +31,13 @@ class CategoryScreen extends Component {
 
     async fetchProduct(categoryid) {
         const url = GET_PRODUCT_URL(categoryid);
-        const response = await fetch(url, { method: 'POST', body: null });
+        const response = await fetch(url, { method: 'GET', body: null });
         const products = await response.json();
 
+        this.updateListView(products);
+    }
+
+    updateListView(products) {
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(products)
         });

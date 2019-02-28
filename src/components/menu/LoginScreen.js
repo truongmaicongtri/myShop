@@ -20,7 +20,14 @@ class LoginScreen extends Component {
         };
     }
 
-    async handleLogInButtonPress() {
+    login(state) {
+        ToastAndroid.show(JSON.stringify(state), ToastAndroid.SHORT);
+        if (state === 'Login successful!') {
+            this.props.logIn(this.state.username);
+        }
+    }
+
+    async callApi() {
         const dataObj = {
             user_name: this.state.username,
             userpassword: this.state.password
@@ -34,13 +41,38 @@ class LoginScreen extends Component {
             body: JSON.stringify(dataObj)
         });
         const loginState = await response.json();
-
-        ToastAndroid.show(JSON.stringify(loginState), ToastAndroid.SHORT);
-        if (loginState === 'Login successful!') {
-            this.props.logIn(dataObj.user_name);
-        }
+        this.login(loginState);
     }
 
+    validateUsername = (userName) => {
+        const usernameRegex = /^[a-zA-Z0-9]+$/;
+        return usernameRegex.test(userName);
+    }
+
+    validatePassword = (password) => {
+        // const mediumPasswordRegex = new RegExp('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
+        // return mediumPasswordRegex.test(password);
+        return password !== '';
+    }
+
+    validateTextInput = () => {
+        if (!this.validateUsername(this.state.username)) {
+            return 'This username is not valid';
+        }
+        if (!this.validatePassword(this.state.password)) {
+            return 'This password is not valid';
+        }
+        return true;
+    }
+
+    handleLogInButtonPress() {
+        const validateState = this.validateTextInput();
+        if (validateState === true) {
+            this.callApi();
+        } else {
+            ToastAndroid.show(validateState, ToastAndroid.SHORT);
+        }
+    }
 
     render() {
         return (
@@ -85,6 +117,11 @@ class LoginScreen extends Component {
                             <Text style={{ color: 'white' }}>LOG IN</Text>
                         </TouchableOpacity>
                     </LinearGradient>
+                </View>
+                <View style={styles.registerButton}>
+                    <TouchableOpacity onPress={() => this.props.navigate('Register')}>
+                        <Text style={{ textDecorationLine: 'underline', fontStyle: 'italic' }}>Create Account</Text>
+                    </TouchableOpacity>
                 </View>
             </LinearGradient >
         );
@@ -137,6 +174,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    registerButton: {
+        position: 'absolute',
+        right: 15,
+        bottom: 25,
+        justifyContent: 'flex-end'
+    }
 });
 
 export default connect(null, actions)(LoginScreen);

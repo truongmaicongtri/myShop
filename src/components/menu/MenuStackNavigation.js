@@ -7,6 +7,7 @@ import UserInfoScreen from './UserInfoScreen';
 import ChangePasswordScreen from './ChangePasswordScreen';
 import UserOrderHistoryScreen from './UserOrderHistory';
 import RatingHistoryScreen from './UserRatingHistory';
+import RegisterScreen from './RegisterScreen';
 
 export default class MenuStackNavigation extends Component {
   constructor(props) {
@@ -25,6 +26,7 @@ export default class MenuStackNavigation extends Component {
 const MenuStackNavigator = createStackNavigator({
   Menu: MenuScreen,
   Login: LoginScreen,
+  Register: RegisterScreen,
   UserControl: UserControlScreen,
   UserInfo: UserInfoScreen,
   ChangePassword: ChangePasswordScreen,

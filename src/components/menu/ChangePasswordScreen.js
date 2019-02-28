@@ -26,12 +26,17 @@ class ChangePasswordScreen extends Component {
         };
     }
 
+    validatePassword = (password) => {
+        const mediumPasswordRegex = new RegExp('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{1,})');
+        return mediumPasswordRegex.test(password);
+    }
+
     handleSave() {
         const { oldPassword, newPassword, confirmPassword } = this.state;
-        if (oldPassword === '' || newPassword === '' || confirmPassword === '') {
-            ToastAndroid.show('Vui lòng nhập đầy đủ thông tin', ToastAndroid.SHORT);
+        if (oldPassword === '' || this.validatePassword(newPassword) === false || this.validatePassword(confirmPassword) === false) {
+            ToastAndroid.show('Password is not valid.', ToastAndroid.SHORT);
         } else if (newPassword !== confirmPassword) {
-            ToastAndroid.show('Mật khẩu xác thực chưa đúng', ToastAndroid.SHORT);
+            ToastAndroid.show('The password and confirmation password do not match.', ToastAndroid.SHORT);
         } else {
             this.checkOldPassword();
         }
@@ -55,7 +60,7 @@ class ChangePasswordScreen extends Component {
         if (loginState === 'Login successful!') {
             this.changePassword();
         } else {
-            ToastAndroid.show('Mật khẩu cũ chưa đúng', ToastAndroid.SHORT);
+            ToastAndroid.show('Old password is wrong.', ToastAndroid.SHORT);
         }
     }
 

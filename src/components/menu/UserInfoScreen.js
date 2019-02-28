@@ -26,34 +26,18 @@ class UserInfoScreen extends Component {
             email: '',
             phone: '',
             address: '',
-            oldInfo: {
-                ofirstName: '',
-                olastName: '',
-                oemail: '',
-                ophone: '',
-                oaddress: ''
-            }
         };
     }
 
-    async componentDidMount() {
+    componentDidMount() {
+        this.getUserInfoFromServer();
+    }
+
+    async getUserInfoFromServer() {
         const url = GET_ACCOUNT_INFO_URL(this.props.username);
-        const response = await fetch(url, { method: 'POST', body: null });
+        const response = await fetch(url, { method: 'GET', body: null });
         const bundle = await response.json();
-        this.setState({
-            firstName: bundle.firstname,
-            lastName: bundle.lastname,
-            email: bundle.email,
-            phone: bundle.phone,
-            address: bundle.address,
-            oldInfo: {
-                ofirstName: bundle.firstname,
-                olastName: bundle.lastname,
-                oemail: bundle.email,
-                ophone: bundle.phone,
-                oaddress: bundle.address,
-            }
-        });
+        this.updateView(bundle);
     }
 
     async updateUserInfo() {
@@ -76,35 +60,23 @@ class UserInfoScreen extends Component {
         const loginState = await response.json();
 
         if (loginState === 'OK') {
-            ToastAndroid.show('Cập nhật thông tin thành công', ToastAndroid.LONG);
-            this.updateTempInfo();
+            ToastAndroid.show('Your information updated successfully', ToastAndroid.LONG);
+            this.getUserInfoFromServer();
         } else {
-            ToastAndroid.show('Cập nhật thông tin thất bại', ToastAndroid.LONG);
-            this.loadTempInfo();
+            ToastAndroid.show('Information update failed', ToastAndroid.LONG);
         }
     }
 
-    updateTempInfo() {
+    updateView(bundle) {
         this.setState({
-            oldInfo: {
-                ofirstName: this.state.firstName,
-                olastName: this.state.lastName,
-                oemail: this.state.email,
-                ophone: this.state.phone,
-                oaddress: this.state.address,
-            }
+            firstName: bundle.firstname,
+            lastName: bundle.lastname,
+            email: bundle.email,
+            phone: bundle.phone,
+            address: bundle.address
         });
     }
 
-    loadTempInfo() {
-        this.setState({
-            firstName: this.state.oldInfo.ofirstName,
-            lastName: this.state.oldInfo.olastName,
-            email: this.state.oldInfo.oemail,
-            phone: this.state.oldInfo.ophone,
-            address: this.state.oldInfo.oaddress,
-        });
-    }
 
     handleEditButtonOnPress() {
         if (this.state.isEditButtonPressed) {
@@ -114,21 +86,32 @@ class UserInfoScreen extends Component {
         }
     }
 
-    checkDuplicateInfo() {
-        const { firstName, lastName, email, phone, address } = this.state;
-        const { ofirstName, olastName, oemail, ophone, oaddress } = this.state.oldInfo;
-        return (firstName === ofirstName &&
-            lastName === olastName &&
-            email === oemail &&
-            phone === ophone &&
-            address === oaddress);
+    validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    validatePhoneNumber = (phoneNumber) => {
+        const phoneNumberRegex = /^[0-9]{9,10}$/;
+        return phoneNumberRegex.test(phoneNumber);
+    }
+
+    validateTextInput = () => {
+        if (!this.validateEmail(this.state.email)) {
+            return 'This Email is not valid';
+        }
+        if (!this.validatePhoneNumber(this.state.phone)) {
+            return 'This Phone number is not valid';
+        }
+        return true;
     }
 
     handleSaveButtonOnPress() {
-        if (!this.checkDuplicateInfo()) {
+        const validateState = this.validateTextInput();
+        if (validateState === true) {
             this.updateUserInfo();
         } else {
-            ToastAndroid.show('Thông tin không có gì để cập nhật', ToastAndroid.LONG);
+            ToastAndroid.show(validateState, ToastAndroid.LONG);
         }
         this.setState({ isEditButtonPressed: false });
     }
@@ -162,12 +145,6 @@ class UserInfoScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View>
-                    <TextInput
-                        style={styles.txtrow}
-                        editable={false}
-                        value={this.props.username}
-                        placeholder="USERNAME"
-                    />
                     <TextInput
                         style={styles.txtrow}
                         editable={this.state.isEditButtonPressed}

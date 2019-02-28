@@ -19,7 +19,7 @@ class NotifyScreen extends Component {
 
     async callApi() {
         const url = GET_NOTIFICATION_URL(this.props.shopId);
-        const response = await fetch(url, { method: 'POST', body: null });
+        const response = await fetch(url, { method: 'GET', body: null });
         const messages = await response.json();
         this.updateListView(messages);
         this.handleChangeNumberOfNotification(messages.length);

@@ -35,7 +35,7 @@ class HomeScreen extends Component {
 
   async callApi() {
     const url = GET_CATEGORY_URL(this.props.shopId);
-    const response = await fetch(url, { method: 'POST', body: null });
+    const response = await fetch(url, { method: 'GET', body: null });
     const categories = await response.json();
     this.updateListView(categories);
   }
@@ -44,6 +44,10 @@ class HomeScreen extends Component {
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(categories)
     });
+  }
+
+  handleExitButton() {
+    this.props.exitShop();
   }
 
   renderRow(category) {
@@ -65,10 +69,6 @@ class HomeScreen extends Component {
           <Text>Có lỗi xảy ra, không thể upload Category</Text>
         );
     }
-  }
-
-  handleExitButton() {
-    this.props.exitShop();
   }
 
   render() {

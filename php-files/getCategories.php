@@ -13,51 +13,81 @@
 
     $shopid = $parameters['shopid'];
 
-    $query = "SELECT category_information.categoryid
-    FROM category_information
-    WHERE category_information.shopid='{$shopid}'";
+    // $query = "SELECT category_information.categoryid
+    // FROM category_information
+    // WHERE category_information.shopid='{$shopid}'";
 
-    $result = $conn->query($query);
+    // $result = $conn->query($query);
+    // $categories = array();
+    // $categoryids = array();
+
+
+    // if ($result->num_rows > 0){
+    //     while ($row = $result->fetch_assoc()){
+    //         array_push($categoryids, $row['categoryid']);
+    //     }
+    // }
+
+
     $categories = array();
     $categoryids = array();
+    if ($query= $conn->prepare("SELECT category_information.categoryid
+    FROM category_information
+    WHERE category_information.shopid= ? ")){
 
+        $query->bind_param("s", $shopid);
 
-    if ($result->num_rows > 0){
-        while ($row = $result->fetch_assoc()){
-            array_push($categoryids, $row['categoryid']);
+        $query->execute();
+
+        $query->bind_result($categoryid);
+            
+        while ($query->fetch()) {
+            array_push($categoryids, $categoryid);
         }
-    }
+
+        $query->close();
+    } 
 
     
     foreach ($categoryids as $categoryid) {
         // get list of category view 
         $categoryViews = array();
 
-        $query = "SELECT media.imagelink
+        if ($query= $conn->prepare("SELECT media.imagelink
         FROM media,category_image
-        WHERE category_image.categoryid='{$categoryid}' && media.mediaid=category_image.mediaid";
+        WHERE category_image.categoryid= ? && media.mediaid=category_image.mediaid")){
 
-        $result = $conn->query($query);
+            $query->bind_param("s", $categoryid);
 
-        if ($result->num_rows > 0){
-            while ($row = $result->fetch_assoc()){
-                array_push($categoryViews, $row['imagelink']);
+            $query->execute();
+
+            $query->bind_result($imagelink);
+                
+            while ($query->fetch()) {
+                array_push($categoryViews, $imagelink);
             }
-        }
+
+            $query->close();
+        } 
 
         //get category name, display type and collect category
 
-        $query = "SELECT category_information.categoryname, category_information.displaytype
+        if ($query= $conn->prepare("SELECT category_information.categoryname, category_information.displaytype
         FROM category_information
-        WHERE category_information.categoryid = '{$categoryid}'";
+        WHERE category_information.categoryid = ? ")){
 
-        $result = $conn->query($query);
+            $query->bind_param("s", $categoryid);
 
-        if ($result->num_rows > 0){
-            while ($row = $result->fetch_assoc()){
-                array_push($categories, new Category($categoryid ,$row['categoryname'],$row['displaytype'], $categoryViews));
+            $query->execute();
+
+            $query->bind_result($categoryname, $displaytype);
+                
+            while ($query->fetch()) {
+                array_push($categories, new Category($categoryid ,$categoryname, $displaytype, $categoryViews));
             }
-        }
+
+            $query->close();
+        } 
     }
 
     $categories = str_replace("\\/", "/", json_encode($categories));

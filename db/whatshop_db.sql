@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 24, 2019 at 06:06 PM
+-- Generation Time: Feb 28, 2019 at 10:33 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.1
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `account` (
   `username` varchar(10) NOT NULL,
-  `password` varchar(20) NOT NULL,
+  `password` char(60) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `mediaid` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -39,9 +39,9 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`username`, `password`, `mediaid`) VALUES
-('tienbui', 'tien', NULL),
-('trichuot', 'tri', NULL),
-('user', 'pass', NULL);
+('tien', '$2y$10$zBM1iDa4QpthqWpZBjf4SeorWkVnqDVOw0ThdXsPIOKdzGt/YXkZa', NULL),
+('tri', '$2y$10$aRIwNVFBBt2LA9NVfr.vn.zU6INRSTGZDPV5a1J4QS9ClBrkpw/2S', NULL),
+('user', '$2y$10$Fw5jIAVpeUxMkuTaNSwDV.K0p11A5Ho2Epnzvw/ir5/wc3KYIm0x6', NULL);
 
 -- --------------------------------------------------------
 
@@ -241,10 +241,10 @@ CREATE TABLE `order_history` (
 --
 
 INSERT INTO `order_history` (`orderid`, `state`, `ordertime`, `amount`, `paymentType`, `address`, `shopid`, `userid`) VALUES
-(26, 'processing', '2019-02-24', '1330000', 'COD', '255, Dong Khoi st, Thu Dau Mot, Binh Duong Newcity', 'shop01', 'trichuot'),
-(27, 'processing', '2019-02-26', '3500000', 'COD', 'Dong An, Thuan An, Binh Duong', 'shop01', 'tienbui'),
-(28, 'processing', '2019-02-25', '165000', 'COD', 'Dong An, Thuan An, Binh Duong', 'shop02', 'tienbui'),
-(29, 'finished', '2019-02-24', '65000', 'COD', '255, Dong Khoi st, Thu Dau Mot, Binh Duong Newcity', 'shop02', 'trichuot');
+(26, 'processing', '2019-02-24', '1330000', 'COD', '255, Dong Khoi st, Thu Dau Mot, Binh Duong Newcity', 'shop01', 'tri'),
+(27, 'processing', '2019-02-26', '3500000', 'COD', 'Dong An, Thuan An, Binh Duong', 'shop01', 'tien'),
+(28, 'processing', '2019-02-25', '165000', 'COD', 'Dong An, Thuan An, Binh Duong', 'shop02', 'tien'),
+(29, 'finished', '2019-02-24', '65000', 'COD', '255, Dong Khoi st, Thu Dau Mot, Binh Duong Newcity', 'shop02', 'tri');
 
 -- --------------------------------------------------------
 
@@ -424,10 +424,10 @@ CREATE TABLE `rating_history` (
 --
 
 INSERT INTO `rating_history` (`userid`, `ratingid`, `shopid`, `ratingstar`, `date`) VALUES
-('tienbui', 2, 'shop01', 4, '2019-01-08'),
-('trichuot', 3, 'shop01', 4, '2019-02-11'),
-('trichuot', 4, 'shop02', 5, '2019-02-03'),
-('tienbui', 5, 'shop02', 2, '2019-02-03');
+('tien', 2, 'shop01', 4, '2019-01-08'),
+('tri', 3, 'shop01', 4, '2019-02-11'),
+('tri', 4, 'shop02', 5, '2019-02-03'),
+('tien', 5, 'shop02', 2, '2019-02-03');
 
 -- --------------------------------------------------------
 
@@ -477,8 +477,8 @@ CREATE TABLE `user_information` (
 --
 
 INSERT INTO `user_information` (`id`, `username`, `firstname`, `lastname`, `email`, `phone`, `address`, `birthday`) VALUES
-(1, 'trichuot', 'Tri', 'Truong', 'tri.truong.set15@eiu.edu.vn', '0195632584', '255, Dong Khoi st, Thu Dau Mot, Binh Duong Newcity', NULL),
-(2, 'tienbui', 'Tien', 'Bui Van', 'tien.bui.set15@eiu.edu.vn', '0397408460', 'Dong An, Thuan An, Binh Duong', NULL);
+(1, 'tri', 'Tri', 'Truong', 'tri.truong.set15@eiu.edu.vn', '0195636262', '255, Dong Khoi st, Thu Dau Mot, Binh Duong Newcity', NULL),
+(2, 'tien', 'Tien', 'Bui Van', 'tien.bui.set15@eiu.edu.vn', '0397408460', 'Dong An, Thuan An, Binh Duong', NULL);
 
 --
 -- Indexes for dumped tables
@@ -592,13 +592,13 @@ ALTER TABLE `category_image`
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `orderdetailid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `orderdetailid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `order_history`
 --
 ALTER TABLE `order_history`
-  MODIFY `orderid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `orderid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `products_in_cate`

@@ -13,21 +13,26 @@
 
     $shopid = $parameters['shopid'];
 
-    $query = "SELECT shop_information.latitude,
-     shop_information.longitude, 
-     shop_information.address, 
-     shop_information.cellphone, 
-     shop_information.email, shop_information.phone 
-    FROM shop_information
-    WHERE shop_information.shopid='{$shopid}'";
+    if ($query= $conn->prepare("SELECT shop_information.latitude,
+    shop_information.longitude, 
+    shop_information.address, 
+    shop_information.cellphone, 
+    shop_information.email, shop_information.phone 
+   FROM shop_information
+   WHERE shop_information.shopid= ? ")){
 
-    $result = $conn->query($query);
+        $query->bind_param("s", $shopid);
 
-    if ($result->num_rows > 0){
-        $row = $result->fetch_assoc();
-        $bundle = new Bundle($row['latitude'],$row['longitude']
-            ,$row['address'],$row['cellphone'],$row['email'],$row['phone']);
-    }
+        $query->execute();
+
+        $query->bind_result($latitude, $longitude, $address, $cellphone, $email, $phone );
+            
+        while ($query->fetch()) {
+            $bundle = new Bundle($latitude, $longitude, $address, $cellphone, $email, $phone);
+        }
+
+        $query->close();
+    } 
 
     echo json_encode($bundle);
 

@@ -1,18 +1,19 @@
 ﻿import React, { Component } from 'react';
 import {
     View, ToastAndroid,
-    Text,
+    Text, TouchableWithoutFeedback,
     StyleSheet,
     TouchableOpacity,
     Dimensions,
     ScrollView,
     Image, ListView
 } from 'react-native';
+import Modal from 'react-native-modal';
 import { connect } from 'react-redux';
 import NumberFormat from 'react-number-format';
 import { Ionicons } from '@expo/vector-icons';
 import * as actions from '../../actions';
-import { CREATE_ORDER_URL } from '../../backend/url';
+import { CREATE_ORDER_URL, GET_ACCOUNT_INFO_URL } from '../../backend/url';
 
 const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 class CartScreen extends Component {
@@ -27,7 +28,10 @@ class CartScreen extends Component {
             dataSource: ds.cloneWithRows([]),
             totalCost: 0,
             isLogin: false,
-            username: ''
+            username: '',
+            address: '',
+            confirmDialogVisible: false,
+            arlertDialogVisible: false
         };
     }
 
@@ -48,6 +52,19 @@ class CartScreen extends Component {
         });
     }
 
+    setConfirmDialogVisible(state) {
+        this.setState({ confirmDialogVisible: state });
+    }
+
+    async setUserAddress() {
+        const url = GET_ACCOUNT_INFO_URL(this.state.username);
+        const response = await fetch(url, { method: 'GET', body: null });
+        const bundle = await response.json();
+        this.setState({
+            address: bundle.address
+        });
+    }
+
     handleIncrease(index) {
         this.props.inCreaseItem(index);
     }
@@ -56,14 +73,15 @@ class CartScreen extends Component {
         this.props.deCreaseItem(index);
     }
 
-    handleMakeOrderButtonPressed() {
+    async handleMakeOrderButtonPressed() {
         const { cart, isLogin } = this.state;
         if (cart.length < 1) {
             ToastAndroid.show('Your cart is empty!', ToastAndroid.SHORT);
         } else if (!isLogin) {
             ToastAndroid.show('Please login before make order!', ToastAndroid.SHORT);
         } else {
-            this.makeOrder();
+            await this.setUserAddress();
+            await this.setConfirmDialogVisible(true);
         }
     }
 
@@ -91,6 +109,7 @@ class CartScreen extends Component {
             this.cleanCart();
         }
     }
+
 
     cleanCart() {
         this.props.cleanCart();
@@ -179,10 +198,46 @@ class CartScreen extends Component {
                             renderText={value => <Text style={styles.txtTotal}>{value} VND</Text>}
                         />
                     </View>
-                    <TouchableOpacity onPress={() => this.handleMakeOrderButtonPressed()}>
+                    <TouchableOpacity onPress={() => this.handleMakeOrderButtonPressed(true)}>
                         <Ionicons name="ios-checkmark-circle-outline" size={32} color="#ff0066" />
                     </TouchableOpacity>
                 </View>
+
+                {/* Confirm Dialog */}
+                <Modal
+                    style={styles.modal}
+                    isVisible={this.state.confirmDialogVisible}
+                    onBackdropPress={() => this.setConfirmDialogVisible(false)}
+                    backdropOpacity={0.2}
+                    onSwipe={() => this.setConfirmDialogVisible(false)}
+                    swipeDirection="left"
+                >
+                    <View>
+                        <View style={styles.modalAlert}>
+                            <Text style={{ fontWeight: 'bold' }}>Please confirm your purchase!</Text>
+                            <Text>Your purchase will be send to : {this.state.address} </Text>
+                        </View>
+                        <View style={styles.modalOption}>
+                            <TouchableWithoutFeedback
+                                onPress={() => {
+                                    this.setConfirmDialogVisible(false);
+                                    this.makeOrder();
+                                }}
+                            >
+                                <View style={styles.modalYes}>
+                                    <Text>Accept</Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                            <TouchableWithoutFeedback
+                                onPress={() => this.setConfirmDialogVisible(false)}
+                            >
+                                <View style={styles.modalNo}>
+                                    <Text>Back to cart</Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        </View>
+                    </View>
+                </Modal>
             </View>
         );
     }
@@ -299,7 +354,52 @@ const styles = StyleSheet.create({
     amountItem: {
         width: width / 12,
         height: width / 8,
-    }
+    },
+    modal: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height
+    },
+    modalAlert: {
+        width: width * 0.7,
+        backgroundColor: 'white',
+        padding: 15,
+        borderTopWidth: 2,
+        borderLeftWidth: 2,
+        borderBottomWidth: 1,
+        borderRightWidth: 2,
+        borderTopLeftRadius: 25,
+        borderTopRightRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalOption: {
+        width: width * 0.7,
+        height: height / 12,
+        flexDirection: 'row',
+    },
+    modalYes: {
+        flex: 1,
+        backgroundColor: 'white',
+        borderTopWidth: 1,
+        borderLeftWidth: 2,
+        borderBottomWidth: 2,
+        borderRightWidth: 1,
+        borderBottomLeftRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalNo: {
+        flex: 1,
+        backgroundColor: 'white',
+        borderTopWidth: 1,
+        borderLeftWidth: 1,
+        borderBottomWidth: 2,
+        borderRightWidth: 2,
+        borderBottomRightRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });
 
 const mapStateToProps = state => ({

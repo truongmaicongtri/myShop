@@ -13,18 +13,24 @@
 
     $shopid = $parameters['shopid'];
 
-    $query = "SELECT notification.detail, notification.date 
-    FROM notification
-    WHERE notification.shopid='{$shopid}'";
-
-    $result = $conn->query($query);
     $bundles = array();
 
-    if ($result->num_rows > 0){
-        while ($row = $result->fetch_assoc()){
-            array_push($bundles, new Bundle($row['detail'], $row['date']));
+    if ($query= $conn->prepare("SELECT notification.detail, notification.date 
+        FROM notification
+        WHERE notification.shopid= ? ")){
+
+        $query->bind_param("s", $shopid);
+
+        $query->execute();
+
+        $query->bind_result($detail, $date);
+            
+        while ($query->fetch()) {
+            array_push($bundles, new Bundle($detail, $date));
         }
-    }
+
+        $query->close();
+    } 
 
     echo json_encode($bundles);
 

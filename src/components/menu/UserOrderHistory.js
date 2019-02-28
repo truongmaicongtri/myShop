@@ -23,10 +23,18 @@ class UserOrderHistory extends Component {
         };
     }
 
-    async componentDidMount() {
+    componentDidMount() {
+        this.callApi();
+    }
+
+    async callApi() {
         const url = GET_ORDER_HISTORY_URL(this.props.username);
-        const response = await fetch(url, { method: 'POST', body: null });
+        const response = await fetch(url, { method: 'GET', body: null });
         const orders = await response.json();
+        this.updateListView(orders)
+    }
+
+    updateListView(orders) {
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(orders)
         });
