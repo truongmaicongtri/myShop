@@ -146,7 +146,7 @@ class ChooseShopScreen extends Component {
                                             />
                                         </View>
                                         :
-                                        <View style={{ marginTop: 10, alignItems: 'center', width: width * 0.9, height: width / 4 }}>
+                                        <View style={{ marginTop: 10, alignItems: 'center', width: width * 0.9 }}>
                                             {
                                                 this.state.hasCameraPermission ?
                                                     <LinearGradient colors={['#9badc9', '#9badc9']} style={styles.scanButton} >
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#82bbfc',
         padding: width / 20,
-        justifyContent: 'space-around',
+        justifyContent: 'flex-start',
     },
     loginButton: {
         flex: 1,
