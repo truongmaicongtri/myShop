@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { SearchBar } from 'react-native-elements';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { LinearGradient, BarCodeScanner, Permissions } from 'expo';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
@@ -113,9 +112,9 @@ class ChooseShopScreen extends Component {
                         </View>
                         {
                             !this.state.isSearching &&
-                                <View style={{ flex: 1, justifyContent: 'space-around' }}>
-                                    <MaterialIcons name='touch-app' size={25} color='#4e5766' />
-                                </View>
+                            <View style={{ flex: 1, justifyContent: 'space-around' }}>
+                                <MaterialIcons name='touch-app' size={25} color='#4e5766' />
+                            </View>
                         }
                     </View>
                 </View>
@@ -172,28 +171,27 @@ class ChooseShopScreen extends Component {
                             <View />
                     }
 
-                    <KeyboardAwareScrollView>
-                        <View>
-                            <Text style={styles.textStyle}>Or enter shop name: </Text>
-                            <SearchBar
-                                placeholder="SHOP NAME"
-                                autoCapitalize='none'
-                                showLoading={this.state.isSearching}
-                                lightTheme
-                                round
-                                onChangeText={(text) => this.handleSearchBarChangeText(text)}
-                                value={this.state.shopName}
-                                onFocus={() => this.setState({ isSearching: true, isScanning: false })}
-                                onSubmitEditing={() => this.setState({ isSearching: false })}
-                                onEndEditing={() => this.setState({ isSearching: false })}
-                            />
-                            <ListView
-                                dataSource={this.state.dataSource}
-                                renderRow={this.renderRow.bind(this)}
-                                enableEmptySections
-                            />
-                        </View>
-                    </KeyboardAwareScrollView>
+                    <View>
+                        <Text style={styles.textStyle}>Or enter shop name: </Text>
+                        <SearchBar
+                            placeholder="SHOP NAME"
+                            autoCapitalize='none'
+                            showLoading={this.state.isSearching}
+                            lightTheme
+                            round
+                            onChangeText={(text) => this.handleSearchBarChangeText(text)}
+                            value={this.state.shopName}
+                            onFocus={() => this.setState({ isSearching: true, isScanning: false })}
+                            onSubmitEditing={() => this.setState({ isSearching: false })}
+                            onEndEditing={() => this.setState({ isSearching: false })}
+                        />
+                        <ListView
+                            dataSource={this.state.dataSource}
+                            renderRow={this.renderRow.bind(this)}
+                            enableEmptySections
+                        />
+                    </View>
+
                 </LinearGradient >
             </DismissKeyboard>
         );
