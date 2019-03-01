@@ -6,7 +6,6 @@ import Swiper from 'react-native-swiper';
 import { Card, Paragraph } from 'react-native-paper';
 import NumberFormat from 'react-number-format';
 import * as actions from '../../actions';
-import CartItem from '../../models/CartItem';
 
 const { width } = Dimensions.get('window');
 

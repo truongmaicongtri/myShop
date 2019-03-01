@@ -21,7 +21,7 @@
             $query->bind_param("sss", $user_name, $newpassword, $user_name);
 
             $query->execute();
-    
+            $query->close();
             echo json_encode("OK");
         } 
     } 

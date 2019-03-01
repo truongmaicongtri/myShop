@@ -4,11 +4,11 @@ export default function (state = [], action) {
     switch (action.type) {
         case ADDTOCART:
             {
-                const sameItem = state.filter(e => e.item.productid === action.cartItem.item.productid);
+                const sameItem = state.filter(e => e.item.productid === action.product.productid);
                 if (sameItem.length > 0) {
                     return [...state];
                 }
-                return [...state, action.cartItem];
+                return [...state, { item: action.product, amount: 1 }];
             }
         case CLEANCART:
             {

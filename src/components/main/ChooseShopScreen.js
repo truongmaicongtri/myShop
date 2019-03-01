@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import {
     View, Text, StyleSheet,
     TouchableOpacity, ListView,
-    Dimensions, TextInput, ToastAndroid
+    Dimensions, ToastAndroid,
+    Keyboard, TouchableWithoutFeedback,
+    Animated
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { SearchBar } from 'react-native-elements';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { LinearGradient, BarCodeScanner, Permissions } from 'expo';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
@@ -22,7 +25,8 @@ class ChooseShopScreen extends Component {
             isScanning: false,
             isSearching: false,
             typingTimer: {},
-            doneTypingInterval: 500,
+            doneTypingInterval: 200,
+            fadeAnim: new Animated.Value(0),
             dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
         };
     }
@@ -49,7 +53,7 @@ class ChooseShopScreen extends Component {
         if (json != null) {
             this.props.changeShop(shopId);
         } else {
-            ToastAndroid.show('Không tìm thấy shop', ToastAndroid.SHORT);
+            ToastAndroid.show('Shop could not be found', ToastAndroid.SHORT);
         }
     }
 
@@ -77,7 +81,6 @@ class ChooseShopScreen extends Component {
 
     updateListView(json) {
         this.setState({
-            isSearching: false,
             dataSource: this.state.dataSource.cloneWithRows(json)
         });
     }
@@ -93,8 +96,7 @@ class ChooseShopScreen extends Component {
     async handleSearchBarChangeText(text) {
         clearTimeout(this.state.typingTimer);
         await this.setState({
-            shopName: text,
-            isSearching: true
+            shopName: text
         });
         await this.setState({
             typingTimer: setTimeout(() => this.searchShopName(), this.state.doneTypingInterval)
@@ -109,10 +111,12 @@ class ChooseShopScreen extends Component {
                         <View style={{ flex: 5, justifyContent: 'center' }}>
                             <Text style={{ textAlign: 'center' }}>{data.shopName}</Text>
                         </View>
-                        <View style={{ flex: 1, justifyContent: 'space-around' }}>
-                            <MaterialIcons name='touch-app' size={25} color='#4e5766' />
-                        </View>
-
+                        {
+                            !this.state.isSearching &&
+                                <View style={{ flex: 1, justifyContent: 'space-around' }}>
+                                    <MaterialIcons name='touch-app' size={25} color='#4e5766' />
+                                </View>
+                        }
                     </View>
                 </View>
             </TouchableOpacity >
@@ -120,92 +124,94 @@ class ChooseShopScreen extends Component {
     }
 
     render() {
-        const { isScanning } = this.state;
-
-        if (isScanning) {
-            return (
-                <View style={{ flex: 1 }}>
-                    <BarCodeScanner
-                        onBarCodeScanned={this.handleBarCodeScanned}
-                        style={StyleSheet.absoluteFill}
-                    />
-                </View>
-            );
-        }
-
-        // if (hasCameraPermission === null) {
-        //     return <Text>Requesting for camera permission</Text>;
-        // }
-        // if (hasCameraPermission === false) {
-        //     return <Text>No access to camera</Text>;
-        // }
+        const { isScanning, isSearching } = this.state;
 
         return (
-            <LinearGradient
-                start={{ x: 0, y: 1 }}
-                end={{ x: 1, y: 0 }}
-                colors={['#ffffff', '#ffffff']}
-                style={styles.screen}
-            >
+            <DismissKeyboard>
+                <LinearGradient
+                    start={{ x: 0, y: 1 }}
+                    end={{ x: 1, y: 0 }}
+                    colors={['#ffffff', '#ffffff']}
+                    style={styles.screen}
+                >
+                    {
+                        !isSearching ?
+                            <View>
+                                <Text style={styles.textStyle}>Scan shop's QR code:</Text>
+                                {
+                                    isScanning ?
+                                        <View style={{ height: width * 0.9, borderColor: '#bdc6cf', borderWidth: 5 }}>
+                                            <BarCodeScanner
+                                                onBarCodeScanned={this.handleBarCodeScanned}
+                                                style={StyleSheet.absoluteFill}
+                                            />
+                                        </View>
+                                        :
+                                        <View style={{ marginTop: 10, alignItems: 'center', width: width * 0.9, height: width / 4 }}>
+                                            {
+                                                this.state.hasCameraPermission ?
+                                                    <LinearGradient colors={['#9badc9', '#9badc9']} style={styles.scanButton} >
+                                                        <TouchableOpacity
+                                                            onPress={() => this.handleScanButtonPress()}
+                                                            style={styles.touchableStyle}
+                                                        >
+                                                            <Text style={{ color: 'white' }}>Start Scan</Text>
+                                                        </TouchableOpacity>
+                                                    </LinearGradient>
+                                                    :
+                                                    this.state.hasCameraPermission === null ?
+                                                        <Text>Requesting for camera permission</Text>
+                                                        :
+                                                        <Text>No access to camera</Text>
+                                            }
 
-                <Text style={styles.textStyle}>Scan shop's QR code:</Text>
-                {
-                    this.state.isScanning ?
-                        <View style={{ flex: 1 }}>
-                            <BarCodeScanner
-                                onBarCodeScanned={this.handleBarCodeScanned}
-                                style={StyleSheet.absoluteFill}
+                                        </View>
+                                }
+                            </View>
+                            :
+                            <View />
+                    }
+
+                    <KeyboardAwareScrollView>
+                        <View>
+                            <Text style={styles.textStyle}>Or enter shop name: </Text>
+                            <SearchBar
+                                placeholder="SHOP NAME"
+                                autoCapitalize='none'
+                                showLoading={this.state.isSearching}
+                                lightTheme
+                                round
+                                onChangeText={(text) => this.handleSearchBarChangeText(text)}
+                                value={this.state.shopName}
+                                onFocus={() => this.setState({ isSearching: true, isScanning: false })}
+                                onSubmitEditing={() => this.setState({ isSearching: false })}
+                                onEndEditing={() => this.setState({ isSearching: false })}
+                            />
+                            <ListView
+                                dataSource={this.state.dataSource}
+                                renderRow={this.renderRow.bind(this)}
+                                enableEmptySections
                             />
                         </View>
-                        :
-                        <View style={{ marginTop: 10, alignItems: 'center', width: width * 0.9, height: width / 4 }}>
-                            {
-                                this.state.hasCameraPermission ?
-                                    <LinearGradient colors={['#9badc9', '#9badc9']} style={styles.scanButton} >
-                                        <TouchableOpacity
-                                            onPress={() => this.handleScanButtonPress()}
-                                            style={styles.touchableStyle}
-                                        >
-                                            <Text style={{ color: 'white' }}>Start Scan</Text>
-                                        </TouchableOpacity>
-                                    </LinearGradient>
-                                    :
-                                    this.state.hasCameraPermission === null ?
-                                        <Text>Requesting for camera permission</Text>
-                                        :
-                                        <Text>No access to camera</Text>
-                            }
-
-                        </View>
-                }
-                <Text style={styles.textStyle}>Or enter shop name: </Text>
-                <View style={{ height: 10 }} />
-                <SearchBar
-                    placeholder="SHOP NAME"
-                    autoCapitalize='none'
-                    showLoading={this.state.isSearching}
-                    lightTheme
-                    underlineColorAndroid='transparent'
-                    onChangeText={(text) => this.handleSearchBarChangeText(text)}
-                    value={this.state.shopName}
-                />
-                <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={this.renderRow.bind(this)}
-                    enableEmptySections
-                />
-            </LinearGradient >
+                    </KeyboardAwareScrollView>
+                </LinearGradient >
+            </DismissKeyboard>
         );
     }
 }
+
+const DismissKeyboard = ({ children }) => (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        {children}
+    </TouchableWithoutFeedback>
+);
 const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
         backgroundColor: '#82bbfc',
         padding: width / 20,
-        justifyContent: 'center',
-        paddingTop: 100,
+        justifyContent: 'space-around',
     },
     loginButton: {
         flex: 1,
@@ -230,7 +236,9 @@ const styles = StyleSheet.create({
     },
     textStyle: {
         fontSize: 15,
-        color: 'black'
+        color: 'black',
+        marginBottom: 10,
+        marginTop: 20
     },
     rowStyle: {
         flex: 1,

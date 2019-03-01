@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 28, 2019 at 10:33 AM
+-- Generation Time: Mar 01, 2019 at 12:23 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.1
 
@@ -41,6 +41,8 @@ CREATE TABLE `account` (
 INSERT INTO `account` (`username`, `password`, `mediaid`) VALUES
 ('tien', '$2y$10$zBM1iDa4QpthqWpZBjf4SeorWkVnqDVOw0ThdXsPIOKdzGt/YXkZa', NULL),
 ('tri', '$2y$10$aRIwNVFBBt2LA9NVfr.vn.zU6INRSTGZDPV5a1J4QS9ClBrkpw/2S', NULL),
+('trichuot', '$2y$10$rOXlh/N1uovO2PXwGu6UL.63Du1C5idAJXWplMz4qPDheRFf9jNDm', NULL),
+('trichuot1', '$2y$10$vzjTXDhX7bB6xltFwE2GD.FioMR6ps1Pbo9UXk2hGNNEvbVQMm/Ai', NULL),
 ('user', '$2y$10$Fw5jIAVpeUxMkuTaNSwDV.K0p11A5Ho2Epnzvw/ir5/wc3KYIm0x6', NULL);
 
 -- --------------------------------------------------------
@@ -443,8 +445,8 @@ CREATE TABLE `shop_information` (
   `cellphone` varchar(10) NOT NULL,
   `phone` varchar(10) DEFAULT NULL,
   `email` varchar(30) NOT NULL,
-  `latitude` double NOT NULL,
-  `longitude` double NOT NULL
+  `latitude` double NOT NULL DEFAULT '11.053683',
+  `longitude` double NOT NULL DEFAULT '106.666986'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -453,7 +455,11 @@ CREATE TABLE `shop_information` (
 
 INSERT INTO `shop_information` (`shopid`, `shopname`, `ownername`, `address`, `cellphone`, `phone`, `email`, `latitude`, `longitude`) VALUES
 ('shop01', 'My Shop', 'Tri and Tien', '255, Nam Ky Khoi Nghia st, Binh Duong Newcity', '0397408460', '067273727', 'tri.truong.set15@eiu.edu.vn', 11.053683, 106.666986),
-('shop02', 'Natural Food', 'Truong Mai Cong Tri', 'Tam Hai, Nui Thanh, Quang Nam', '0545434841', '0344845844', 'tri.truong.dsn@gmail.com', 10.9634671, 106.7125004);
+('shop02', 'Natural Food', 'Truong Mai Cong Tri', 'Tam Hai, Nui Thanh, Quang Nam', '0545434841', '0344845844', 'tri.truong.dsn@gmail.com', 10.9634671, 106.7125004),
+('shop03', 'Shop', '', '', '', NULL, '', 11.053683, 106.666986),
+('shop04', 'Shop 123', '', '', '', NULL, '', 11.053683, 106.666986),
+('shop06', 'Shalalala', '', '', '', NULL, '', 11.053683, 106.666986),
+('shop07', 'S', '', '', '', NULL, '', 11.053683, 106.666986);
 
 -- --------------------------------------------------------
 
@@ -462,13 +468,12 @@ INSERT INTO `shop_information` (`shopid`, `shopname`, `ownername`, `address`, `c
 --
 
 CREATE TABLE `user_information` (
-  `id` int(11) NOT NULL,
   `username` varchar(10) NOT NULL,
-  `firstname` varchar(20) NOT NULL,
-  `lastname` varchar(20) NOT NULL,
-  `email` varchar(30) NOT NULL,
+  `firstname` varchar(20) NOT NULL DEFAULT '',
+  `lastname` varchar(20) NOT NULL DEFAULT '',
+  `email` varchar(30) NOT NULL DEFAULT '',
   `phone` varchar(20) NOT NULL,
-  `address` varchar(300) DEFAULT NULL,
+  `address` varchar(300) NOT NULL DEFAULT '',
   `birthday` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -476,9 +481,12 @@ CREATE TABLE `user_information` (
 -- Dumping data for table `user_information`
 --
 
-INSERT INTO `user_information` (`id`, `username`, `firstname`, `lastname`, `email`, `phone`, `address`, `birthday`) VALUES
-(1, 'tri', 'Tri', 'Truong', 'tri.truong.set15@eiu.edu.vn', '0195636262', '255, Dong Khoi st, Thu Dau Mot, Binh Duong Newcity', NULL),
-(2, 'tien', 'Tien', 'Bui Van', 'tien.bui.set15@eiu.edu.vn', '0397408460', 'Dong An, Thuan An, Binh Duong', NULL);
+INSERT INTO `user_information` (`username`, `firstname`, `lastname`, `email`, `phone`, `address`, `birthday`) VALUES
+('tien', 'Tien', 'Bui Van', 'tien.bui.set15@eiu.edu.vn', '0397408460', 'Dong An, Thuan An, Binh Duong', NULL),
+('tri', 'Tri', 'Truong', 'tri.truong.set15@eiu.edu.vn', '0195636262', '255, Dong Khoi st, Thu Dau Mot, Binh Duong Newcity', NULL),
+('trichuot', '', '', '', '098656435', 'Hshshxh djsjbsbc xjuehshd ,\nHdhx sbbx', NULL),
+('trichuot1', '', '', '', '0986434546', 'Thsgsjhd shjdhhs djidhshd jdjhshs djdj\n', NULL),
+('user', '', '', '', '09123923', 'dghuadjawojdiawjdaw', NULL);
 
 --
 -- Indexes for dumped tables
@@ -575,7 +583,7 @@ ALTER TABLE `shop_information`
 -- Indexes for table `user_information`
 --
 ALTER TABLE `user_information`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`username`),
   ADD KEY `id` (`username`);
 
 --
@@ -592,13 +600,13 @@ ALTER TABLE `category_image`
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `orderdetailid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `orderdetailid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `order_history`
 --
 ALTER TABLE `order_history`
-  MODIFY `orderid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `orderid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `products_in_cate`
@@ -617,12 +625,6 @@ ALTER TABLE `product_image`
 --
 ALTER TABLE `rating_history`
   MODIFY `ratingid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `user_information`
---
-ALTER TABLE `user_information`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

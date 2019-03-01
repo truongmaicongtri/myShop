@@ -50,6 +50,7 @@ class NotifyScreen extends Component {
             <View style={styles.screen}>
                 <View>
                     <ListView
+                        enableEmptySections
                         dataSource={this.state.dataSource}
                         renderRow={this.renderRow}
                     />

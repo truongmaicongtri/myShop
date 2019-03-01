@@ -35,3 +35,5 @@ export const CREATE_ORDER_URL = HOST_URL + 'insertOrder.php';
 
 export const SEARCH_BY_SHOP_NAME = (shopName) =>
     HOST_URL + 'searchShopname.php?shopname=' + shopName;
+
+export const REGISTER_URL = HOST_URL + 'register.php';

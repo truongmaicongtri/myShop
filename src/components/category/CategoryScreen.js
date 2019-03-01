@@ -13,7 +13,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import { GET_PRODUCT_URL } from '../../backend/url';
-import CartItem from '../../models/CartItem';
 
 class CategoryScreen extends Component {
     static navigationOptions = {
@@ -78,7 +77,7 @@ class CategoryScreen extends Component {
                 </View>
                 <TouchableOpacity
                     style={styles.iconstyle}
-                    onPress={() => this.handleAddToCart(new CartItem(product, 1))}
+                    onPress={() => this.handleAddToCart(product)}
                 >
                     <Ionicons name="ios-cart" size={30} color="#B10D65" />
                 </TouchableOpacity>

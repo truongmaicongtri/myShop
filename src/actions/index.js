@@ -11,7 +11,7 @@ import {
     CLEANCART
 } from './types';
 
-export const addToCart = (cartItem) => ({ type: ADDTOCART, cartItem });
+export const addToCart = (product) => ({ type: ADDTOCART, product });
 export const cleanCart = () => ({ type: CLEANCART });
 export const inCreaseItem = (index) => ({ type: INCREASECARTAMOUNT, index });
 export const deCreaseItem = (index) => ({ type: DECREASECARTAMOUNT, index });

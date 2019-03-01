@@ -21,7 +21,7 @@
     if ($query= $conn->prepare("SELECT shop_information.shopid, shop_information.shopname FROM shop_information WHERE shop_information.shopname
     LIKE ? ORDER BY CASE WHEN shop_information.shopname LIKE ? THEN 0 WHEN shop_information.shopname
      LIKE ? THEN 1 WHEN shop_information.shopname LIKE ? THEN 2 ELSE 3  END  
-     LIMIT 3")){
+     LIMIT 4")){
 
         $query->bind_param("ssss", $param1, $param2, $param3, $param4);
 

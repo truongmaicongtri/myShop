@@ -3,7 +3,8 @@ import {
     View, Text, StyleSheet,
     TouchableOpacity, Image,
     Dimensions, TextInput,
-    ToastAndroid
+    ToastAndroid, Keyboard,
+    TouchableWithoutFeedback
 } from 'react-native';
 import { LinearGradient } from 'expo';
 import { connect } from 'react-redux';
@@ -20,7 +21,7 @@ class LoginScreen extends Component {
         };
     }
 
-    login(state) {
+    handleLoginState(state) {
         ToastAndroid.show(JSON.stringify(state), ToastAndroid.SHORT);
         if (state === 'Login successful!') {
             this.props.logIn(this.state.username);
@@ -41,7 +42,7 @@ class LoginScreen extends Component {
             body: JSON.stringify(dataObj)
         });
         const loginState = await response.json();
-        this.login(loginState);
+        this.handleLoginState(loginState);
     }
 
     validateUsername = (userName) => {
@@ -74,59 +75,69 @@ class LoginScreen extends Component {
         }
     }
 
+
     render() {
         return (
-            <LinearGradient
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                colors={['#2980B9', '#6DD5FA']}
-                style={styles.screen}
-            >
-                <View style={styles.topContainer}>
-                    <Image
-                        style={styles.avatarView}
-                        source={require('../../drawable/icon/userDefaultAvater.png')}
-                    />
-                    <Text style={{ marginTop: 20 }}>Have a nice day!</Text>
-                </View>
-                <View>
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder="USER"
-                        autoCapitalize='none'
-                        underlineColorAndroid='transparent'
-                        onChangeText={username => this.setState({ username })}
-                    />
-                </View>
-                <View style={{ marginTop: 10 }}>
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder="PASSWORD"
-                        autoCapitalize='none'
-                        secureTextEntry
-                        underlineColorAndroid='transparent'
-                        onChangeText={password => this.setState({ password })}
-                    />
-                </View>
-                <View style={{ marginTop: 10, alignItems: 'center' }}>
-                    <LinearGradient colors={['#4a9cf9', '#268bff']} style={styles.loginButton} >
-                        <TouchableOpacity
-                            onPress={() => this.handleLogInButtonPress()}
-                            style={styles.touchableStyle}
-                        >
-                            <Text style={{ color: 'white' }}>LOG IN</Text>
+            <DismissKeyboard>
+                <LinearGradient
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    colors={['#2980B9', '#6DD5FA']}
+                    style={styles.screen}
+                >
+                    <View style={styles.topContainer}>
+                        <Image
+                            style={styles.avatarView}
+                            source={require('../../drawable/icon/userDefaultAvater.png')}
+                        />
+                        <Text style={{ marginTop: 20 }}>Have a nice day!</Text>
+                    </View>
+                    <View>
+                        <TextInput
+                            style={styles.textInput}
+                            placeholder="USER"
+                            autoCapitalize='none'
+                            underlineColorAndroid='transparent'
+                            onChangeText={username => this.setState({ username })}
+                        />
+                    </View>
+                    <View style={{ marginTop: 10 }}>
+                        <TextInput
+                            style={styles.textInput}
+                            placeholder="PASSWORD"
+                            autoCapitalize='none'
+                            secureTextEntry
+                            underlineColorAndroid='transparent'
+                            onChangeText={password => this.setState({ password })}
+                        />
+                    </View>
+                    <View style={{ marginTop: 10, alignItems: 'center' }}>
+                        <LinearGradient colors={['#4a9cf9', '#268bff']} style={styles.loginButton} >
+                            <TouchableOpacity
+                                onPress={() => this.handleLogInButtonPress()}
+                                style={styles.touchableStyle}
+                            >
+                                <Text style={{ color: 'white' }}>LOG IN</Text>
+                            </TouchableOpacity>
+                        </LinearGradient>
+                    </View>
+                    <View style={styles.registerButton}>
+                        <TouchableOpacity onPress={() => this.props.navigate('Register')}>
+                            <Text style={{ textDecorationLine: 'underline', fontStyle: 'italic' }}>Create Account</Text>
                         </TouchableOpacity>
-                    </LinearGradient>
-                </View>
-                <View style={styles.registerButton}>
-                    <TouchableOpacity onPress={() => this.props.navigate('Register')}>
-                        <Text style={{ textDecorationLine: 'underline', fontStyle: 'italic' }}>Create Account</Text>
-                    </TouchableOpacity>
-                </View>
-            </LinearGradient >
+                    </View>
+                </LinearGradient >
+            </DismissKeyboard>
         );
     }
 }
+
+const DismissKeyboard = ({ children }) => (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        {children}
+    </TouchableWithoutFeedback>
+);
+
 const { height } = Dimensions.get('window');
 const { width } = Dimensions.get('window');
 
