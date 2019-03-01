@@ -39,7 +39,7 @@ class DetailProductScreen extends Component {
                         </TouchableOpacity>
                         <View style={{ width: 30 }} />
                         <TouchableOpacity
-                            onPress={() => this.handleAddToCart(new CartItem(product, 1))}
+                            onPress={() => this.handleAddToCart(product)}
                         >
                             <Ionicons name="ios-cart" size={25} color="#B10D65" />
                         </TouchableOpacity>
